@@ -15,6 +15,7 @@ public class MongodbApplication {
   public static void main(String[] args) {
     SpringApplication.run(MongodbApplication.class, args);
   }
+  
   @Bean
   public RestTemplate restTemplate() {
     return new RestTemplate();
