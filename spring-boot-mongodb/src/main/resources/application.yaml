@@ -1,4 +1,15 @@
+server:
+  port: 8082
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/kgms_file_picture
+      uri: mongodb://119.28.18.63:27017/kgms_file_picture
+
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: DEBUG
