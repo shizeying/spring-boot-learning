@@ -5,10 +5,8 @@ import com.example.mongodb.repository.UserPortraitRepository;
 import com.example.mongodb.service.UserPortraitService;
 import com.example.mongodb.utils.MongoPageHelper;
 import com.example.mongodb.utils.PageResult;
-import javax.annotation.Resource;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserPortraitServiceImpl implements UserPortraitService {
-   
+
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -50,15 +49,15 @@ public class UserPortraitServiceImpl implements UserPortraitService {
      */
     @Override
     public PageResult<UserPortraitEntity> showUserPortraits(Long entityId, String kgName,
-        Integer pageSize, Integer pageNum) {
+                                                            Integer pageSize, Integer pageNum) {
         Query condition = new Query();
 
         condition.addCriteria(Criteria.where("entity_id").is(entityId))
                 .addCriteria(Criteria.where("kg_name").is(kgName));
         Sort sort = Sort.by(Direction.DESC, "update_time");
-    
-        return mongoPageHelper.pageQuery(condition, UserPortraitEntity.class, pageSize,
-            pageNum,sort);
+
+        return mongoPageHelper.pageQuery(condition, UserPortraitEntity.class, Optional.ofNullable(pageSize).orElse(10),
+                Optional.ofNullable(pageNum).orElse(1), sort);
 
     }
 
@@ -87,14 +86,14 @@ public class UserPortraitServiceImpl implements UserPortraitService {
     @Override
     public UserPortraitEntity update(String username, String id, String toAnnotate) {
 
-        if (repository.existsById(id)){
+        if (repository.existsById(id)) {
             UserPortraitEntity entity = repository.findById(id).get();
             entity.setUsername(username);
             entity.setToAnnotate(toAnnotate);
             entity.setUpdateTime(LocalDateTime.now());
 
             return repository.save(entity);
-        }else {
+        } else {
             return null;
         }
 
