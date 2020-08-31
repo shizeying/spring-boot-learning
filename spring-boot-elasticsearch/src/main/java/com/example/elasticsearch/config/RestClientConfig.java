@@ -38,6 +38,7 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
 
         return RestClients.create(clientConfiguration()).rest();
     }
+
     @Bean
     public ElasticsearchOperations elasticsearchTemplate() {
         return new ElasticsearchRestTemplate(elasticsearchClient());
@@ -56,7 +57,7 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
 
         //TODO 不存在username
         if (StringUtils.isEmpty(username) && StringUtils.isEmpty(password)) {
-            log.info("hostAndPorts:" + Arrays.toString(hostAndPorts)  + ";");
+            log.info("hostAndPorts:" + Arrays.toString(hostAndPorts) + ";");
 
             return ClientConfiguration.builder().connectedTo(hostAndPorts).withConnectTimeout(connectionTimeout).build();
 
@@ -67,7 +68,6 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
             return ClientConfiguration.builder().connectedTo(hostAndPorts).withBasicAuth(username, password).withConnectTimeout(connectionTimeout).build();
 
         }
-
 
 
     }

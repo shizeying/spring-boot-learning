@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 
 import java.io.IOException;
@@ -37,6 +38,9 @@ class ElasticsearchApplicationTests {
      */
     @Autowired
     private ElasticsearchRestTemplate template;
+    @Qualifier("elasticsearchTemplate")
+    @Autowired
+    private ElasticsearchOperations operations;
     //TODO 注意：如果查看源码就能看到elasticsearchRestHighLevelClient和elasticsearchClient其实返回类型都是RestHighLevelClient
     // ，这里自己实现了RestClientConfig，所以这里实现elasticsearchClient就可以了
 
