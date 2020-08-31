@@ -9,8 +9,8 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>common</artifactId>
-    <version>${parent.version}</version>
     <name>common</name>
+    <version>${parent.version}</version>
     <description>spring boot common study</description>
     <packaging>jar</packaging>
     <properties>
