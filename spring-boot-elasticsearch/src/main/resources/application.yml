@@ -10,6 +10,19 @@ spring:
 
 
 
+#开启elasticsearch的日志打印
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          elasticsearch:
+            core: DEBUG
+    #打印出完整的curl语句以及完整的json
+    tracer: TRACE
+
+
+
 
 
 
