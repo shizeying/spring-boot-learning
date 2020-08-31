@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
-@RestControllerAdvice(basePackages = "com.github.lybgeek")
+@RestControllerAdvice(basePackages = "com.example.common")
 @Slf4j
 public class ResponseAdvice implements ResponseBodyAdvice {
     @Override
