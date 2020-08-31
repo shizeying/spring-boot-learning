@@ -57,6 +57,7 @@ class ElasticsearchApplicationTests {
     }
     @Test
     void setCreateIndex(){
+        createIndex();
     }
     @Test
     void setHealth() throws IOException {
