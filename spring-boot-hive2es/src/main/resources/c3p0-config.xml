@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<c3p0-config>
+    <default-config>
+        <property name="jdbcUrl">jdbc:hive2://localhost:10000/database
+            <!--useSSL错误可以添加false设置-->
+        </property>
+        <property name="driverClass">org.apache.hive.jdbc.HiveDriver</property>
+        <property name="user"></property>
+        <property name="password"></property>
+
+        <property name="checkoutTimeout">30000</property>
+        <property name="idleConnectionTestPeriod">30</property>
+        <property name="initialPoolSize">10</property>
+        <property name="maxIdleTime">30</property>
+        <property name="maxPoolSize">100</property>
+        <property name="minPoolSize">10</property>
+        <property name="maxStatements">200</property>
+    </default-config>
+
+    <!--命名配置,这里还使用的是Mysql的四大参数，只是连接池配置有些修改-->
+    <named-config name="hive-config">
+        <property name="jdbcUrl">jdbc:hive2://localhost:10000/database</property>
+        <property name="driverClass">org.apache.hive.jdbc.HiveDriver</property>
+        <property name="user"></property>
+        <property name="password"></property>
+        <property name="acquireIncrement">3</property>
+        <property name="initialPoolSize">10</property>
+        <property name="minPoolSize">2</property>
+        <property name="maxPoolSize">10</property>
+    </named-config>
+    <!--c3p0的配置文件中可以配置多个连接信息，可以给每个配置起个名字，
+    这样可以方便的通过配置名称来切换配置信息。上面文件中有一个默认配置和一个名为hive-config配置-->
+</c3p0-config>

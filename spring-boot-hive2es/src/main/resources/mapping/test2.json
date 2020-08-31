@@ -1,0 +1,106 @@
+{
+	"properties": {
+		"reId": {
+			"type": "keyword"
+		},
+		"name": {
+			"type": "keyword"
+		},
+		"abs": {
+			"type": "keyword"
+		},
+		"origin": {
+			"type": "keyword"
+		},
+		"image": {
+			"type": "keyword"
+		},
+		"identifyTag": {
+			"type": "keyword"
+		},
+		"lot": {
+			"type": "double"
+		},
+		"lat": {
+			"type": "double"
+		},
+		"gisAdress": {
+			"type": "keyword"
+		},
+		"startTime": {
+			"type": "keyword"
+		},
+		"endTime": {
+			"type": "keyword"
+		},
+		"entityTag": {
+			"type": "keyword"
+		},
+		"gender": {
+			"type": "keyword"
+		},
+		"height": {
+			"type": "integer"
+		},
+		"age": {
+			"type": "integer"
+		},
+		"position": {
+			"type": "keyword"
+		},
+		"englishName": {
+			"type": "keyword"
+		},
+		"winning": {
+			"type": "keyword"
+		},
+		"familyName": {
+			"type": "keyword"
+		},
+		"givenName": {
+			"type": "keyword"
+		},
+		"deathDate": {
+			"type": "keyword"
+		},
+		"bloodType": {
+			"type": "keyword"
+		},
+		"constellation": {
+			"type": "keyword"
+		},
+		"weight": {
+			"type": "double"
+		},
+		"country": {
+			"type": "keyword"
+		},
+		"national": {
+			"type": "keyword"
+		},
+		"degree": {
+			"type": "keyword"
+		},
+		"meaningTag": {
+			"type": "keyword"
+		},
+		"accomplishment": {	
+			"type": "keyword"
+		},
+		"expertise": {
+			"type": "keyword"
+		},
+		"profession": {
+			"type": "keyword"
+		},
+		"feature": {
+			"type": "keyword"
+		},
+		"religion": {
+			"type": "keyword"
+		},
+		"url": {
+			"type": "keyword"
+		}
+	}
+}

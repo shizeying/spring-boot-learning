@@ -1,0 +1,8 @@
+elasticsearch:
+#    uris: http://127.0.0.1:9200
+    uris: http://52.81.42.85:9200
+#    username:
+    username: elastic
+#    password:
+    password: root@hiekn
+
