@@ -15,19 +15,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class ClassUtil {
+  // 是否循环迭代
+  private static final boolean recursive = true;
   /**
    * 根据包名获取包下面所有的类名
    *
    * @param pack
    * @return
-   * @throws Exception
    */
-  public static Set<Class<?>> getClasses(String pack) throws Exception {
+  public static Set<Class<?>> getClasses(String pack) {
 
     // 第一个class类的集合
     Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
-    // 是否循环迭代
-    boolean recursive = true;
+
     // 获取包的名字 并进行替换
     String packageName = pack;
     String packageDirName = packageName.replace('.', '/');
@@ -83,7 +83,7 @@ public class ClassUtil {
     File dir = new File(packagePath);
     // 如果不存在或者 也不是目录就直接返回
     if (!dir.exists() || !dir.isDirectory()) {
-      // log.warn("用户定义包名 " + packageName + " 下没有任何文件");
+      log.warn("用户定义包名 " + packageName + " 下没有任何文件");
       return;
     }
     // 如果存在 就获取包下的所有文件 包括目录
