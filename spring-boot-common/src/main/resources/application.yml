@@ -3,3 +3,8 @@
 
 server:
   port: 8082
+  
+spring:
+  banner:
+    charset: utf-8
+    location: banner.txt

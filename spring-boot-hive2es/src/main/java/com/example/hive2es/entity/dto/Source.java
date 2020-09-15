@@ -16,24 +16,16 @@
 package com.example.hive2es.entity.dto;
 
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Source {
 
   private Map<String, Object> map;
-
-  public Map<String, Object> getMap() {
-    return map;
-  }
-
-  public void setMap(Map<String, Object> map) {
-    this.map = map;
-  }
-
-  public Source(Map<String, Object> map) {
-    this.map = map;
-  }
 }

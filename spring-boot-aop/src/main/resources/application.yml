@@ -1,0 +1,11 @@
+server:
+  port: 8082
+
+spring:
+  aop:
+    auto: true
+    #设置代理模式 true（cglib） false(java JDK代理)
+    proxy-target-class: true
+  banner:
+    charset: utf-8
+    location: banner.txt
