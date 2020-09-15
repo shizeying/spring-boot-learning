@@ -10,6 +10,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
+
 	<artifactId>learning</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>learning</name>
@@ -50,7 +51,10 @@
 		<jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
 		<commons-dbutils.version>1.7</commons-dbutils.version>
 		<c3o0.version>0.9.1.2</c3o0.version>
+		<io.springfox.version>3.0.0</io.springfox.version>
+		<swagger2.version.ui>1.9.6</swagger2.version.ui>
 		<org.mapstruct.version>1.4.0.CR1</org.mapstruct.version>
+		<maven.model.version>3.6.3</maven.model.version>
 	</properties>
 
 	<modules>
@@ -60,6 +64,7 @@
 		<module>spring-boot-common</module>
 		<module>spring-boot-redis</module>
 		<module>spring-boot-aop</module>
+		<module>spring-boot-swagger</module>
 	</modules>
 
 
