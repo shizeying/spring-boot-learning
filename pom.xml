@@ -55,6 +55,11 @@
 		<swagger2.version.ui>1.9.6</swagger2.version.ui>
 		<org.mapstruct.version>1.4.0.CR1</org.mapstruct.version>
 		<maven.model.version>3.6.3</maven.model.version>
+		<guava.version>29.0-jre</guava.version>
+		<commons-lang3.version>3.11</commons-lang3.version>
+		<commons-io.version>2.8.0</commons-io.version>
+		<commons-codec.version>1.15</commons-codec.version>
+		<commons-collections4.version>4.4</commons-collections4.version>
 	</properties>
 
 	<modules>
