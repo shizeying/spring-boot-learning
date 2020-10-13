@@ -7,12 +7,11 @@
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<packaging>jar</packaging>
 	<artifactId>mongodb</artifactId>
 	<name>mongodb</name>
-	<version>${parent.version}</version>
+	<version>1.0</version>
 	<description>Spring Boot learning mongodb</description>
 
 	<properties>
@@ -23,6 +22,27 @@
 	</properties>
 
 	<dependencies>
+		<!--&lt;!&ndash; https://mvnrepository.com/artifact/org.mongodb/mongodb-driver &ndash;&gt;-->
+		<!--<dependency>-->
+		<!--	<groupId>org.mongodb</groupId>-->
+		<!--	<artifactId>mongodb-driver</artifactId>-->
+		<!--	<version>3.12.7</version>-->
+		<!--</dependency>-->
+		<dependency>
+			<groupId>com.hiekn</groupId>
+			<artifactId>mongo_driver</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hiekn</groupId>
+			<artifactId>config_driver</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -32,6 +52,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

@@ -1,5 +1,6 @@
 package com.example.mongodb;
 
+//import com.example.mongodb.config.MongoUtil;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -16,8 +17,7 @@ public class MongodbApplication {
     SpringApplication.run(MongodbApplication.class, args);
   }
   
-  @Bean
-  public RestTemplate restTemplate() {
-    return new RestTemplate();
-  }
+
+  
+  
 }

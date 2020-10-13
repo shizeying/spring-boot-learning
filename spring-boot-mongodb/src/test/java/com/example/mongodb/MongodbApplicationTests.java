@@ -3,6 +3,7 @@ package com.example.mongodb;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+//import com.example.mongodb.config.MongoUtil;
 import com.example.mongodb.entity.UserPortraitEntity;
 import com.example.mongodb.service.UserPortraitService;
 import java.util.Arrays;
@@ -23,6 +24,12 @@ class MongodbApplicationTests {
 
   @Test
   void contextLoads() {}
+
+  @Test
+  public void testMONG() {
+  
+   
+  }
 
   @Test
   public void show() {
