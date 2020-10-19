@@ -8,11 +8,10 @@ import java.util.List;
 @NoArgsConstructor
 public class UserPortraitQo {
     /**
-     * 研判记录id
      */
     @Setter
     @Getter
-    private List<String> ids;
+    private String id;
 
 
     @Getter
@@ -38,7 +37,7 @@ public class UserPortraitQo {
      */
     @Getter
     @Setter
-    private String kgName;
+    private String databaseName;
     
     /**
      * 研判批注集合

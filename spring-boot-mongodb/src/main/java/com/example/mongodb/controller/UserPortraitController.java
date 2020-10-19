@@ -22,7 +22,7 @@ public class UserPortraitController {
 
     return userPortraitService.showUserPortraits(
         userPortraitQo.getEntityId(),
-        userPortraitQo.getKgName(),
+        userPortraitQo.getDatabaseName(),
         userPortraitQo.getPageSize(),
         userPortraitQo.getPageNum());
   }
@@ -32,7 +32,7 @@ public class UserPortraitController {
 
     return userPortraitService.update(
         userPortraitQo.getUsername(),
-        userPortraitQo.getIds().get(0),
+        userPortraitQo.getId(),
         userPortraitQo.getToAnnotates().get(0));
   }
 
@@ -42,13 +42,13 @@ public class UserPortraitController {
     return userPortraitService.batchAdd(
         userPortraitQo.getEntityId(),
         userPortraitQo.getUsername(),
-        userPortraitQo.getKgName(),
+        userPortraitQo.getDatabaseName(),
         userPortraitQo.getToAnnotates());
   }
 
   @DeleteMapping("delete")
-  public Long deleteUserPortraits(UserPortraitQo userPortraitQo) {
+  public Long deleteUserPortraits(List<String> ids) {
 
-    return userPortraitService.batchDelete(userPortraitQo.getIds());
+    return userPortraitService.batchDelete(ids);
   }
 }

@@ -18,12 +18,12 @@ public interface UserPortraitService {
      * 显示用户画像
      *
      * @param entityId 实体的id
-     * @param kgName   对应的图谱
+     * @param databaseName   对应的图谱
      * @param pageSize
      * @param pageNum
      * @return {@link Page<UserPortraitEntity>}
      */
-    PageResult<UserPortraitEntity> showUserPortraits(Long entityId, String kgName, Integer pageSize, Integer pageNum);
+    PageResult<UserPortraitEntity> showUserPortraits(Long entityId, String databaseName, Integer pageSize, Integer pageNum);
 
     /**
      * 批处理delete
@@ -49,12 +49,12 @@ public interface UserPortraitService {
      *
      *
      * @param entityId    实体的id
-     * @param kgName      公斤的名字
+     * @param databaseName      公斤的名字
      * @param toAnnotates 研判批注
      * @param username    用户名
      * @return {@link List<UserPortraitEntity>}
      */
-    List<UserPortraitEntity> batchAdd(Long entityId, String username, String kgName, List<String> toAnnotates);
+    List<UserPortraitEntity> batchAdd(Long entityId, String username, String databaseName, List<String> toAnnotates);
 
 
 }

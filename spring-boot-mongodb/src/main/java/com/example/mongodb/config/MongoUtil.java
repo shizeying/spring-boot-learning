@@ -2,56 +2,41 @@ package com.example.mongodb.config;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
+import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.mongo.MongoProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-/** mongo数据读写通用方法 */
+/** mongo数据读写通用方法 mongodB使用原生方法 */
+@Component
+@Configuration
 public class MongoUtil {
-  @Value("spring.data.mongodb.port")
-  private int mongoPort;
 
-  @Value("spring.data.mongodb.host")
-  private String mongoHost;
+  @Autowired private MongoProperties mongoProperties;
 
-  private static volatile MongoUtil instance = null;
-
-  private MongoUtil() {}
-
-  public static MongoUtil getInstance() {
-    try {
-      if (instance != null) {
-
-      } else {
-        // 创建实例之前可能会有一些准备性的耗时工作
-        Thread.sleep(300);
-        synchronized (MongoUtil.class) {
-          if (instance == null) { // 二次检查
-            instance = new MongoUtil();
-          }
-        }
-      }
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-    return instance;
+  /** 设置连接参数 */
+  private MongoClientOptions getMongoClientOptions() {
+    MongoClientOptions.Builder builder = MongoClientOptions.builder();
+    // todo 添加其他参数配置
+    // 最大连接数
+    builder.connectionsPerHost(mongoProperties.getPort());
+    MongoClientOptions options = builder.readPreference(ReadPreference.nearest()).build();
+    return options;
   }
-
-  private MongoClient mongoClient = null;
-
+  /** @return */
+  @Bean
   public MongoClient getMongoClient() {
-    if (mongoClient == null) {
-      MongoClientOptions options =
-          MongoClientOptions.builder().connectTimeout(60000).socketTimeout(60000).build();
-      System.out.println(mongoHost);
-      mongoClient = new MongoClient(new ServerAddress(mongoHost, mongoPort), options);
-    }
+    System.err.printf(
+        "mongodb.host:%s;mongodb.port:%s\n", mongoProperties.getHost(), mongoProperties.getPort());
 
-    return mongoClient;
+    return new MongoClient(
+        new ServerAddress(mongoProperties.getHost(), mongoProperties.getPort()),
+        getMongoClientOptions());
   }
 
-  public void close() {
-    if (mongoClient != null) {
-      mongoClient.close();
-    }
-  }
+  //
+
 }

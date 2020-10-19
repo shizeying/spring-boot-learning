@@ -9,10 +9,15 @@ import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 
-@Configuration
+/**
+ * @doc spring data mongodb 方式插入数据存在_class，去除方法
+ * @desc TODO
+ * @version 1.0.0
+ * @author shizeying
+ * @date 2020/10/19
+ */@Configuration
 public class MongoConfigListener implements ApplicationListener<ContextRefreshedEvent> {
   @Autowired private MongoTemplate mongoTemplate;
-
   @Override
   public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
     MongoConverter converter = mongoTemplate.getConverter();
@@ -20,4 +25,7 @@ public class MongoConfigListener implements ApplicationListener<ContextRefreshed
       ((MappingMongoConverter) converter).setTypeMapper(new DefaultMongoTypeMapper(null));
     }
   }
+  
+  
+  
 }
