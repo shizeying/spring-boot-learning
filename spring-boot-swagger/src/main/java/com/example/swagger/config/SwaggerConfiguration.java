@@ -1,19 +1,15 @@
-package com.example.wagger.config;
+package com.example.swagger.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -24,19 +20,13 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Slf4j
+
 @Configuration
-@EnableSwagger2
-// TODO 通过dev方式指定
-// @Profile({"dev","test"})
 @ConditionalOnProperty(
-    prefix = "swagger",
-    value = {"enable"},
-    havingValue = "true")
+    value = {"swagger.enable"},
+    matchIfMissing = true)
 public class SwaggerConfiguration {
-  
-  
-  
-  
+
   MavenXpp3Reader reader = new MavenXpp3Reader();
 
   Model model;
@@ -48,14 +38,14 @@ public class SwaggerConfiguration {
       e.printStackTrace();
     }
   }
-
+  
   @Bean
   public Docket createRestApi() {
 
     return new Docket(DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo())
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.example.wagger"))
+        .apis(RequestHandlerSelectors.basePackage("com.example"))
         .paths(PathSelectors.any())
         .build();
   }
