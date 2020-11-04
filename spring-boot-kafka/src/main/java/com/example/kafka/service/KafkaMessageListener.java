@@ -31,15 +31,16 @@ public class KafkaMessageListener {
 				String key = kafkaMessage.get().key();
 				String clazzName = key.split("#")[1];
 
-				log.info("----------------- record ={}", record);
-				log.info("------------------ value ={}", value);
-				log.info("------------------ key ={}", key);
+				//log.info("----------------- record ={}", record);
+				//log.info("------------------ value ={}", value);
+				//log.info("------------------ key ={}", key);
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 		} finally {
 			// 手动提交 offset
 			acknowledgment.acknowledge();
+			log.info("消费成功");
 		}
 	
 		
