@@ -19,6 +19,7 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
 
 @Configuration
+@SuppressWarnings("ALL")
 public class KafkaConsumerConfig {
 	
 	@Autowired
