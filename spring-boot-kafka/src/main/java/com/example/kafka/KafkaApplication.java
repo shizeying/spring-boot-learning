@@ -23,17 +23,8 @@ public class KafkaApplication {
 			TCommonEntity entity = new TCommonEntity();
 			entity.setReId("12dfaf3");
 			
-			entity.setAbs("adf");
-			entity.setEndTime(new Date());
-			entity.setEntityTag("dsaf"+i);
-			entity.setEntityType("abc");
-			entity.setGisAdress("daf");
-			entity.setGisAdress("dafas");
-			entity.setLat(213.0);
-			entity.setLon(123.0);
-			entity.setName("zhangda");
-			entity.setStartTime(new Date());
-			entity.setOrigin("zhangsan");
+		
+		
 			// 调用消息发送类中的消息发送方法
 			sender.send(entity);
 		}

@@ -1,10 +1,17 @@
 package com.example.kafka.entity;
 
-import com.example.kafka.entity.base.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import lombok.Data;
 
 @Data
+@SuppressWarnings("ALL")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class TCommonEntity extends BaseEntity implements Serializable {}
+public class TCommonEntity implements Serializable {
+	
+	/**
+	 * 关联Id
+	 */
+	private String reId;
+	
+}

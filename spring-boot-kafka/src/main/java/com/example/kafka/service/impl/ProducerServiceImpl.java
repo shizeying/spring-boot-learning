@@ -3,7 +3,6 @@ package com.example.kafka.service.impl;
 import static org.hibernate.validator.internal.util.Contracts.*;
 
 import com.example.kafka.config.KafkaTopicProperties;
-import com.example.kafka.entity.base.BasicEntity;
 import com.example.kafka.service.ProducerService;
 import com.example.utils.config.JacksonUtil;
 import java.lang.reflect.Method;
@@ -25,7 +24,7 @@ public class ProducerServiceImpl implements ProducerService {
 
   @Override
   public void send(Object data) {
-    Contracts.assertTrue( data instanceof BasicEntity,"输出传输错误");
+    //Contracts.assertTrue( data instanceof BasicEntity,"输出传输错误");
     try {
       Class<? extends Class> aClass = (Class<? extends Class>) data.getClass();
       String className = data.getClass().getName();
@@ -44,7 +43,7 @@ public class ProducerServiceImpl implements ProducerService {
 
   @Override
   public void sendAsync(Object data) {
-    assertTrue( data instanceof BasicEntity,"输出传输错误");
+    //assertTrue( data instanceof BasicEntity,"输出传输错误");
     try {
       Class<? extends Class> aClass = (Class<? extends Class>) data.getClass();
       String className = data.getClass().getName();
@@ -66,7 +65,7 @@ public class ProducerServiceImpl implements ProducerService {
 
             @Override
             public void onFailure(Throwable ex) {
-              System.out.printf("failure:%s\n" + ex.getMessage());
+              System.out.printf("failure:%s\n" , ex.getMessage());
             }
           });
 
