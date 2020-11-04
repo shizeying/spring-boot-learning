@@ -19,7 +19,6 @@ public class SearchSnapshotQo {
 	private String focusEntityName;
 	@ApiModelProperty("快照名称")
 	private String name;
-	@ApiModelProperty("单页应用id")
 	private String spaId;
 	private Page page;
 	
