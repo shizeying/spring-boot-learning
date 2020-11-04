@@ -8,13 +8,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.mybatis.plus.entity.GraphConfSnapshotGroup;
 import com.example.mybatis.plus.entity.GraphConfSnapshotGroupBO;
 import com.example.mybatis.plus.entity.SearchSnapshotQo;
-import com.example.mybatis.plus.entity.SnapshotGroupVO;
 import com.example.mybatis.plus.mapper.GraphConfSnapshotMapper;
 import com.example.mybatis.plus.service.GraphConfSnapshotService;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -48,14 +48,18 @@ public class GraphConfSnapshotServiceImpl extends
 	
 	@Override
 	public Boolean deleteSnapshot(List<Long> ids) {
-		return this.removeByIds(ids);
+		LambdaQueryWrapper<GraphConfSnapshotGroup> wrapper = new LambdaQueryWrapper<>();
+		wrapper.in(GraphConfSnapshotGroup::getId, ids);
+		Integer count = this.baseMapper.selectCount(wrapper);
+		return (count == 0 || count == null) ? true : removeByIds(ids);
 	}
 	
 	@Override
 	public Boolean deleteByGraphConfSnapshotIds(List<Long> graphConfSnapshotIds) {
 		LambdaQueryWrapper<GraphConfSnapshotGroup> wrapper = new LambdaQueryWrapper<>();
 		wrapper.in(GraphConfSnapshotGroup::getGraphConfSnapshotId, graphConfSnapshotIds);
-		return this.remove(wrapper);
+		Integer count = this.baseMapper.selectCount(wrapper);
+		return (count == 0 || count == null) ? true : this.remove(wrapper);
 	}
 	
 	@Override
@@ -83,8 +87,8 @@ public class GraphConfSnapshotServiceImpl extends
 			queryWrapper
 					.like("gcsg.subject_name", snapshotQo.getSubjectName());
 		}
-		Page<GraphConfSnapshotGroupBO> page = snapshotQo.getPage() == null ? new Page<>() : snapshotQo.getPage();
-		
+		Page<GraphConfSnapshotGroupBO> page =
+				snapshotQo.getPage() == null ? new Page<>() : snapshotQo.getPage();
 		
 		return this.baseMapper.selectByExample(page, queryWrapper);
 	}
@@ -96,7 +100,8 @@ public class GraphConfSnapshotServiceImpl extends
 			queryWrapper
 					.like("gcsg.subject_name", snapshotQo.getSubjectName());
 		}
-		Page<Map<String, Object>> page = snapshotQo.getPage() == null ? new Page<>() : snapshotQo.getPage();
+		Page<Map<String, Object>> page =
+				snapshotQo.getPage() == null ? new Page<>() : snapshotQo.getPage();
 		return this.baseMapper
 				.groupBySubjectName(page, queryWrapper);
 	}

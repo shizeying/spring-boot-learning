@@ -32,14 +32,14 @@ class MybatisPlusApplicationTests {
 				.setSubjectName("test")
 				.setGraphConfSnapshotId(1L);
 		//Assertions.assertTrue(service.saveOrUpdateBatch(Arrays.asList(group)));
-		//Assertions.assertTrue(service.deleteByGraphConfSnapshotIds(Arrays.asList(1L)));
+		Assertions.assertTrue(service.deleteSnapshot(Arrays.asList(100L)));
 		//IPage<Map<String, Object>> page = service.groupBySubjectName(new SearchSnapshotQo());
 		//List<Map<String, Object>> records = page.getRecords();
 		//System.out.println(records);
 		Page<Map<String, Object>> page =  new Page<Map<String, Object>>();
 		QueryWrapper queryWrapper = new QueryWrapper<>();
 		//System.out.println(JacksonUtil.bean2Json(mapper.groupBySubjectName(page, queryWrapper)));
-		System.out.println(JacksonUtil.bean2Json(service.search(new SearchSnapshotQo()).getPages()));
+		//System.out.println(JacksonUtil.bean2Json(service.search(new SearchSnapshotQo()).getPages()));
 		//System.out.println(mapper.groupBySubjectName2(page, queryWrapper));
 	}
 
