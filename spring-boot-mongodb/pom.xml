@@ -29,12 +29,11 @@
 			<version>${gson.version}</version>
 		</dependency>
 
-		<!--&lt;!&ndash; https://mvnrepository.com/artifact/org.mongodb/mongodb-driver &ndash;&gt;-->
-		<!--<dependency>-->
-		<!--	<groupId>org.mongodb</groupId>-->
-		<!--	<artifactId>mongodb-driver</artifactId>-->
-		<!--	<version>3.12.7</version>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>com.example</groupId>
+			<artifactId>spring-boot-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>com.hiekn</groupId>
 			<artifactId>mongo_driver</artifactId>
