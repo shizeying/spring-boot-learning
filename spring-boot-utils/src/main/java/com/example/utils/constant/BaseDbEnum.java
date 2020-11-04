@@ -2,6 +2,7 @@ package com.example.utils.constant;
 
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 public interface BaseDbEnum {
 	Integer getValue();
 	

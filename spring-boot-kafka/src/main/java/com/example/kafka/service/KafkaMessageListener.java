@@ -1,9 +1,7 @@
 package com.example.kafka.service;
 
-import com.example.kafka.service.ConsumerService;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -19,8 +17,8 @@ public class KafkaMessageListener {
 			groupId = "${spring.kafka.consumer.group-id}",
 			containerFactory = "kafkaListenerContainerFactory",
 			autoStartup = "true",
-			errorHandler = "listenErrorHandler" ,
-			topics = "${kafka.topic.elasticsearch-to-mongo}" 
+			errorHandler = "listenErrorHandler",
+			topics = "${kafka.topic.elasticsearch-to-mongo}"
 	)
 	public void listen(ConsumerRecord record,
 			Acknowledgment acknowledgment) {
@@ -30,7 +28,7 @@ public class KafkaMessageListener {
 				String value = kafkaMessage.get().value();
 				String key = kafkaMessage.get().key();
 				String clazzName = key.split("#")[1];
-
+				
 				//log.info("----------------- record ={}", record);
 				//log.info("------------------ value ={}", value);
 				//log.info("------------------ key ={}", key);
@@ -42,7 +40,7 @@ public class KafkaMessageListener {
 			acknowledgment.acknowledge();
 			log.info("消费成功");
 		}
-	
+		
 		
 	}
 	
