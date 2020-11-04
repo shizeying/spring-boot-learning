@@ -50,10 +50,7 @@ public class KafkaConsumerConfig {
         ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
         properties.getConsumer().getValueDeserializer());
  
-    //// 自动位移提交间隔时间
-    // props.put(
-    //    ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG,
-    //    properties.getConsumer().getAutoCommitInterval());
+    
     // 位移丢失和位移越界后的恢复起始位置
     props.put(
         ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, properties.getConsumer().getAutoOffsetReset());
