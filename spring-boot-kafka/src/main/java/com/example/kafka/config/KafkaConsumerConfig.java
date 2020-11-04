@@ -14,6 +14,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConsumerAwareListenerErrorHandler;
+import org.springframework.kafka.listener.ContainerProperties.AckMode;
 import org.springframework.kafka.listener.ListenerExecutionFailedException;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.Message;
@@ -27,8 +28,8 @@ public class KafkaConsumerConfig {
     ConcurrentKafkaListenerContainerFactory<String, Object> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
-    factory.setConcurrency(3);
-    factory.getContainerProperties().setPollTimeout(3000);
+    //设置偏移量
+    factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
     return factory;
   }
 
@@ -48,6 +49,7 @@ public class KafkaConsumerConfig {
     props.put(
         ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
         properties.getConsumer().getValueDeserializer());
+ 
     //// 自动位移提交间隔时间
     // props.put(
     //    ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG,
