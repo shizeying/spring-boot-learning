@@ -20,9 +20,10 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>com.example</groupId>
-			<artifactId>spring-boot-utils</artifactId>
+			<artifactId>spring-boot-swagger</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

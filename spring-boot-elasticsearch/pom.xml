@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>spring-boot-swagger</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- elasticsearch-rest-high-level-client -->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>

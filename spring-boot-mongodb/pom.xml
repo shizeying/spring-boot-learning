@@ -22,38 +22,20 @@
 	</properties>
 
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>${gson.version}</version>
-		</dependency>
+
 
 		<dependency>
 			<groupId>com.example</groupId>
-			<artifactId>spring-boot-utils</artifactId>
+			<artifactId>spring-boot-swagger</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
-			<groupId>com.hiekn</groupId>
-			<artifactId>mongo_driver</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.hiekn</groupId>
-			<artifactId>config_driver</artifactId>
-			<version>1.0</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
