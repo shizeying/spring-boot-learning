@@ -6,11 +6,10 @@
         <groupId>com.example</groupId>
         <artifactId>learning</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
     <artifactId>elasticsearch</artifactId>
-    <version>${parent.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
+<!--    <version>${parent.version}</version>-->
     <name>elasticsearch</name>
     <description>spring boot data for elasticsearch study</description>
 
