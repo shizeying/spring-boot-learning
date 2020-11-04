@@ -14,7 +14,6 @@ public class KafkaMessageListener {
 	
 	
 	@KafkaListener(
-			//groupId = "${spring.kafka.consumer.group-id}",
 			containerFactory = "kafkaListenerContainerFactory",
 			autoStartup = "true",
 			errorHandler = "listenErrorHandler",
