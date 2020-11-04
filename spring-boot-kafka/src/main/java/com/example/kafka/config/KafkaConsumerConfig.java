@@ -29,7 +29,7 @@ public class KafkaConsumerConfig {
         new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(consumerFactory());
     //设置偏移量
-    factory.getContainerProperties().setAckMode(AckMode.MANUAL_IMMEDIATE);
+    factory.getContainerProperties().setAckMode(properties.getListener().getAckMode());
     return factory;
   }
 
