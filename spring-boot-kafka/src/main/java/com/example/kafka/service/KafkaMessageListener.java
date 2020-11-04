@@ -14,7 +14,7 @@ public class KafkaMessageListener {
 	
 	
 	@KafkaListener(
-			groupId = "${spring.kafka.consumer.group-id}",
+			//groupId = "${spring.kafka.consumer.group-id}",
 			containerFactory = "kafkaListenerContainerFactory",
 			autoStartup = "true",
 			errorHandler = "listenErrorHandler",
@@ -22,6 +22,7 @@ public class KafkaMessageListener {
 	)
 	public void listen(ConsumerRecord record,
 			Acknowledgment acknowledgment) {
+		System.out.println(record);
 		try {
 			Optional<ConsumerRecord<String, String>> kafkaMessage = Optional.ofNullable(record);
 			if (kafkaMessage.isPresent()) {
@@ -29,9 +30,9 @@ public class KafkaMessageListener {
 				String key = kafkaMessage.get().key();
 				String clazzName = key.split("#")[1];
 				
-				//log.info("----------------- record ={}", record);
-				//log.info("------------------ value ={}", value);
-				//log.info("------------------ key ={}", key);
+				log.info("----------------- record ={}", record);
+				log.info("------------------ value ={}", value);
+				log.info("------------------ key ={}", key);
 			}
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);

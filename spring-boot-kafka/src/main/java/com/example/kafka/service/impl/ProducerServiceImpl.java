@@ -34,7 +34,7 @@ public class ProducerServiceImpl implements ProducerService {
       assertTrue( StringUtils.isNotBlank(reId),"reId不能为空");
 
       String json = JacksonUtil.bean2Json(data);
-      log.info("reId={}\nelasticsearch to mongo : {} ", reId, json);
+      //log.info("reId={}\nelasticsearch to mongo : {} ", reId, json);
       kafkaTemplate.send(topicProperties.getElasticsearchToMongo(), reId + "#" + className, json);
 
     } catch (Exception e) {
