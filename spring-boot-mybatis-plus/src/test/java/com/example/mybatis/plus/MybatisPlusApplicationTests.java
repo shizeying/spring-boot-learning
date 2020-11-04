@@ -1,15 +1,11 @@
 package com.example.mybatis.plus;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroup;
-import com.example.mybatis.plus.entity.SearchSnapshotQo;
+import com.example.mybatis.plus.entity.SnapshotGroup;
 import com.example.mybatis.plus.mapper.GraphConfSnapshotMapper;
-import com.example.mybatis.plus.service.GraphConfSnapshotService;
-import com.example.utils.config.JacksonUtil;
+import com.example.mybatis.plus.service.SnapshotService;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -19,7 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class MybatisPlusApplicationTests {
 	 @Autowired
-	 private GraphConfSnapshotService service;
+	 private SnapshotService service;
 	 @Autowired
 	 private GraphConfSnapshotMapper mapper;
 	@Test
@@ -27,7 +23,7 @@ class MybatisPlusApplicationTests {
 	}
 	@Test
 	public  void  setService(){
-		GraphConfSnapshotGroup group = new GraphConfSnapshotGroup()
+		SnapshotGroup group = new SnapshotGroup()
 				.setFocusEntityName("dfa")
 				.setSubjectName("test")
 				.setGraphConfSnapshotId(1L);

@@ -2,12 +2,10 @@ package com.example.mybatis.plus.service;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroup;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroupBO;
+import com.example.mybatis.plus.entity.SnapshotGroup;
+import com.example.mybatis.plus.entity.SnapshotGroupBO;
 import com.example.mybatis.plus.entity.SearchSnapshotQo;
-import com.example.mybatis.plus.entity.SnapshotGroupVO;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +13,7 @@ import java.util.Map;
  * @author hjh
  */
 @SuppressWarnings("ALL")
-public interface GraphConfSnapshotService extends IService<GraphConfSnapshotGroup> {
+public interface SnapshotService extends IService<SnapshotGroup> {
 	
 	/**
 	 * 删除快照收藏夹id
@@ -37,9 +35,9 @@ public interface GraphConfSnapshotService extends IService<GraphConfSnapshotGrou
 	 * 分组查询，支持快砸收藏夹和快照功能
 	 *
 	 * @param snapshotQo 问:快照
-	 * @return {@link List<GraphConfSnapshotGroupBO>}
+	 * @return {@link List< SnapshotGroupBO >}
 	 */
-	IPage<GraphConfSnapshotGroupBO> search(SearchSnapshotQo snapshotQo);
+	IPage<SnapshotGroupBO> search(SearchSnapshotQo snapshotQo);
 	
 	/**
 	 * 对收藏夹进行分组

@@ -16,5 +16,5 @@ import lombok.experimental.Accessors;
 public class SnapshotGroupVO {
 	
 	private Page<List<Map<String, Object>>> grouping;
-	private IPage<GraphConfSnapshotGroupBO> entities;
+	private IPage<SnapshotGroupBO> entities;
 }

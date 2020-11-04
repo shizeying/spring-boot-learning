@@ -5,9 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroup;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroupBO;
-import java.util.List;
+import com.example.mybatis.plus.entity.SnapshotGroup;
+import com.example.mybatis.plus.entity.SnapshotGroupBO;
 import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,7 +14,7 @@ import org.apache.ibatis.annotations.Select;
 
 @SuppressWarnings("ALL")
 @Mapper
-public interface GraphConfSnapshotMapper extends BaseMapper<GraphConfSnapshotGroup> {
+public interface GraphConfSnapshotMapper extends BaseMapper<SnapshotGroup> {
 	
 	
 	String querySql = "SELECT\n"
@@ -25,7 +24,6 @@ public interface GraphConfSnapshotMapper extends BaseMapper<GraphConfSnapshotGro
 			+ "       gcsg.focus_entity_name AS focus_entity_name,\n"
 			+ "       gcsg.id AS  id,\n"
 			+ "       gcsg.subject_name AS subject_name,\n"
-			+ "       gcs.kg_name AS kg_name,\n"
 			+ "       gcs.spa_id AS spa_id,\n"
 			+ "       gcs.snapshot_config AS  snapshot_config,\n"
 			+ "       gcs.create_at AS create_at,\n"
@@ -33,14 +31,14 @@ public interface GraphConfSnapshotMapper extends BaseMapper<GraphConfSnapshotGro
 			+ "       gcs.remark AS remark,\n"
 			+ "       gcs.name AS name\n"
 			+ "\n"
-			+ "from   kg_cloud_kgms.graph_conf_snapshot_group  gcsg\n"
-			+ "    left join kg_cloud_kgms.graph_conf_snapshot gcs ON gcsg.graph_conf_snapshot_id=gcs.id "
+			+ "from   group gcsg\n"
+			+ "    left join snapshot gcs ON gcsg.graph_conf_snapshot_id=gcs.id "
 			+ " ${ew.customSqlSegment}";
 	String queryByGroupSql = "SELECT "
 			+ " subject_name AS subjectName,"
 			+ "count(1) AS count"
 			+ " FROM "
-			+ " kg_cloud_kgms.graph_conf_snapshot_group "
+			+ " snapshot_group "
 			+ "GROUP BY  subject_name"
 			+ " ${ew.customSqlSegment}";
 	
@@ -49,10 +47,10 @@ public interface GraphConfSnapshotMapper extends BaseMapper<GraphConfSnapshotGro
 	 *
 	 * @param page    页面
 	 * @param wrapper 包装器
-	 * @return {@link Page<GraphConfSnapshotGroupBO>}
+	 * @return {@link Page< SnapshotGroupBO >}
 	 */
 	@Select(querySql)
-	IPage<GraphConfSnapshotGroupBO> selectByExample(
+	IPage<SnapshotGroupBO> selectByExample(
 			IPage page, @Param(Constants.WRAPPER) Wrapper wrapper);
 	
 	/**

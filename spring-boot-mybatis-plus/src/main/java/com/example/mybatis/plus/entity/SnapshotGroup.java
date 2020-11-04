@@ -18,26 +18,22 @@ import lombok.experimental.Accessors;
 @Data
 @ApiModel
 @Accessors(chain = true)
-public class GraphConfSnapshotGroup implements Serializable {
+public class SnapshotGroup implements Serializable {
 	
 	private static final long serialVersionUID = 6163369825048118489L;
 	/***
 	 * 分组id
 	 */
-	@ApiModelProperty("分组收藏夹id")
+	@ApiModelProperty("id")
 	@TableId(value = "id", type = IdType.AUTO)
-	
 	private Long id;
-	/**
-	 * 收藏夹名称
-	 */
 	@NotBlank
-	@ApiModelProperty("分组收藏夹名称")
+	@ApiModelProperty("收藏夹名称")
 	private String subjectName;
 	/**
 	 * 快照下子快照
 	 */
-	@ApiModelProperty("分组收藏夹下子快照id")
+	@ApiModelProperty("快照id")
 	private Long graphConfSnapshotId;
 	@ApiModelProperty("焦点实体")
 	private String focusEntityName;

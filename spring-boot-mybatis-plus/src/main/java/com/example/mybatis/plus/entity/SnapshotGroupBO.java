@@ -15,10 +15,9 @@ import lombok.experimental.Accessors;
 @ApiModel
 @Accessors(chain = true)
 @SuppressWarnings("ALL")
-public class GraphConfSnapshotGroupBO extends GraphConfSnapshotGroup implements Serializable {
+public class SnapshotGroupBO extends SnapshotGroup implements Serializable {
 	
-	@ApiModelProperty("图谱名称")
-	private String kgName;
+	
 	@ApiModelProperty("单页应用id")
 	private String spaId;
 	@ApiModelProperty("快照配置")

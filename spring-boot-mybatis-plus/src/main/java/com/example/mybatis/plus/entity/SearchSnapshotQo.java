@@ -13,7 +13,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class SearchSnapshotQo {
 	
-	private String kgName;
 	@ApiModelProperty("分组收藏夹名称")
 	private String subjectName;
 	@ApiModelProperty("焦点实体")

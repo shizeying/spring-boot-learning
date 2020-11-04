@@ -5,16 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroup;
-import com.example.mybatis.plus.entity.GraphConfSnapshotGroupBO;
+import com.example.mybatis.plus.entity.SnapshotGroup;
+import com.example.mybatis.plus.entity.SnapshotGroupBO;
 import com.example.mybatis.plus.entity.SearchSnapshotQo;
 import com.example.mybatis.plus.mapper.GraphConfSnapshotMapper;
-import com.example.mybatis.plus.service.GraphConfSnapshotService;
+import com.example.mybatis.plus.service.SnapshotService;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -26,55 +25,52 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @SuppressWarnings("ALL")
 @Transactional
-public class GraphConfSnapshotServiceImpl extends
-		ServiceImpl<GraphConfSnapshotMapper, GraphConfSnapshotGroup> implements
-		GraphConfSnapshotService {
+public class SnapshotServiceImpl extends
+		ServiceImpl<GraphConfSnapshotMapper, SnapshotGroup> implements
+		SnapshotService {
 	
 	private static final int FIRST_PAGE_NUM = 1;
 	
-	private static GraphConfSnapshotGroup apply(GraphConfSnapshotGroup entity) {
+	private static SnapshotGroup apply(SnapshotGroup entity) {
 		return entity.setCreateDate(
 				entity.getCreateDate() == null ? LocalDateTime.now() : entity.getUpdateDate())
 				.setUpdateDate(LocalDateTime.now());
 	}
 	
 	@Override
-	public boolean saveOrUpdateBatch(Collection<GraphConfSnapshotGroup> entityList, int batchSize) {
-		List<GraphConfSnapshotGroup> entities =
-				entityList.stream().map(GraphConfSnapshotServiceImpl::apply).collect(Collectors.toList());
+	public boolean saveOrUpdateBatch(Collection<SnapshotGroup> entityList, int batchSize) {
+		List<SnapshotGroup> entities =
+				entityList.stream().map(SnapshotServiceImpl::apply).collect(Collectors.toList());
 		return super.saveOrUpdateBatch(entities, batchSize);
 	}
 	
 	
 	@Override
 	public Boolean deleteSnapshot(List<Long> ids) {
-		LambdaQueryWrapper<GraphConfSnapshotGroup> wrapper = new LambdaQueryWrapper<>();
-		wrapper.in(GraphConfSnapshotGroup::getId, ids);
+		LambdaQueryWrapper<SnapshotGroup> wrapper = new LambdaQueryWrapper<>();
+		wrapper.in(SnapshotGroup::getId, ids);
 		Integer count = this.baseMapper.selectCount(wrapper);
 		return (count == 0 || count == null) ? true : removeByIds(ids);
 	}
 	
 	@Override
 	public Boolean deleteByGraphConfSnapshotIds(List<Long> graphConfSnapshotIds) {
-		LambdaQueryWrapper<GraphConfSnapshotGroup> wrapper = new LambdaQueryWrapper<>();
-		wrapper.in(GraphConfSnapshotGroup::getGraphConfSnapshotId, graphConfSnapshotIds);
+		LambdaQueryWrapper<SnapshotGroup> wrapper = new LambdaQueryWrapper<>();
+		wrapper.in(SnapshotGroup::getGraphConfSnapshotId, graphConfSnapshotIds);
 		Integer count = this.baseMapper.selectCount(wrapper);
 		return (count == 0 || count == null) ? true : this.remove(wrapper);
 	}
 	
 	@Override
-	public IPage<GraphConfSnapshotGroupBO> search(
+	public IPage<SnapshotGroupBO> search(
 			SearchSnapshotQo snapshotQo) {
-		QueryWrapper<GraphConfSnapshotGroupBO> queryWrapper = new QueryWrapper<>();
+		QueryWrapper<SnapshotGroupBO> queryWrapper = new QueryWrapper<>();
 		
 		if (StringUtils.isNotBlank(snapshotQo.getFocusEntityName())) {
 			queryWrapper
 					.like("gcsg.focus_entity_name", snapshotQo.getFocusEntityName());
 		}
-		if (StringUtils.isNotBlank(snapshotQo.getKgName())) {
-			queryWrapper
-					.like("gcs.kg_name", snapshotQo.getKgName());
-		}
+	
 		if (StringUtils.isNotBlank(snapshotQo.getName())) {
 			queryWrapper
 					.like("gcs.name", snapshotQo.getName());
@@ -87,7 +83,7 @@ public class GraphConfSnapshotServiceImpl extends
 			queryWrapper
 					.like("gcsg.subject_name", snapshotQo.getSubjectName());
 		}
-		Page<GraphConfSnapshotGroupBO> page =
+		Page<SnapshotGroupBO> page =
 				snapshotQo.getPage() == null ? new Page<>() : snapshotQo.getPage();
 		
 		return this.baseMapper.selectByExample(page, queryWrapper);
