@@ -14,6 +14,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
+/**
+ * @author shizeying
+ * @version 1.0.0
+ * @desc {@link SpringBootSwaggerApplication} spring引导大摇大摆的应用程序
+ * @date 2020/11/05
+ * @see ApplicationListener
+ * @since 1.0.0
+ */
 @Slf4j
 @EnableKnife4j
 @EnableSwagger2

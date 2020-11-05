@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.swagger.controller;
 
 import java.util.List;
 import lombok.AccessLevel;

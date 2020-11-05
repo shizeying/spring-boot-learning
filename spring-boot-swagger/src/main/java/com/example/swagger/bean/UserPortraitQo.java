@@ -1,4 +1,4 @@
-package com.example.bean;
+package com.example.swagger.bean;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
