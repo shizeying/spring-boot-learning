@@ -1,5 +1,7 @@
 package com.example.hive2es.elasticsearch.common;
 
+import static java.util.regex.Pattern.*;
+
 import com.example.hive2es.elasticsearch.config.RestClientConfig;
 import org.apache.commons.io.FileUtils;
 
@@ -8,7 +10,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ConversionUtils {
+public class ConversionUtils  {
 
     private static ConversionUtils conversionUtils;
 
@@ -43,7 +45,7 @@ public class ConversionUtils {
         line = String.valueOf(line.charAt(0)).toUpperCase()
                 .concat(line.substring(1));
         StringBuffer sb = new StringBuffer();
-        Pattern pattern = Pattern.compile("[A-Z]([a-z\\d]+)?");
+        Pattern pattern = compile("[A-Z]([a-z\\d]+)?");
         Matcher matcher = pattern.matcher(line);
         while (matcher.find()) {
             String word = matcher.group();

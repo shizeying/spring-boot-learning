@@ -17,6 +17,7 @@
   <description>spring boot learning</description>
   <packaging>pom</packaging>
   <properties>
+    <vavr.version>0.10.3</vavr.version>
     <java.version>1.8</java.version>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

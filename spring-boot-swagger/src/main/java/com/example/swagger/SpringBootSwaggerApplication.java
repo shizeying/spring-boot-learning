@@ -2,6 +2,7 @@ package com.example.swagger;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import java.net.InetAddress;
+import java.util.function.Function;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 /**
- * @author shizeying
+ * @author <a href="MAILTO: w741069229@gmail.com">shizeying</a>
  * @version 1.0.0
  * @desc {@link SpringBootSwaggerApplication} spring引导大摇大摆的应用程序
  * @date 2020/11/05
