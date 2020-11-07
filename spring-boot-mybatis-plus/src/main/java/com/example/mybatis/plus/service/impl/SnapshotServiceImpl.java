@@ -68,20 +68,20 @@ public class SnapshotServiceImpl extends
 		
 		if (StringUtils.isNotBlank(snapshotQo.getFocusEntityName())) {
 			queryWrapper
-					.like("gcsg.focus_entity_name", snapshotQo.getFocusEntityName());
+					.like("focus_entity_name", snapshotQo.getFocusEntityName());
 		}
 	
 		if (StringUtils.isNotBlank(snapshotQo.getName())) {
 			queryWrapper
-					.like("gcs.name", snapshotQo.getName());
+					.like("name", snapshotQo.getName());
 		}
 		if (StringUtils.isNotBlank(snapshotQo.getSpaId())) {
 			queryWrapper
-					.like("gcsg.spa_id", snapshotQo.getSpaId());
+					.like("spa_id", snapshotQo.getSpaId());
 		}
 		if (StringUtils.isNotBlank(snapshotQo.getSubjectName())) {
 			queryWrapper
-					.like("gcsg.subject_name", snapshotQo.getSubjectName());
+					.like("subject_name", snapshotQo.getSubjectName());
 		}
 		Page<SnapshotGroupBO> page =
 				snapshotQo.getPage() == null ? new Page<>() : snapshotQo.getPage();
