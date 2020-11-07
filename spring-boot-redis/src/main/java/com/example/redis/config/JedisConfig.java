@@ -9,6 +9,13 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 
+/**
+ * @author <a href="MAILTO: w741069229@gmail.com">shizeying</a>
+ * @version 1.0.0
+ * @des {@link JedisConfig} 能配置
+ * @date 2020/11/07
+ * @since 1.0.0
+ */
 @Component
 @Slf4j
 public class JedisConfig {

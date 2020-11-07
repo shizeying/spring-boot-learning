@@ -19,11 +19,12 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
- * @doc 复述, 配置
- * @desc TODO
+ * @author <a href="MAILTO: w741069229@gmail.com">shizeying</a>
  * @version 1.0.0
- * @author shizeying
- * @date 2020/08/30
+ * @des {@link RedisConfig} 复述,配置
+ * @date 2020/11/07
+ * @see CachingConfigurerSupport
+ * @since 1.0.0
  */
 @EnableCaching
 @Configuration
