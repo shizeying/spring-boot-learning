@@ -1,12 +1,14 @@
 package com.example.utils.config;
 
 
-import java.text.ParseException;
+import io.vavr.control.Try;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("ALL")
+@Slf4j
 public final class DateUtils {
 	
 	public static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
@@ -47,21 +49,21 @@ public final class DateUtils {
 	 *
 	 * @param date    日期
 	 * @param pattern 表达式
+	 *
 	 * @return Data
 	 */
 	public static Date parseDate(String date, String pattern) {
-		try {
-			return new SimpleDateFormat(pattern).parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return Try.of(() -> new SimpleDateFormat(pattern).parse(date))
+				.onFailure(error -> log.error("解析日期:[{}]", error.getCause()))
+				.get();
+		
 	}
 	
 	/**
 	 * 解析日期时间
 	 *
 	 * @param date date
+	 *
 	 * @return date
 	 */
 	public static Date parseDatetime(String date) {
@@ -73,6 +75,7 @@ public final class DateUtils {
 	 *
 	 * @param date1 date
 	 * @param date2 date
+	 *
 	 * @return date
 	 */
 	public static int dayDiff(Date date1, Date date2) {
@@ -84,6 +87,7 @@ public final class DateUtils {
 	 * 获取一个日期与当前时间相差的天数
 	 *
 	 * @param date date
+	 *
 	 * @return date
 	 */
 	public static int dayDiff(Date date) {
@@ -177,6 +181,7 @@ public final class DateUtils {
 	 * 获取某个日期所在月的天数
 	 *
 	 * @param date date
+	 *
 	 * @return date
 	 */
 	public static int getDaysOfMonth(Date date) {
@@ -191,6 +196,7 @@ public final class DateUtils {
 	 *
 	 * @param date1 date
 	 * @param date2 date
+	 *
 	 * @return date
 	 */
 	public static int monthDiff(Date date1, Date date2) {
@@ -203,6 +209,7 @@ public final class DateUtils {
 	 *
 	 * @param date1 date
 	 * @param date2 date
+	 *
 	 * @return date
 	 */
 	public static int minuteDiff(Date date1, Date date2) {
@@ -214,6 +221,7 @@ public final class DateUtils {
 	 * 获取某个日期的月份
 	 *
 	 * @param date date
+	 *
 	 * @return date
 	 */
 	public static int getMonthOfDate(Date date) {
@@ -226,6 +234,7 @@ public final class DateUtils {
 	 * 获取某个日期的年份
 	 *
 	 * @param date date
+	 *
 	 * @return date
 	 */
 	public static int getYearOfDate(Date date) {
@@ -238,6 +247,7 @@ public final class DateUtils {
 	 * 获取某个日期所在天的小时
 	 *
 	 * @param date date
+	 *
 	 * @return date
 	 */
 	public static int getHoursOfDay(Date date) {
@@ -252,6 +262,7 @@ public final class DateUtils {
 	 * @param date   date
 	 * @param field  x
 	 * @param amount s
+	 *
 	 * @return date
 	 */
 	public static Date add(Date date, int field, int amount) {
@@ -266,6 +277,7 @@ public final class DateUtils {
 	 *
 	 * @param date   date
 	 * @param amount s
+	 *
 	 * @return date
 	 */
 	public static Date addDays(Date date, int amount) {
@@ -277,6 +289,7 @@ public final class DateUtils {
 	 *
 	 * @param date   date
 	 * @param amount s
+	 *
 	 * @return date
 	 */
 	public static Date addMonths(Date date, int amount) {
@@ -288,6 +301,7 @@ public final class DateUtils {
 	 *
 	 * @param date   date
 	 * @param amount s
+	 *
 	 * @return date
 	 */
 	public static Date addHours(Date date, int amount) {
@@ -299,6 +313,7 @@ public final class DateUtils {
 	 *
 	 * @param date   date
 	 * @param amount s
+	 *
 	 * @return date
 	 */
 	public static Date addMinutes(Date date, int amount) {
@@ -310,6 +325,7 @@ public final class DateUtils {
 	 *
 	 * @param date   date
 	 * @param amount s
+	 *
 	 * @return date
 	 */
 	public static Date addSeconds(Date date, int amount) {
@@ -366,6 +382,7 @@ public final class DateUtils {
 	 * 获取一个时间的开始时间(00:00:00)
 	 *
 	 * @param timestamp 时间戳
+	 *
 	 * @return date
 	 */
 	public static Date getStartTimeOfDate(Long timestamp) {
@@ -379,6 +396,7 @@ public final class DateUtils {
 	 * 获取一个时间的结束时间(23:59:59)
 	 *
 	 * @param timestamp 时间戳
+	 *
 	 * @return date
 	 */
 	public static Date getEndTimeOfDate(Long timestamp) {

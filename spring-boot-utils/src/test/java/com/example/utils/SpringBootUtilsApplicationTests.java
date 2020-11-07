@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.io.FileUtils;
@@ -45,17 +46,17 @@ class SpringBootUtilsApplicationTests {
   //  }
 	private static ThreadLocalRandom random =
 			ThreadLocalRandom.current();
-  public static void main(String[] args) {
-		List<String> strings=new ArrayList<>();
-		strings.add("1");
-		strings.add("2");
-		strings.add("3");
-		strings.add("4");
-		strings.add("5");
-		strings.add("6");
-		String[] strings1 = {"1", "2", "90"};
-		List<String> strings2 = Arrays.stream(strings1).collect(Collectors.toList());
-		strings.removeAll(strings2);
-		System.out.println(strings);
+	public static void main(String[] args) {
+		Function<Integer, Integer> times2 = i -> i+1;
+		Function<Integer, Integer> squared = i -> i*i;
+		
+		//System.out.println(times2.apply(4));
+		//System.out.println(squared.apply(4));
+		
+		//System.out.println(times2.compose(squared).apply(3));  //32                先4×4然后16×2,
+		// 先执行apply(4)，在times2的apply(16),先执行参数，再执行调用者。
+		System.out.println(times2.andThen(squared).apply(4));  //64               先4×2,然后8×8,先执行times2的函数，在执行squared的函数。
+		
+		System.out.println(Function.identity().compose(squared).apply(4));   //16
 	}
 }

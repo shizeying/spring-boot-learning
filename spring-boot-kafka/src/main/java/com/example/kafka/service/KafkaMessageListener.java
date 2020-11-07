@@ -1,5 +1,6 @@
 package com.example.kafka.service;
 
+import io.vavr.control.Try;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -22,25 +23,20 @@ public class KafkaMessageListener {
 	public void listen(ConsumerRecord record,
 			Acknowledgment acknowledgment) {
 		System.out.println(record);
-		try {
-			Optional<ConsumerRecord<String, String>> kafkaMessage = Optional.ofNullable(record);
-			if (kafkaMessage.isPresent()) {
-				String value = kafkaMessage.get().value();
-				String key = kafkaMessage.get().key();
-				String clazzName = key.split("#")[1];
-				
-				log.info("----------------- record ={}", record);
-				log.info("------------------ value ={}", value);
-				log.info("------------------ key ={}", key);
-			}
-		} catch (Exception e) {
-			log.error(e.getMessage(), e);
-		} finally {
-			// 手动提交 offset
-			acknowledgment.acknowledge();
-			log.info("消费成功");
-		}
-		
+		Try.of(
+				() ->
+						Optional.ofNullable(record))
+				.filter(Optional::isPresent)
+				.map(Optional::get)
+				.onFailure(error -> log.error(error.getMessage(), error))
+				.andFinally(() -> {
+					acknowledgment.acknowledge();
+					log.info("消费成功");
+				})
+				.forEach(kafkaMessage -> {
+					String value = (String) kafkaMessage.key();
+					String key = (String) kafkaMessage.value();
+				});
 		
 	}
 	

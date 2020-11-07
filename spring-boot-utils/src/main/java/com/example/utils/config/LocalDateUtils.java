@@ -155,9 +155,4 @@ public class LocalDateUtils {
     return getDayNameOfWeek(dateToLocalDateTime(date));
   }
 
-  public static void main(String[] args) {
-    // System.out.println(getFirstDayOfMonth("2020-01", 0));
-    // System.out.println(getFirstDayOfMonth("2020-01", 1));
-    // System.out.println(parseDateByLocalDate("2019-01-15",PATTERN_YYYYMMDD));
-  }
 }
