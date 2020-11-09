@@ -37,7 +37,7 @@ class SpringBootUtilsApplicationTests {
 	public int removeDuplicates(int[] nums) {
 
 		
-		Long count = Stream.of(nums).distinct().count();
+		Long count = Stream.of(nums).count();
 		return count.intValue();
 		
 	}
