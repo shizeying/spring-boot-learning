@@ -31,6 +31,13 @@
 			<version>${vavr.version}</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/io.vavr/vavr-test -->
+		<dependency>
+			<groupId>io.vavr</groupId>
+			<artifactId>vavr-test</artifactId>
+			<version>${vavr.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!--IOUtils对IO操作的封装；FileUtils对文件操作类的封装-->
 		<dependency>

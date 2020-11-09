@@ -1,8 +1,10 @@
 package com.example.mongodb.service.impl;
 
 import com.example.mongodb.entity.UserPortrait;
+import com.example.mongodb.entity.UserPortraitEntity;
 import com.example.mongodb.service.UserPortraitOriginalService;
 import com.example.mongodb.utils.PageResult;
+import com.google.common.base.Functions;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -13,13 +15,21 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.InsertOneModel;
 import com.mongodb.client.model.WriteModel;
 import com.mongodb.client.result.UpdateResult;
+import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Function3;
+import io.vavr.Function4;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -29,7 +39,9 @@ import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Service;
 
 /** @author shizeying */
+@SuppressWarnings("ALL")
 @Service
+@Slf4j
 public class UserPortraitOriginalServiceImpl implements UserPortraitOriginalService {
 	
 	private static final String COLLECTION_NAME = "content";
@@ -106,24 +118,25 @@ public class UserPortraitOriginalServiceImpl implements UserPortraitOriginalServ
 						.getDatabase(DATA_BASENAME)
 						.withCodecRegistry(codecRegistry())
 						.getCollection(COLLECTION_NAME, UserPortrait.class);
+	
 		
-		Function3<Long, String, String, UserPortrait> function3 =
-				(ei, un, db) -> new UserPortrait()
+		
+		Function4<Long, String, String,String, UserPortrait> function3 =
+				(ei, un, db,annotate) -> new UserPortrait()
 						.setEntityId(ei)
 						.setUsername(un)
 						.setDatabaseName(db)
 						.setInsertTime(LocalDateTime.now())
-						.setUpdateTime(LocalDateTime.now());
+						.setUpdateTime(LocalDateTime.now())
+				.setToAnnotate(annotate);
+	Function<String,UserPortrait> function=	function3.apply(entityId, username, databaseName);
+		
 		Function2<String, UserPortrait, UserPortrait> function2 =
 				(toAnnotate, bean) -> bean.setToAnnotate(toAnnotate);
 		
 		List<WriteModel<UserPortrait>> writeModelList =
 				toAnnotates.stream()
-						.map(
-								toAnnotate -> function3
-										.andThen(w -> function2.apply(toAnnotate, w))
-										.apply(entityId, username, databaseName)
-						)
+						.map(function)
 						.map(InsertOneModel::new)
 						.collect(Collectors.toList());
 		
@@ -131,4 +144,30 @@ public class UserPortraitOriginalServiceImpl implements UserPortraitOriginalServ
 				.bulkWrite(writeModelList, new BulkWriteOptions().ordered(true))
 				.getInsertedCount();
 	}
+	
+	public static void main(String[] args) {
+		Long entityId=1L;
+		String username="test";
+		String databaseName="test2";
+		List<String> toAnnotates= Arrays.asList("tes1","test2","tes4");
+		Function4<Long, String, String,String, UserPortrait> function3 =
+				(ei, un, db,annotate) -> new UserPortrait()
+						.setEntityId(ei)
+						.setUsername(un)
+						.setDatabaseName(db)
+						.setInsertTime(LocalDateTime.now())
+						.setUpdateTime(LocalDateTime.now())
+						.setToAnnotate(annotate);
+		Function<String,UserPortrait> function=	function3.apply(entityId, username, databaseName);
+		
+		Function2<String, UserPortrait, UserPortrait> function2 =
+				(toAnnotate, bean) -> bean.setToAnnotate(toAnnotate);
+		toAnnotates.stream()
+				.map(function)
+				.forEach(System.out::println);
+		
+		Integer test=null;
+		System.out.println(Optional.ofNullable(test).filter(Objects::nonNull).orElse(20));
+	}
+	
 }

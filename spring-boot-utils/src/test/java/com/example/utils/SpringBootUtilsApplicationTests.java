@@ -1,7 +1,10 @@
 package com.example.utils;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Stopwatch;
+import io.vavr.Function1;
 import io.vavr.Function2;
 import io.vavr.Function4;
 import io.vavr.control.Either;
@@ -21,6 +24,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.commons.io.FileUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -47,16 +51,19 @@ class SpringBootUtilsApplicationTests {
 	private static ThreadLocalRandom random =
 			ThreadLocalRandom.current();
 	public static void main(String[] args) {
-		Function<Integer, Integer> times2 = i -> i+1;
-		Function<Integer, Integer> squared = i -> i*i;
-		
-		//System.out.println(times2.apply(4));
-		//System.out.println(squared.apply(4));
-		
-		//System.out.println(times2.compose(squared).apply(3));  //32                先4×4然后16×2,
-		// 先执行apply(4)，在times2的apply(16),先执行参数，再执行调用者。
-		System.out.println(times2.andThen(squared).apply(4));  //64               先4×2,然后8×8,先执行times2的函数，在执行squared的函数。
-		
-		System.out.println(Function.identity().compose(squared).apply(4));   //16
+		Function1<String, String> toUpper = String::toUpperCase;
+		Function1<String, String> trim = String::trim;
+		Function1<String, String> cheers = (s) -> String.format("Hello %s", s);
+		assertThat(trim
+				.andThen(toUpper)
+				.andThen(cheers)
+				.apply("   john")).isEqualTo("Hello JOHN");
+		Function1<String, String> composedCheer =
+				cheers.compose(trim).compose(toUpper);
+		System.out.println(trim
+				.andThen(toUpper)
+				.andThen(cheers)
+				.apply("   john"));
+		assertThat(composedCheer.apply(" steve ")).isEqualTo("Hello STEVE");
 	}
 }
