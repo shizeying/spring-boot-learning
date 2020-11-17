@@ -6,13 +6,11 @@ spring:
       port: 27017
       host: 127.0.0.1
       database: test
-      
+
 
 
 logging:
   level:
     org:
-      springframework:
-        data:
-          mongodb:
-            core: DEBUG
+      mongodb:
+        driver: debug
