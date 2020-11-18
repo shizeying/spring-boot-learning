@@ -10,7 +10,7 @@
     <artifactId>elasticsearch</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 <!--    <version>${parent.version}</version>-->
-    <name>elasticsearch</name>
+    <name>spring-boot-elasticsearch</name>
     <description>spring boot data for elasticsearch study</description>
 
     <properties>

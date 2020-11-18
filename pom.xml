@@ -13,7 +13,7 @@
   <groupId>com.example</groupId>
   <artifactId>learning</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>learning</name>
+  <name>spring-boot-learning</name>
   <description>spring boot learning</description>
   <packaging>pom</packaging>
   <properties>
@@ -72,7 +72,15 @@
     <mysql.version>5.1.47</mysql.version>
   </properties>
   <dependencyManagement>
+
     <dependencies>
+      <dependency>
+        <groupId>io.projectreactor</groupId>
+        <artifactId>reactor-bom</artifactId>
+        <version>Bismuth-RELEASE</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>com.github.xiaoymin</groupId>
         <artifactId>knife4j-dependencies</artifactId>
@@ -101,6 +109,7 @@
     <module>spring-boot-utils</module>
     <module>spring-boot-jython</module>
     <module>spring-boot-mybatis-plus</module>
+    <module>spring-boot-webflux</module>
   </modules>
 
 

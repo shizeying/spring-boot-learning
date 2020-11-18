@@ -10,7 +10,7 @@
 	</parent>
 	<packaging>jar</packaging>
 	<artifactId>mongodb</artifactId>
-	<name>mongodb</name>
+	<name>spring-boot-mongodb</name>
 	<version>1.0</version>
 	<description>Spring Boot learning mongodb</description>
 

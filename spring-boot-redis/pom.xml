@@ -12,7 +12,7 @@
 	<packaging>jar</packaging>
 	<artifactId>redis</artifactId>
 	<version>${parent.version}</version>
-	<name>redis</name>
+	<name>spring-boot-redis</name>
 	<description>spring boot redis study</description>
 
 	<properties>

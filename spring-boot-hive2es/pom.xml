@@ -11,7 +11,7 @@
 	</parent>
 	<artifactId>hive2es</artifactId>
 	<version>${parent.version}</version>
-	<name>hive2es</name>
+	<name>spring-boot-hive2es</name>
 	<description>native hive to es</description>
 
 

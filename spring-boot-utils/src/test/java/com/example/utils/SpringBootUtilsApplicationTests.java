@@ -61,8 +61,15 @@ class SpringBootUtilsApplicationTests {
 		Function1<String, String> composedCheer =
 				cheers.compose(trim).compose(toUpper);
 		System.out.println(trim
-				.andThen(toUpper)
-				.andThen(cheers)
+				.compose(toUpper)
+				.andThen(value->{
+					if (value.equals("JOHN")){
+						Exception exception = new Exception("JOHN is error");
+						return  exception.getMessage();
+					}
+					return  value;
+				})
+				//.andThen(cheers)
 				.apply("   john"));
 		assertThat(composedCheer.apply(" steve ")).isEqualTo("Hello STEVE");
 	}

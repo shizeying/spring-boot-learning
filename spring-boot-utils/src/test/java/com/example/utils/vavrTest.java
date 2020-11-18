@@ -48,7 +48,11 @@ public class vavrTest {
 		Function1<Integer, Integer> plusOne = a -> a + 1;
 		Function1<Integer, Integer> multiplyByTwo = a -> a * 2;
 		
-		Function1<Integer, Integer> add1AndMultiplyBy2 = plusOne.andThen(multiplyByTwo);
+		Function1<Integer, Integer> add1AndMultiplyBy2 = plusOne
+				.andThen(multiplyByTwo)
+				
+				
+				;
 		
 		then(add1AndMultiplyBy2.apply(2)).isEqualTo(6);
 		Arbitrary<Integer> ints = Arbitrary.integer();
