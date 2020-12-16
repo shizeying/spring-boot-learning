@@ -1,21 +1,19 @@
 package com.example.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.BDDAssertions.then;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import io.vavr.Function0;
-import io.vavr.Function1;
-import io.vavr.Function2;
-import io.vavr.Function4;
-import io.vavr.Tuple;
-import io.vavr.Tuple2;
+import io.vavr.*;
 import io.vavr.collection.Queue;
 import io.vavr.control.Option;
 import io.vavr.test.Arbitrary;
 import io.vavr.test.Property;
-import java.util.Optional;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class vavrTest {
 	
@@ -96,6 +94,37 @@ public class vavrTest {
 		assertThat(add1MultiplyBy2AndSubtract2.apply(3).intValue())
 				.isEqualTo(8);
 	}
+	@Test
+	void setFlatMap(){
+		List<TestEntity> testEntities=new ArrayList<>();
+
+	for (Integer i=0;i<100;i++){
+		TestEntity build = TestEntity
+				.builder()
+				.id(i.longValue())
+				.name("张三" + i)
+				.count((i.longValue() * 2))
+				.build();
+
+		testEntities.add(build);
+
+	}
+		io.vavr.collection.List<Tuple2<Long, io.vavr.collection.List<TestEntity>>> tuple2s = io.vavr.collection.List
+				                                                                  .ofAll(testEntities)
+				                                                                  .groupBy(TestEntity::getId)
+		
+				                                                                  .toList();
+		io.vavr.collection.List<TestEntity> entities = tuple2s
+				                                 .map(Tuple2::_2)
+				                                 .flatMap(t -> t)
+				                                 .toList();
+		io.vavr.collection.List<io.vavr.collection.List<TestEntity>> test= io.vavr.collection.List.of(entities);
+		List<TestEntity> testEntities1 = test
+				                                 .flatMap(t -> t)
+				                                 .toJavaList();
+		
+		
+	}
 	
 	/**
 	 * @author: <a href="MAILTO: w741069229@gmail.com">shizeying</a>
@@ -108,10 +137,11 @@ public class vavrTest {
 		Function2<Integer, Integer, Integer> divide = (x, y) -> x / y;
 		
 		//ArithmeticException will be thrown
-		//Integer result = divide.apply(5, 0);
+		//Integer result = divide.apply(5, 0);                                                                        
 		
 		Function2<Integer, Integer, Option<Integer>> safeDivide
-				= Function2.lift(divide);
+				= Function2
+						  .lift(divide);
 		
 		Option<Integer> result = safeDivide.apply(10, 0);
 		Option<Integer> noResult = safeDivide.apply(10, 0);

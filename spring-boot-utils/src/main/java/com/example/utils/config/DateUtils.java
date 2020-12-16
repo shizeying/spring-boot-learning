@@ -2,10 +2,11 @@ package com.example.utils.config;
 
 
 import io.vavr.control.Try;
+import lombok.extern.slf4j.Slf4j;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import lombok.extern.slf4j.Slf4j;
 
 @SuppressWarnings("ALL")
 @Slf4j
@@ -47,22 +48,25 @@ public final class DateUtils {
 	/**
 	 * 解析日期
 	 *
-	 * @param date    日期
-	 * @param pattern 表达式
+	 * @param date
+	 * 		日期
+	 * @param pattern
+	 * 		表达式
 	 *
 	 * @return Data
 	 */
 	public static Date parseDate(String date, String pattern) {
 		return Try.of(() -> new SimpleDateFormat(pattern).parse(date))
-				.onFailure(error -> log.error("解析日期:[{}]", error.getCause()))
-				.get();
+				       .onFailure(error -> log.error("解析日期:[{}]", error.getCause()))
+				       .get();
 		
 	}
 	
 	/**
 	 * 解析日期时间
 	 *
-	 * @param date date
+	 * @param date
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -73,8 +77,10 @@ public final class DateUtils {
 	/**
 	 * 获取两个日期相差的天数
 	 *
-	 * @param date1 date
-	 * @param date2 date
+	 * @param date1
+	 * 		date
+	 * @param date2
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -86,7 +92,8 @@ public final class DateUtils {
 	/**
 	 * 获取一个日期与当前时间相差的天数
 	 *
-	 * @param date date
+	 * @param date
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -99,7 +106,8 @@ public final class DateUtils {
 	/**
 	 * 设置时间部分到开始时刻
 	 *
-	 * @param calendar s
+	 * @param calendar
+	 * 		s
 	 */
 	public static void setTime2Start(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -111,7 +119,8 @@ public final class DateUtils {
 	/**
 	 * 设置时间部分到结束时刻
 	 *
-	 * @param calendar 设置时间部分到结束时刻
+	 * @param calendar
+	 * 		设置时间部分到结束时刻
 	 */
 	public static void setTime2End(Calendar calendar) {
 		calendar.set(Calendar.HOUR_OF_DAY, 23);
@@ -180,7 +189,8 @@ public final class DateUtils {
 	/**
 	 * 获取某个日期所在月的天数
 	 *
-	 * @param date date
+	 * @param date
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -194,8 +204,10 @@ public final class DateUtils {
 	/**
 	 * 两个时间相差的月份
 	 *
-	 * @param date1 date
-	 * @param date2 date
+	 * @param date1
+	 * 		date
+	 * @param date2
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -207,8 +219,10 @@ public final class DateUtils {
 	/**
 	 * 获取两个日期相差的秒数
 	 *
-	 * @param date1 date
-	 * @param date2 date
+	 * @param date1
+	 * 		date
+	 * @param date2
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -220,7 +234,8 @@ public final class DateUtils {
 	/**
 	 * 获取某个日期的月份
 	 *
-	 * @param date date
+	 * @param date
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -233,7 +248,8 @@ public final class DateUtils {
 	/**
 	 * 获取某个日期的年份
 	 *
-	 * @param date date
+	 * @param date
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -246,7 +262,8 @@ public final class DateUtils {
 	/**
 	 * 获取某个日期所在天的小时
 	 *
-	 * @param date date
+	 * @param date
+	 * 		date
 	 *
 	 * @return date
 	 */
@@ -259,9 +276,12 @@ public final class DateUtils {
 	/**
 	 * 日期加减
 	 *
-	 * @param date   date
-	 * @param field  x
-	 * @param amount s
+	 * @param date
+	 * 		date
+	 * @param field
+	 * 		x
+	 * @param amount
+	 * 		s
 	 *
 	 * @return date
 	 */
@@ -275,8 +295,10 @@ public final class DateUtils {
 	/**
 	 * 日期天数加减
 	 *
-	 * @param date   date
-	 * @param amount s
+	 * @param date
+	 * 		date
+	 * @param amount
+	 * 		s
 	 *
 	 * @return date
 	 */
@@ -287,8 +309,10 @@ public final class DateUtils {
 	/**
 	 * 日期月份加减
 	 *
-	 * @param date   date
-	 * @param amount s
+	 * @param date
+	 * 		date
+	 * @param amount
+	 * 		s
 	 *
 	 * @return date
 	 */
@@ -299,8 +323,10 @@ public final class DateUtils {
 	/**
 	 * 加减小时
 	 *
-	 * @param date   date
-	 * @param amount s
+	 * @param date
+	 * 		date
+	 * @param amount
+	 * 		s
 	 *
 	 * @return date
 	 */
@@ -311,8 +337,10 @@ public final class DateUtils {
 	/**
 	 * 加减分钟
 	 *
-	 * @param date   date
-	 * @param amount s
+	 * @param date
+	 * 		date
+	 * @param amount
+	 * 		s
 	 *
 	 * @return date
 	 */
@@ -323,8 +351,10 @@ public final class DateUtils {
 	/**
 	 * 加减秒
 	 *
-	 * @param date   date
-	 * @param amount s
+	 * @param date
+	 * 		date
+	 * @param amount
+	 * 		s
 	 *
 	 * @return date
 	 */
@@ -381,7 +411,8 @@ public final class DateUtils {
 	/**
 	 * 获取一个时间的开始时间(00:00:00)
 	 *
-	 * @param timestamp 时间戳
+	 * @param timestamp
+	 * 		时间戳
 	 *
 	 * @return date
 	 */
@@ -395,7 +426,8 @@ public final class DateUtils {
 	/**
 	 * 获取一个时间的结束时间(23:59:59)
 	 *
-	 * @param timestamp 时间戳
+	 * @param timestamp
+	 * 		时间戳
 	 *
 	 * @return date
 	 */
