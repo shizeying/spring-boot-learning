@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.then;
@@ -27,15 +29,16 @@ public class vavrTest {
 		Optional<String> maybeFoo = Optional.of("foo");
 		then(maybeFoo.get()).isEqualTo("foo");
 		Optional<String> maybeFooBar = maybeFoo.map(s -> (String) null)
-				.map(s -> s.toUpperCase() + "bar");
+				                               .map(s -> s.toUpperCase() + "bar");
 		System.out.println(maybeFooBar.isPresent());
 		then(maybeFooBar.isPresent()).isFalse();
 	}
+	
 	@Test
-	public  void  setQueue(){
+	public void setQueue() {
 		Queue<Integer> queue = Queue.of(1, 3, 2)
-				.enqueue(5)
-				.enqueue(4);
+				                       .enqueue(5)
+				                       .enqueue(4);
 		System.out.println(queue.get());
 	}
 	
@@ -47,10 +50,7 @@ public class vavrTest {
 		Function1<Integer, Integer> multiplyByTwo = a -> a * 2;
 		
 		Function1<Integer, Integer> add1AndMultiplyBy2 = plusOne
-				.andThen(multiplyByTwo)
-				
-				
-				;
+				                                                 .andThen(multiplyByTwo);
 		
 		then(add1AndMultiplyBy2.apply(2)).isEqualTo(6);
 		Arbitrary<Integer> ints = Arbitrary.integer();
@@ -94,34 +94,39 @@ public class vavrTest {
 		assertThat(add1MultiplyBy2AndSubtract2.apply(3).intValue())
 				.isEqualTo(8);
 	}
+	
 	@Test
-	void setFlatMap(){
-		List<TestEntity> testEntities=new ArrayList<>();
-
-	for (Integer i=0;i<100;i++){
-		TestEntity build = TestEntity
-				.builder()
-				.id(i.longValue())
-				.name("张三" + i)
-				.count((i.longValue() * 2))
-				.build();
-
-		testEntities.add(build);
-
-	}
-		io.vavr.collection.List<Tuple2<Long, io.vavr.collection.List<TestEntity>>> tuple2s = io.vavr.collection.List
-				                                                                  .ofAll(testEntities)
-				                                                                  .groupBy(TestEntity::getId)
+	void setFlatMap() {
+		List<TestEntity> testEntities = new ArrayList<>();
 		
-				                                                                  .toList();
+		for (Integer i = 0; i < 100; i++) {
+			TestEntity build = TestEntity
+					                   .builder()
+					                   .id(i.longValue())
+					                   .name("张三" + i)
+					                   .count((i.longValue() * 2))
+					                   .build();
+			
+			testEntities.add(build);
+			
+		}
+		io.vavr.collection.List<Tuple2<Long, io.vavr.collection.List<TestEntity>>> tuple2s = io.vavr.collection.List
+				                                                                                     .ofAll(testEntities)
+				                                                                                     .groupBy(TestEntity::getId)
+				
+				                                                                                     .toList();
 		io.vavr.collection.List<TestEntity> entities = tuple2s
-				                                 .map(Tuple2::_2)
-				                                 .flatMap(t -> t)
-				                                 .toList();
-		io.vavr.collection.List<io.vavr.collection.List<TestEntity>> test= io.vavr.collection.List.of(entities);
-		List<TestEntity> testEntities1 = test
-				                                 .flatMap(t -> t)
-				                                 .toJavaList();
+				                                               .map(Tuple2::_2)
+				                                               .flatMap(t -> t)
+				                                               .toList();
+		io.vavr.collection.List<io.vavr.collection.List<TestEntity>> test = io.vavr.collection.List.of(entities);
+		Set<Integer> collect = test
+				                       .flatMap(t -> t)
+				                       .map(TestEntity::getId)
+				                       .toJavaStream()
+				                       .mapToInt(Long::intValue)
+				                       .boxed()
+				                       .collect(Collectors.toSet());
 		
 		
 	}
