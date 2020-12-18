@@ -110,6 +110,7 @@
     <module>spring-boot-jython</module>
     <module>spring-boot-mybatis-plus</module>
     <module>spring-boot-webflux</module>
+    <module>word-transform-pdf-start</module>
   </modules>
 
 
