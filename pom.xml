@@ -70,6 +70,7 @@
     <swagger-bootstrap-ui>1.9.6</swagger-bootstrap-ui>
     <mybatis-plus.version>3.1.1</mybatis-plus.version>
     <mysql.version>5.1.47</mysql.version>
+    <documents4j.version>1.1.5</documents4j.version>
   </properties>
   <dependencyManagement>
 

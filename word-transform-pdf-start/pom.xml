@@ -21,7 +21,47 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-api</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.documents4j/documents4j-transformer-api -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-transformer-api</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.documents4j/documents4j-util-conversion -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-util-conversion</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.documents4j/documents4j-transformer-msoffice-excel -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-transformer-msoffice-excel</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.documents4j/documents4j-transformer-msoffice-word -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-transformer-msoffice-word</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.documents4j/documents4j-client -->
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-client</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.documents4j</groupId>
+            <artifactId>documents4j-local</artifactId>
+            <version>${documents4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-configuration-processor</artifactId>
@@ -36,6 +76,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${vavr.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -60,5 +105,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
