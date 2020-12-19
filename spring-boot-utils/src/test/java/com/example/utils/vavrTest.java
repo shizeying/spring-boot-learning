@@ -72,7 +72,9 @@ public class vavrTest {
 	@Test
 	void andThenComposition() {
 		Function1<Integer, Integer> add1MultiplyBy2AndSubtract2
-				= plusTwo.andThen(multiplyByTwo).andThen(minusTwo);
+				= plusTwo
+						  .andThen(multiplyByTwo)
+						  .andThen(minusTwo);
 		
 		System.out.println((add1MultiplyBy2AndSubtract2.apply(3)));
 		assertThat(add1MultiplyBy2AndSubtract2.apply(3).intValue())
