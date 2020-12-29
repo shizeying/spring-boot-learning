@@ -68,7 +68,7 @@
     <knife4j.version>2.0.4</knife4j.version>
     <spring.swagger.version>2.9.2</spring.swagger.version>
     <swagger-bootstrap-ui>1.9.6</swagger-bootstrap-ui>
-    <mybatis-plus.version>3.1.1</mybatis-plus.version>
+    <mybatis-plus.version>3.4.0</mybatis-plus.version>
     <mysql.version>5.1.47</mysql.version>
     <documents4j.version>1.1.5</documents4j.version>
   </properties>
@@ -112,6 +112,7 @@
     <module>spring-boot-mybatis-plus</module>
     <module>spring-boot-webflux</module>
     <module>word-transform-pdf-start</module>
+    <module>spring-boot-mybatis-plus-typehandle</module>
   </modules>
 
 
