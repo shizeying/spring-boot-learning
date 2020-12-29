@@ -19,7 +19,8 @@ import java.util.Objects;
 @MappedJdbcTypes({JdbcType.JAVA_OBJECT})
 @MappedTypes({Map.class})
 public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
-	
+	private MapTypeHandler() {
+	}
 	/**
 	 * 用于定义在Mybatis设置参数时该如何把Java类型的参数转换为对应的数据库类型
 	 *
@@ -35,10 +36,11 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	 * @throws SQLException
 	 */
 	@Override
-	public void setNonNullParameter(PreparedStatement ps, int i, Map<String, Object> parameter, JdbcType jdbcType) throws
-			SQLException {
-		
+	public void setNonNullParameter(PreparedStatement ps, int i, Map<String, Object> parameter, JdbcType jdbcType) {
+	     log.info("不需要");
 	}
+	
+
 	
 	/**
 	 * 用于在Mybatis获取数据结果集时如何把数据库类型转换为对应的Java类型
@@ -81,7 +83,8 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	@Override
 	public Map<String, Object> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		log.info("getNullableResult2");
-		return getStringObjectMap(columnIndex, rs.getObject(columnIndex), rs.getMetaData(), cs);
+
+		return getStringObjectMap(columnIndex, rs.getObject(columnIndex), rs.getMetaData());
 	}
 	
 	/**
@@ -99,10 +102,10 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	@Override
 	public Map<String, Object> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		log.info("getNullableResult3");
-		return getStringObjectMap(columnIndex, cs.getObject(columnIndex), cs.getMetaData(), cs);
+		return getStringObjectMap(columnIndex, cs.getObject(columnIndex), cs.getMetaData());
 	}
 	
-	private Map<String, Object> getStringObjectMap(int columnIndex, Object object, ResultSetMetaData metaData, CallableStatement cs) throws
+	private Map<String, Object> getStringObjectMap(int columnIndex, Object object, ResultSetMetaData metaData) throws
 			SQLException {
 		Object value = object;
 		String columnName = metaData.getColumnName(columnIndex);
