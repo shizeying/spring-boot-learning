@@ -2,6 +2,7 @@ package com.example.typehandle.handle;
 
 
 import com.google.common.collect.Maps;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
@@ -21,6 +22,7 @@ import java.util.Objects;
 public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	private MapTypeHandler() {
 	}
+	
 	/**
 	 * 用于定义在Mybatis设置参数时该如何把Java类型的参数转换为对应的数据库类型
 	 *
@@ -37,10 +39,9 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	 */
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i, Map<String, Object> parameter, JdbcType jdbcType) {
-	     log.info("不需要");
+		log.info("不需要");
 	}
 	
-
 	
 	/**
 	 * 用于在Mybatis获取数据结果集时如何把数据库类型转换为对应的Java类型
@@ -58,10 +59,10 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	public Map<String, Object> getNullableResult(ResultSet rs, String columnName) throws SQLException {
 		log.info("getNullableResult1");
 		Object value = rs.getObject(columnName);
-	
+		
 		Map<String, Object> map = Maps.newHashMap();
 		
-		if (Objects.nonNull(value)){
+		if (Objects.nonNull(value)) {
 			map.put(columnName, value);
 			
 		}
@@ -83,7 +84,7 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	@Override
 	public Map<String, Object> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		log.info("getNullableResult2");
-
+		
 		return getStringObjectMap(columnIndex, rs.getObject(columnIndex), rs.getMetaData());
 	}
 	
@@ -105,13 +106,14 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 		return getStringObjectMap(columnIndex, cs.getObject(columnIndex), cs.getMetaData());
 	}
 	
-	private Map<String, Object> getStringObjectMap(int columnIndex, Object object, ResultSetMetaData metaData) throws
-			SQLException {
-		Object value = object;
-		String columnName = metaData.getColumnName(columnIndex);
+	private Map<String, Object> getStringObjectMap(int columnIndex, Object object, ResultSetMetaData metaData) {
+		String columnName = Try
+				                    .of(() -> metaData.getColumnName(columnIndex))
+				                    .onFailure(Throwable::printStackTrace)
+				                    .get();
 		Map<String, Object> map = Maps.newHashMap();
-		if (Objects.nonNull(value)){
-			map.put(columnName, value);
+		if (Objects.nonNull(object)) {
+			map.put(columnName, object);
 			
 		}
 		return map;
