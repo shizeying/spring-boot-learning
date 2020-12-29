@@ -8,10 +8,7 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 
-import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Map;
 import java.util.Objects;
 
@@ -84,14 +81,7 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	@Override
 	public Map<String, Object> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
 		log.info("getNullableResult2");
-		Object value = rs.getObject(columnIndex);
-		String columnName = rs.getMetaData().getColumnName(columnIndex);
-		Map<String, Object> map = Maps.newHashMap();
-		if (Objects.nonNull(value)){
-			map.put(columnName, value);
-			
-		}
-		return map;
+		return getStringObjectMap(columnIndex, rs.getObject(columnIndex), rs.getMetaData(), cs);
 	}
 	
 	/**
@@ -109,8 +99,13 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	@Override
 	public Map<String, Object> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
 		log.info("getNullableResult3");
-		Object value = cs.getObject(columnIndex);
-		String columnName = cs.getMetaData().getColumnName(columnIndex);
+		return getStringObjectMap(columnIndex, cs.getObject(columnIndex), cs.getMetaData(), cs);
+	}
+	
+	private Map<String, Object> getStringObjectMap(int columnIndex, Object object, ResultSetMetaData metaData, CallableStatement cs) throws
+			SQLException {
+		Object value = object;
+		String columnName = metaData.getColumnName(columnIndex);
 		Map<String, Object> map = Maps.newHashMap();
 		if (Objects.nonNull(value)){
 			map.put(columnName, value);
