@@ -100,6 +100,7 @@ public class BeanUtils<E extends BasicEntity> {
 				       .filter(field -> field.isAnnotationPresent(annotationClass))
 				       .map(field -> toMap(field, javaBean, annotationClass))
 				       .flatMap(i -> i)
+				       .filter(tuple -> Objects.nonNull(tuple._2))
 				       .distinct()
 				       .toJavaMap(HashMap::new, Tuple2::_1, Tuple2::_2);
 	}
