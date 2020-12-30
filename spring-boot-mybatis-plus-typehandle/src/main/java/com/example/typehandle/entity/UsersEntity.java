@@ -19,13 +19,13 @@ import java.util.Map;
 @NoArgsConstructor
 @Data
 @Builder
-public class UsersEntity {
-    private Long id;
-    private String name;
-    private Map<String, Object> map = Maps.newHashMap();
-
-
-    public void setMap(Map<String, Object> map) {
-        this.map.putAll(map);
-    }
+public class UsersEntity extends BasicEntity {
+	
+	
+	private Map<String, Object> map = Maps.newHashMap();
+	
+	
+	public void setMap(Map<String, Object> map) {
+		this.map.putAll(map);
+	}
 }
