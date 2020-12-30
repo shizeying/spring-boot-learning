@@ -82,7 +82,7 @@ public class BeanUtils<E extends BasicEntity> {
 	 * @throws IllegalAccessException
 	 * 		非法访问异常
 	 */
-	public Map<String, Object> javaBean2Map(E javaBean, Class<? extends Annotation> annotationClass) throws IllegalAccessException {
+	public Map<String, Object> javaBean2Map(E javaBean, Class<? extends Annotation> annotationClass) {
 		if (Objects.isNull(javaBean)) {
 			return Maps.newHashMap();
 		}
@@ -108,7 +108,7 @@ public class BeanUtils<E extends BasicEntity> {
 	private io.vavr.collection.List<Tuple2<String, Object>> toMap(Field field, E javaBean, Class<? extends Annotation> clazz) {
 		PropertyDescriptor pd = Try
 				                        .of(() -> new PropertyDescriptor(field.getName(), javaBean.getClass()))
-				                        .onFailure(Throwable::printStackTrace)
+				                        .onFailure( Throwable::printStackTrace)
 				                        .get();
 		
 		return Try
