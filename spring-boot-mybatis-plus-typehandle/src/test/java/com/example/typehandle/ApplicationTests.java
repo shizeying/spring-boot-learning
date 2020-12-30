@@ -21,10 +21,9 @@ class ApplicationTests {
 	void contextLoads() {
 	}
 	@Test
-	void setUserService() throws IllegalAccessException {
-		TestUsersEntity testUsersEntity = new TestUsersEntity();
-		testUsersEntity.setId(1L);
-		testUsersEntity.setName("teset");
+	void setUserService()  {
+		TestUsersEntity testUsersEntity = testUsersService.find().get(0);
+		System.out.println(testUsersEntity.toString());
 		Map<String, Object> map = beanUtils.javaBean2Map(testUsersEntity, ToMap.class);
 		System.out.println(map);
 	}
