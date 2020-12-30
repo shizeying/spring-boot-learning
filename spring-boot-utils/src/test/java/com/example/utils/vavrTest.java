@@ -1,10 +1,26 @@
 package com.example.utils;
 
 import io.vavr.*;
+import static io.vavr.API.$;
+import static io.vavr.API.Case;
+import static io.vavr.API.Match;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.BDDAssertions.then;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import io.vavr.Function0;
+import io.vavr.Function1;
+import io.vavr.Function2;
+import io.vavr.Function3;
+import io.vavr.Function4;
+import io.vavr.Tuple;
+import io.vavr.Tuple2;
 import io.vavr.collection.Queue;
 import io.vavr.control.Option;
 import io.vavr.test.Arbitrary;
 import io.vavr.test.Property;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -23,6 +39,13 @@ public class vavrTest {
 	Function1<Integer, Integer> plusTwo = a -> a + 2;
 	Function1<Integer, Integer> multiplyByTwo = a -> a * 2;
 	Function1<Integer, Integer> minusTwo = a -> a - 2;
+	Function3<Long,Integer,Integer,Integer> function3= (a,b,c)->a.intValue()+b+c;
+	
+	@Test
+	public void setFunction3(){
+		Function1<Integer, Integer> function1 = function3.curried().apply(1L).apply(2);
+		System.out.println(function1.apply(1));
+	}
 	
 	@Test
 	public void setOptional() {
@@ -144,7 +167,7 @@ public class vavrTest {
 		Function2<Integer, Integer, Integer> divide = (x, y) -> x / y;
 		
 		//ArithmeticException will be thrown
-		//Integer result = divide.apply(5, 0);                                                                        
+		//Integer result = divide.apply(5, 0);
 		
 		Function2<Integer, Integer, Option<Integer>> safeDivide
 				= Function2
@@ -219,6 +242,17 @@ public class vavrTest {
 		then(add2.apply(4L)).isEqualTo(6);
 	}
 	
+	@Test
+	public void setMatch(){
+		String input = "g";
+		List<String> strings=new ArrayList<>();
+		String result = Match(input).of(
+				Case($("g"), "good"),
+				Case($("b"), "bad"),
+				Case($(), "unknown")
+		);
+		System.out.println(result);
+	}
 }
 
 

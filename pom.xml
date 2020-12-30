@@ -45,9 +45,6 @@
     <redis_driver.version>2.0</redis_driver.version>
     <mongo_driver.version>2.0</mongo_driver.version>
     <db_driver.version>2.0</db_driver.version>
-    <save_util.version>3.4.0-SNAPSHOT</save_util.version>
-    <data_util.version>3.4.0-SNAPSHOT</data_util.version>
-    <kgms_bean.version>3.4.0-SNAPSHOT</kgms_bean.version>
     <scala.version>2.10.5</scala.version>
     <log.version>1.7.30</log.version>
     <jackjson.version>2.8.8</jackjson.version>

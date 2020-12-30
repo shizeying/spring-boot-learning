@@ -1,10 +1,7 @@
 package com.example.typehandle.entity;
 
 import com.google.common.collect.Maps;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Map;
 
@@ -15,15 +12,19 @@ import java.util.Map;
  * @author shizeying
  * @date 2020/12/29
  */
-@AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @Data
-@Builder
 public class UsersEntity extends BasicEntity {
 	
 	
 	private Map<String, Object> map = Maps.newHashMap();
 	
+	@Builder
+	public UsersEntity(Long id, String name, Map<String, Object> map) {
+		super(id, name);
+		this.map = map;
+	}
 	
 	public void setMap(Map<String, Object> map) {
 		this.map.putAll(map);
