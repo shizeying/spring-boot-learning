@@ -20,7 +20,7 @@ import java.util.Objects;
 @MappedJdbcTypes({JdbcType.JAVA_OBJECT})
 @MappedTypes({Map.class})
 public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
-	private MapTypeHandler() {
+	public MapTypeHandler() {
 	}
 	
 	/**
@@ -56,9 +56,13 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	 * @throws SQLException
 	 */
 	@Override
-	public Map<String, Object> getNullableResult(ResultSet rs, String columnName) throws SQLException {
+	public Map<String, Object> getNullableResult(ResultSet rs, String columnName) {
 		log.info("getNullableResult1");
-		Object value = rs.getObject(columnName);
+		Object value = Try
+				               .of(() -> rs.getObject(columnName))
+				
+				               .onFailure(Throwable::printStackTrace)
+				               .get();
 		
 		Map<String, Object> map = Maps.newHashMap();
 		
@@ -82,10 +86,15 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	 * @throws SQLException
 	 */
 	@Override
-	public Map<String, Object> getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+	public Map<String, Object> getNullableResult(ResultSet rs, int columnIndex) {
 		log.info("getNullableResult2");
-		
-		return getStringObjectMap(columnIndex, rs.getObject(columnIndex), rs.getMetaData());
+		Object object = Try.of(() -> rs.getObject(columnIndex))
+		                   .onFailure(Throwable::printStackTrace)
+		                   .get();
+		ResultSetMetaData metaData = Try.of(rs::getMetaData)
+		                                .onFailure(Throwable::printStackTrace)
+		                                .get();
+		return getStringObjectMap(columnIndex, object, metaData);
 	}
 	
 	/**
@@ -101,9 +110,15 @@ public class MapTypeHandler extends BaseTypeHandler<Map<String, Object>> {
 	 * @throws SQLException
 	 */
 	@Override
-	public Map<String, Object> getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+	public Map<String, Object> getNullableResult(CallableStatement cs, int columnIndex) {
 		log.info("getNullableResult3");
-		return getStringObjectMap(columnIndex, cs.getObject(columnIndex), cs.getMetaData());
+		Object o = Try.of(() -> cs.getObject(columnIndex))
+		              .onFailure(Throwable::printStackTrace)
+		              .get();
+		ResultSetMetaData metaData = Try.of(cs::getMetaData)
+		                                .onFailure(Throwable::printStackTrace)
+		                                .get();
+		return getStringObjectMap(columnIndex, o, metaData);
 	}
 	
 	private Map<String, Object> getStringObjectMap(int columnIndex, Object object, ResultSetMetaData metaData) {

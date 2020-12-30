@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @MapperScan("com.example.typehandle.dao")
 @SpringBootApplication
-public class SpringBootMybatisPlusApplication {
+public class Application {
 	
 	public static void main(String[] args) {
-		SpringApplication.run(SpringBootMybatisPlusApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 	
 }

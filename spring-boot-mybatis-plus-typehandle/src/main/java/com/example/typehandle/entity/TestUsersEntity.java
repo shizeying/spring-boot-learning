@@ -15,13 +15,13 @@ import java.util.Map;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Data
-public class UsersEntity extends BasicEntity {
+public class TestUsersEntity extends BasicEntity {
 	
 	
 	private Map<String, Object> map = Maps.newHashMap();
 	
 	@Builder
-	public UsersEntity(Long id, String name, Map<String, Object> map) {
+	public TestUsersEntity(Long id, String name, Map<String, Object> map) {
 		super(id, name);
 		this.map = map;
 	}

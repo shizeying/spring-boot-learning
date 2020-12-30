@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.typehandle.dao.TestUsersMapper">
+  <resultMap id="BaseResultMap" type="com.example.typehandle.entity.TestUsersEntity">
+    <!--@mbg.generated-->
+    <!--@Table user-->
+    <id column="id" property="id"/>
+    <result column="name" property="name"/>
+    <result column="attrmapabc" property="map" typeHandler="com.example.typehandle.handle.MapTypeHandler"/>
+    <result column="attrmapabcd" property="map" typeHandler="com.example.typehandle.handle.MapTypeHandler"/>
+  </resultMap>
+  <select id="find" resultMap="BaseResultMap">
+    SELECT *
+    FROM user
+  </select>
+</mapper>
