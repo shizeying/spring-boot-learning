@@ -1,12 +1,12 @@
 package com.example.elasticsearch.config;
 
-import java.time.Duration;
-import java.util.Arrays;
+import io.vavr.control.Try;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.elasticsearch.rest.RestClientProperties;
-import org.springframework.context.annotation.Bean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchRestClientProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
@@ -16,6 +16,9 @@ import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.time.Duration;
+import java.util.Arrays;
+
 /** ElasticSearch配置文件 Es7使用RestHighLevelClient操作ES */
 @Slf4j
 @SuppressWarnings("ALL")
@@ -24,17 +27,19 @@ import org.springframework.util.StringUtils;
 public class RestClientConfig extends AbstractElasticsearchConfiguration {
 	
 	@Autowired
-	private RestClientProperties properties;
+	private ElasticsearchRestClientProperties properties;
 	
 	/** @return {@link RestHighLevelClient} */
 	@Override
-	@Bean
+	@ConditionalOnMissingBean(RestClientBuilder.class)
+	@Autowired
 	public RestHighLevelClient elasticsearchClient() {
 		
-		return RestClients.create(clientConfiguration()).rest();
+		return Try.of(() -> RestClients.create(clientConfiguration()).rest())
+		          .onFailure(error -> log.error(error.getMessage())).get();
 	}
 	
-	@Bean
+	@Autowired
 	public ElasticsearchOperations elasticsearchTemplate() {
 		return new ElasticsearchRestTemplate(elasticsearchClient());
 	}
@@ -51,14 +56,14 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
 		String password = properties.getPassword();
 		Duration connectionTimeout = properties.getConnectionTimeout();
 		
-		// TODO 不存在username
+		// 不存在username
 		if (StringUtils.isEmpty(username) && StringUtils.isEmpty(password)) {
 			log.info("hostAndPorts:[{}];", Arrays.toString(hostAndPorts));
 			
 			return ClientConfiguration.builder()
-					.connectedTo(hostAndPorts)
-					.withConnectTimeout(connectionTimeout)
-					.build();
+			                          .connectedTo(hostAndPorts)
+			                          .withConnectTimeout(connectionTimeout)
+			                          .build();
 			
 		} else {
 			log.info(
@@ -67,12 +72,12 @@ public class RestClientConfig extends AbstractElasticsearchConfiguration {
 					, username
 					, password);
 			
-			// TODO 存在username
+			// 存在username
 			return ClientConfiguration.builder()
-					.connectedTo(hostAndPorts)
-					.withBasicAuth(username, password)
-					.withConnectTimeout(connectionTimeout)
-					.build();
+			                          .connectedTo(hostAndPorts)
+			                          .withBasicAuth(username, password)
+			                          .withConnectTimeout(connectionTimeout)
+			                          .build();
 		}
 	}
 }

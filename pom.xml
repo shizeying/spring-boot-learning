@@ -31,7 +31,7 @@
     <commons-lang3.version>3.9</commons-lang3.version>
     <org.mapstruct.version>1.4.0.CR1</org.mapstruct.version>
     <javax.validation.version>2.0.1.Final</javax.validation.version>
-    <elasticsearch.version>7.4.1</elasticsearch.version>
+    <elasticsearch.version>7.5.1</elasticsearch.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
