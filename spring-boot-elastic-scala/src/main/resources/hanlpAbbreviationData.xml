@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hanlpSpeech>
+	<abbreviation id="n">
+		<name>名词</name>
+	</abbreviation>
+	<abbreviation id="nb">
+		<name>生物名</name>
+	</abbreviation>
+	<abbreviation id="nba">
+		<name>动物名</name>
+	</abbreviation>
+	<abbreviation id="nbc">
+		<name>动物纲目</name>
+	</abbreviation>
+	<abbreviation id="nbp">
+		<name>植物名</name>
+	</abbreviation>
+	<abbreviation id="nf">
+		<name>食品，比如“薯片”</name>
+	</abbreviation>
+	<abbreviation id="ng">
+		<name>名词性语素</name>
+	</abbreviation>
+	<abbreviation id="nh">
+		<name>医药疾病等健康相关名词</name>
+	</abbreviation>
+	<abbreviation id="nhd">
+		<name>疾病</name>
+	</abbreviation>
+	<abbreviation id="nhm">
+		<name>药品</name>
+	</abbreviation>
+	<abbreviation id="ni">
+		<name>机构相关（不是独立机构名）</name>
+	</abbreviation>
+	<abbreviation id="nic">
+		<name>下属机构</name>
+	</abbreviation>
+	<abbreviation id="nis">
+		<name>机构后缀</name>
+	</abbreviation>
+	<abbreviation id="nit">
+		<name>教育相关机构</name>
+	</abbreviation>
+	<abbreviation id="nl">
+		<name>名词性惯用语</name>
+	</abbreviation>
+	<abbreviation id="nm">
+		<name>物品名</name>
+	</abbreviation>
+	<abbreviation id="nmc">
+		<name>化学品名</name>
+	</abbreviation>
+	<abbreviation id="nn">
+		<name>工作相关名词</name>
+	</abbreviation>
+	<abbreviation id="nnd">
+		<name>职业</name>
+	</abbreviation>
+	<abbreviation id="nnt">
+		<name>职务职称</name>
+	</abbreviation>
+	<abbreviation id="nr">
+		<name>人名</name>
+	</abbreviation>
+	<abbreviation id="nr1">
+		<name>复姓</name>
+	</abbreviation>
+	<abbreviation id="nr2">
+		<name>蒙古姓名</name>
+	</abbreviation>
+	<abbreviation id="nrf">
+		<name>音译人名</name>
+	</abbreviation>
+	<abbreviation id="nrj">
+		<name>日语人名</name>
+	</abbreviation>
+	<abbreviation id="ns">
+		<name>地名</name>
+	</abbreviation>
+	<abbreviation id="nsf">
+		<name>音译地名</name>
+	</abbreviation>
+	<abbreviation id="nt">
+		<name>机构团体名</name>
+	</abbreviation>
+	<abbreviation id="ntc">
+		<name>公司名</name>
+	</abbreviation>
+	<abbreviation id="ntcb">
+		<name>银行</name>
+	</abbreviation>
+	<abbreviation id="ntcf">
+		<name>工厂</name>
+	</abbreviation>
+	<abbreviation id="ntch">
+		<name>酒店宾馆</name>
+	</abbreviation>
+	<abbreviation id="nth">
+		<name>医院</name>
+	</abbreviation>
+	<abbreviation id="nto">
+		<name>政府机构</name>
+	</abbreviation>
+	<abbreviation id="nts">
+		<name>中小学</name>
+	</abbreviation>
+	<abbreviation id="ntu">
+		<name>大学</name>
+	</abbreviation>
+	<abbreviation id="nx">
+		<name>字母专名</name>
+	</abbreviation>
+	<abbreviation id="nz">
+		<name>其他专名</name>
+	</abbreviation>
+</hanlpSpeech>
