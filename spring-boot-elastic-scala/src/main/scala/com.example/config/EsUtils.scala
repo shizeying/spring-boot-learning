@@ -1,5 +1,4 @@
 package com.example.config
-case class HighlightEntity (column: String, fragmentSize: Integer)
 
 object EsUtils {
 	
@@ -32,21 +31,5 @@ object EsUtils {
 	}
 	
 	
-	def builderHighlight (highlights: java.util.List[HighlightEntity]) = {
-		import com.sksamuel.elastic4s.ElasticApi.highlight
-		import scala.collection.JavaConverters.asScalaBufferConverter
-		highlights.asScala
-			.map (
-				rest => {
-					import java.util.Objects
-					val hig = highlight (rest.column)
-					if (Objects.nonNull (rest.fragmentSize)) {
-						hig.fragmentOffset (rest.fragmentSize)
-					}
-					hig
-				}
-			)
-		
-	}
-	
+
 }
