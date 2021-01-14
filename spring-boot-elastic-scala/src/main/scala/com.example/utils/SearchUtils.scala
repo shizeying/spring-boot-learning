@@ -29,16 +29,20 @@ case class HighlightEntity (column: String, fragmentSize: Integer)
 	* @author shizeying
 	* @date 2021 /01/14
 	*/
-case class SearchEntity (column: String, kw: String, boots: Integer)
+trait SearchEntity {
+	val column: String
+	val words: java.util.List[String]
+	val boots: Integer
+}
 
-case class TermEntity (override val column: String, override val kw: String, override val boots: Integer) extends
-	SearchEntity (column, kw, boots)
+case class TermEntity (override val column: String, override val words: java.util.List[String], override val boots: Integer) extends
+	SearchEntity 
 
-case class MatchPhrasePrefixEntity (override val column: String, override val kw: String, override val boots: Integer) extends
-	SearchEntity (column, kw, boots)
+case class MatchPhrasePrefixEntity (override val column: String, override val words: java.util.List[String], override val boots: Integer) extends
+	SearchEntity
 
-case class WildcardEntity (override val column: String, override val kw: String, override val boots: Integer) extends
-	SearchEntity (column, kw, boots)
+case class WildcardEntity (override val column: String, override val words: java.util.List[String], override val boots: Integer) extends
+	SearchEntity
 
 //case class TermEntity (override val column: String,override val kw: String,override val boots: Integer,
 //                       include: java.util.List[String], exclude: java
@@ -51,7 +55,9 @@ case class WildcardEntity (override val column: String, override val kw: String,
 	* @create: 2021-01-14 18:07
 	* */
 object SearchUtils {
+	
 	import com.sksamuel.elastic4s.requests.searches.queries.ConstantScore
+	
 	def builderHighlight (highlights: java.util.List[HighlightEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.highlight
 		
@@ -82,7 +88,7 @@ object SearchUtils {
 		*
 		* @return {   @link Iterable < Query >   }
 		*/
-	def builderTermQueries (termEntities: java.util.List[TermEntity], isSegment: Boolean) = {
+	def builderTermQueries (termEntities: java.util.List[TermEntity]) = {
 		
 		termEntities
 			.asScala
@@ -90,18 +96,13 @@ object SearchUtils {
 			.map {
 				termEntity => {
 					import com.sksamuel.elastic4s.ElasticApi.termQuery
-					if (isSegment) {
-						val term = termQuery (termEntity.column, segmentKw (termEntity.kw))
-						termScore (termEntity, term)
-					} else {
-						val term = termQuery (termEntity.column, termEntity.kw)
-						termScore (termEntity, term)
-					}
+					val term = termQuery (termEntity.column, termEntity.words)
+					termScore (termEntity, term)
 				}
 			}
 	}
 	
-	private def termScore (termEntity: TermEntity, term: TermQuery) = {
+	private def termScore (termEntity: TermEntity, term: TermQuery): Query = {
 		import com.sksamuel.elastic4s.ElasticApi.constantScoreQuery
 		if (Objects.nonNull (termEntity.boots)) {
 			constantScoreQuery (term).boost (termEntity.boots.doubleValue ())
@@ -117,24 +118,19 @@ object SearchUtils {
 		*
 		* @return {  @link Iterable < Iterable < Query > >  }
 		*/
-	def builderFuzzyQuery (fuzzEntities: java.util.List[TermEntity], isSegment: Boolean): Iterable[Query] = {
+	def builderFuzzyQuery (fuzzEntities: java.util.List[TermEntity]): Iterable[Query] = {
 		fuzzEntities
 			.asScala
 			.filter (Objects.nonNull)
 			.map {
 				fuzzEntity => {
 					import com.sksamuel.elastic4s.ElasticApi.fuzzyQuery
-					if (isSegment) {
-						segmentKw (fuzzEntity.kw)
-							.filter (Objects.nonNull)
-							.map { word =>
-								convertFuzzyScore (fuzzEntity, fuzzyQuery (fuzzEntity.column, word))
-							}.iterator
-					} else {
-						val fuzzy = fuzzyQuery (fuzzEntity.column, fuzzEntity.kw)
-						Iterable (convertFuzzyScore (fuzzEntity, fuzzy)).iterator
-					}
-					
+					fuzzEntity.words
+						.asScala
+						.filter (Objects.nonNull)
+						.map { word =>
+							convertFuzzyScore (fuzzEntity, fuzzyQuery (fuzzEntity.column, word))
+						}.iterator
 				}
 			}
 			.flatMap (_.toIterator)
@@ -153,7 +149,7 @@ object SearchUtils {
 		* 构建器匹配查询词的前缀
 		*
 		*/
-	def builderMatchPhrasePrefixQuery (prefixEntities: java.util.List[MatchPhrasePrefixEntity], isSegment: Boolean): Iterable[MatchPhrasePrefix] = {
+	def builderMatchPhrasePrefixQuery (prefixEntities: java.util.List[MatchPhrasePrefixEntity]): Iterable[MatchPhrasePrefix] = {
 		
 		prefixEntities
 			.asScala
@@ -161,28 +157,31 @@ object SearchUtils {
 			.map {
 				phrasePrefixEntity => {
 					import com.sksamuel.elastic4s.ElasticApi.matchPhrasePrefixQuery
-					if (isSegment) {
-						segmentKw (phrasePrefixEntity.kw)
-							.filter (Objects.nonNull)
-							.map {
-								word =>
-									val phrase = matchPhrasePrefixQuery (phrasePrefixEntity.column, word).maxExpansions (3)
-									if (Objects.nonNull (phrasePrefixEntity.boots)) {
-										phrase.boost (phrasePrefixEntity.boots.doubleValue ())
-									}
-									phrase
-							}.iterator
-					} else {
-						val phrase = matchPhrasePrefixQuery (phrasePrefixEntity.column, phrasePrefixEntity.kw).maxExpansions (3)
-						if (Objects.nonNull (phrasePrefixEntity.boots)) {
-							phrase.boost (phrasePrefixEntity.boots.doubleValue ())
+					phrasePrefixEntity.words
+						.asScala
+						.filter (Objects.nonNull)
+						.map {
+							word =>
+								val phrase = matchPhrasePrefixQuery (phrasePrefixEntity.column, word).maxExpansions (3)
+								if (Objects.nonNull (phrasePrefixEntity.boots)) {
+									phrase.boost (phrasePrefixEntity.boots.doubleValue ())
+								}
+								phrase
 						}
-						Iterable (phrase)
-					}
+						.iterator
 				}
 			}.flatMap (_.toIterable)
 	}
 	
+	/**
+		* 构建器匹配短语查询
+		* 前缀查询 建议2-5个字
+		*
+		* @param prefixEntities 前缀的实体
+		* @param isSegment      是段
+		*
+		* @return {  @link BoolQuery  }
+		*/
 	def builderMatchPhraseQuery (prefixEntities: java.util.List[MatchPhrasePrefixEntity], isSegment: Boolean) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		val boolMatchPhraseQuery = boolQuery.minimumShouldMatch (1)
@@ -192,27 +191,17 @@ object SearchUtils {
 			.map {
 				phrasePrefixEntity => {
 					import com.sksamuel.elastic4s.ElasticApi.matchPhraseQuery
-					
-					if (isSegment) {
-						segmentKw (phrasePrefixEntity.kw)
-							.filter (Objects.nonNull)
-							.map {
-								word =>
-									val phrase = matchPhraseQuery (phrasePrefixEntity.column, word)
-									val score = constantScoreQuery (phrase)
-									if (Objects.nonNull (phrasePrefixEntity.boots)) {
-										score.boost (phrasePrefixEntity.boots.doubleValue ())
-									}
-									score
-							}.iterator
-					} else {
-						val phrase = matchPhraseQuery (phrasePrefixEntity.column, phrasePrefixEntity.kw)
-						val score = constantScoreQuery (phrase)
-						if (Objects.nonNull (phrasePrefixEntity.boots)) {
-							score.boost (phrasePrefixEntity.boots.doubleValue ())
-						}
-						Iterable (score)
-					}
+					phrasePrefixEntity.words.asScala
+						.filter (Objects.nonNull)
+						.map {
+							word =>
+								val phrase = matchPhraseQuery (phrasePrefixEntity.column, word)
+								val score = constantScoreQuery (phrase)
+								if (Objects.nonNull (phrasePrefixEntity.boots)) {
+									score.boost (phrasePrefixEntity.boots.doubleValue ())
+								}
+								score
+						}.iterator
 				}
 			}.flatMap (_.toIterable).map (boolMatchPhraseQuery.should (_))
 		boolMatchPhraseQuery
@@ -224,38 +213,27 @@ object SearchUtils {
 		* @param wildcardEntities 通配符的实体
 		* @param isSegment        是分词
 		*/
-	def builderWildcardQuery (wildcardEntities: java.util.List[WildcardEntity], isSegment: Boolean) = {
+	def builderWildcardQuery (wildcardEntities: java.util.List[WildcardEntity]) = {
 		wildcardEntities.asScala
 			.filter (Objects.nonNull)
 			.map {
 				wildcardEntity => {
 					import com.sksamuel.elastic4s.ElasticApi.boolQuery
 					val boolQueries = boolQuery ().minimumShouldMatch (1)
-					if (isSegment) {
-						segmentKw (wildcardEntity.kw)
-							.filter (Objects.nonNull)
-							.map {
-								word =>
-									import com.sksamuel.elastic4s.ElasticApi.wildcardQuery
-									wildcardQuery (wildcardEntity.column, "*" + word + "*")
-							}.map { wildcard => boolQueries.should (wildcard) }
-						
-						
-					} else {
-						import com.sksamuel.elastic4s.ElasticApi.wildcardQuery
-						val wildcard = wildcardQuery (wildcardEntity.column, "*" + wildcardEntity.kw + "*")
-						boolQueries.should (wildcard)
-					}
-					val score = constantScoreQuery (boolQueries)
+					wildcardEntity.words
+						.asScala
+						.filter (Objects.nonNull)
+						.map {
+							word =>
+								import com.sksamuel.elastic4s.ElasticApi.wildcardQuery
+								wildcardQuery (wildcardEntity.column, "*" + word + "*")
+						}.map { wildcard => boolQueries.should (wildcard) }
 					
-					if (Objects.nonNull (wildcardEntity.boots)) {
-						score.boost (wildcardEntity.boots.doubleValue ())
-					} else {
-						score.boost (1)
-					}
-					score
+					
 				}
 			}
+			.filter (Objects.nonNull)
+			.flatMap (_.iterator)
 	}
 	
 	
@@ -287,29 +265,31 @@ object SearchUtils {
 			.filter (_.length >= 2)
 	}
 	
-	def builderFineTermsQuery (termEntities: java.util.List[TermEntity], isSegment: Boolean) = {
+	/** 构建器精确条款查询
+		*
+		* @param termEntities 术语实体
+		*
+		* @return {      @link BoolQuery      }
+		*
+		* @param termEntities term实体
+		*
+		* @return {    @link BoolQuery    }
+		*/
+	def builderFineTermsQuery (termEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		val funcQuery = boolQuery.minimumShouldMatch (0)
 		termEntities.asScala
 			.filter (Objects.nonNull)
 			.map {
 				term => {
-					if (isSegment) {
-						import com.sksamuel.elastic4s.ElasticApi.termsQuery
-						val words = segmentKw (term.kw)
-							.filter (Objects.nonNull)
-						val score = constantScoreQuery (	termsQuery (term.column, words) )
-						fineTermQuery (term, score)
-					} else {
-						import com.sksamuel.elastic4s.ElasticApi.termsQuery
-						val score = constantScoreQuery (termsQuery (term.column, term.kw))
-						fineTermQuery (term, score)
-					}
+					import com.sksamuel.elastic4s.ElasticApi.termsQuery
+					val score = constantScoreQuery (termsQuery (term.column, term.words))
+					fineTermQuery (term, score)
 					
 				}
-			}.filter(Objects.nonNull).flatMap().foreach(funcQuery.should)
-		
-		
+			}.filter (Objects.nonNull)
+			.foreach (funcQuery.should (_))
+		funcQuery
 	}
 	
 	private def fineTermQuery (term: TermEntity, score: ConstantScore): ConstantScore = {
@@ -319,5 +299,41 @@ object SearchUtils {
 			score.boost (0.01f)
 		}
 		score
+	}
+	
+	/**
+		* 构建器正则表达式查询
+		*
+		* @param wildcardEntities 通配符的实体
+		*
+		* @return {  @link BoolQuery  }
+		*/
+	def builderRegexpQuery (wildcardEntities: java.util.List[WildcardEntity]) = {
+		import com.sksamuel.elastic4s.ElasticApi.boolQuery
+		val regexpBool = boolQuery ()
+		wildcardEntities
+			.asScala
+			.filter (Objects.nonNull)
+			.map {
+				wildcardEntity =>
+					import com.sksamuel.elastic4s.requests.searches.queries.{RegexpFlag, RegexQuery}
+					import org.apache.commons.lang3.StringUtils
+					wildcardEntity.words
+						.asScala
+						.filter (StringUtils.isNoneBlank (_))
+						.map (word => RegexQuery (wildcardEntity.column, word).flags (RegexpFlag.All).maxDeterminedStates (10000))
+						.map (ConstantScore (_))
+						.map { score =>
+							if (Objects.nonNull (wildcardEntity.boots)) {
+								score.boost (wildcardEntity.boots.doubleValue ())
+							}
+							score
+						}
+				
+			}.filter (Objects.nonNull)
+			.flatMap (_.iterator)
+			.foreach (regexpBool.should (_))
+		
+		regexpBool
 	}
 }
