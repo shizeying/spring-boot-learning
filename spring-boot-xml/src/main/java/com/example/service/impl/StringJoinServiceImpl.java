@@ -1,6 +1,6 @@
 package com.example.service.impl;
 
-import com.example.entity.Namespace;
+import com.example.domain.Namespace;
 import com.example.service.StringJoinService;
 import com.example.utils.XmlFormatter;
 import io.vavr.control.Try;

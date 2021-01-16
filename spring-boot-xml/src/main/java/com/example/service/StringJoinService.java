@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.Namespace;
+import com.example.domain.Namespace;
 
 /**
  * 字符串连接服务

@@ -1,19 +1,13 @@
 package com.example;
 
-import com.example.entity.Namespace;
-import com.example.entity.SqlBean;
-import com.example.entity.XmlBean;
+import com.example.domain.Namespace;
+import com.example.domain.SqlBean;
+import com.example.domain.XmlBean;
 import com.example.service.StringJoinService;
 import com.example.utils.XmlFormatter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.w3c.dom.Document;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 
 @SpringBootTest
 class SpringBootXmlApplicationTests {

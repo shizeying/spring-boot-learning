@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.TConfigMapper">
+	<resultMap id="BaseResultMap" type="com.example.domain.TConfig">
+		<!--@mbg.generated--><!--@Table t_config-->
+		<id column="id" property="id"/>
+		<result column="index_name" property="indexName"/>
+		<result column="mapping" property="mapping"/>
+		<result column="config" property="config" typeHandler="com.example.handle.GeneralBuildsHandler"/>
+		<result column="chinese_name" property="chineseName"/>
+		<result column="task_id" property="taskId"/>
+		<result column="indexes_list" property="indexesList" typeHandler="com.example.handle.AttrsHandler"/>
+		<result column="create_at" property="createAt"/>
+		<result column="update_at" property="updateAt"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!--@mbg.generated-->id, index_name, mapping, config, chinese_name, task_id, indexes_list, create_at, update_at
+	</sql>
+	
+	<update id="updateById" parameterType="com.example.domain.bo.SearchPatternToBuild">
+		UPDATE t_config
+		<trim prefix="set" suffixOverrides=",">
+			<if test="entity.chineseName != null and entity.chineseName != ''">
+				chinese_name = #{entity.chineseName},
+			</if>
+			<if test="entity.fields != null and entity.fields.size() != 0">
+				config=#{entity.fields},
+			</if>
+			<if test="entity.indexes != null and entity.indexes.size() != 0">
+				indexes_list=#{entity.indexes},
+			</if>
+			<if test="entity.indexName != null and entity.indexName != ''">
+				index_name=#{entity.indexName},
+			</if>
+			<if test="updateDate != null">
+				update_at=#{updateDate} ,
+			</if>
+		</trim>
+		WHERE id = #{id}
+	</update>
+</mapper>

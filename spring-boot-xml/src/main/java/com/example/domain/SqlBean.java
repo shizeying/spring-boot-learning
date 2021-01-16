@@ -1,4 +1,4 @@
-package com.example.entity;
+package com.example.domain;
 
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;

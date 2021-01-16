@@ -7,10 +7,10 @@
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
 	</parent>
 	<artifactId>hive2es</artifactId>
-	<version>${parent.version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-hive2es</name>
 	<description>native hive to es</description>
 

@@ -6,12 +6,11 @@
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<packaging>jar</packaging>
 	<artifactId>redis</artifactId>
-	<version>${parent.version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-redis</name>
 	<description>spring boot redis study</description>
 

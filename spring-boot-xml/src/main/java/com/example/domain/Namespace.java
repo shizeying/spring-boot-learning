@@ -1,4 +1,4 @@
-package com.example.entity;
+package com.example.domain;
 
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;

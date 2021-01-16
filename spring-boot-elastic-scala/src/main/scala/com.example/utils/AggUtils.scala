@@ -1,32 +1,20 @@
 package com.example.utils
 
-import com.fasterxml.jackson.annotation.JsonInclude
 import com.sksamuel.elastic4s.requests.searches.DateHistogramInterval
 import org.apache.commons.lang3.StringUtils
 
 import java.util.Objects
 import scala.collection.JavaConverters.collectionAsScalaIterableConverter
 
-@JsonInclude (JsonInclude.Include.NON_NULL)
-case class AttrAggK (name: String, columnItem: String, esType: String, interval: String, format: String, include: java.util.List[String],
-                     exclude: java
-                     .util
-                     .List[String],
-                     `type`: String, size: Integer, parentId: Long, detail: java.util.List[String]) extends Serializable
-
-@JsonInclude (JsonInclude.Include.NON_NULL)
-case class AttrAggV (aggSum: Long, value: Any, key: Any)
-
-case class AttrAgg (k: AttrAggK, v: java.util.List[AttrAggV], d: String)
 
 object AggUtils {
-	def main (args: Array[String]): Unit ={
-		import com.sksamuel.elastic4s.JacksonSupport
-		printf(		JacksonSupport.mapper.writeValueAsString(AttrAgg)
-		)
-	}
+	
+	
+	import com.sksamuel.elastic4s.requests.searches.aggs.AbstractAggregation
 	
 	import java.time.LocalDate
+	import scala.collection.JavaConverters.seqAsJavaListConverter
+	import scala.collection.mutable.ArrayBuffer
 	
 	/**
 		* 构造Terms聚合
@@ -34,9 +22,7 @@ object AggUtils {
 		* @param k k
 		*/
 	
-	def builderTermsAgg (attrAggKs: java.util.List[AttrAggK]) = {
-		
-		
+	def builderTermsAgg (attrAggKs: java.util.List[AttrAggK]) =
 		attrAggKs
 			.asScala
 			.filter (Objects.nonNull)
@@ -53,11 +39,9 @@ object AggUtils {
 					if (!attr.exclude.isEmpty) termsAggregation.includeExactValues (attr.exclude.asScala.toSeq)
 					if (attr.esType.equalsIgnoreCase ("date")) termsAggregation.order (TermsOrder.apply ("_key", asc = true))
 					termsAggregation
-					
-					
 				}
-			}
-	}
+			}.toList.asJava
+	
 	
 	/**
 		* 构造日期范围聚合
@@ -86,7 +70,7 @@ object AggUtils {
 					val toDate = ElasticDate.apply (to)
 					DateRangeAggregation.apply (key).field (column).format (format).range (formDate, toDate)
 				}
-			}
+			}.toList.asJava
 	
 	/**
 		* 构造日期柱状图
@@ -108,7 +92,7 @@ object AggUtils {
 					val format = if (StringUtils.isNotBlank (attr.format)) attr.format else "yyyy-mm-dd hh:mm:ss"
 					DateHistogramAggregation.apply (key).field (column).format (format).fixedInterval (interval).minDocCount (30)
 				}
-			}
+			}.toList.asJava
 	
 	private def getDateHistogramInterval (interval: String): DateHistogramInterval = interval match {
 		case "seconds" =>
@@ -130,4 +114,67 @@ object AggUtils {
 		case _ =>
 			throw new NullPointerException ("interval 传入有问题")
 	}
+	
+	/**
+		* 构建器重要的text聚合
+		*
+		* @param attrAggKs attr聚合ks
+		*
+		* @return {  @link Iterable < SigTermsAggregation >  }
+		*/
+	def builderSignificantTextAgg (attrAggKs: java.util.List[AttrAggK]) =
+		attrAggKs
+			.asScala
+			.filter (Objects.nonNull)
+			.filter (res => StringUtils.isNoneBlank (res.columnItem))
+			.filter (res => StringUtils.isNoneBlank (res.interval))
+			.filter (res => StringUtils.equalsAnyIgnoreCase (res.esType, "text"))
+			.map {
+				attr =>
+					import com.sksamuel.elastic4s.requests.searches.aggs.SigTermsAggregation
+					val key = "key" + attr.name
+					val column = attr.columnItem.replaceAll ("\\.keyword", "")
+					
+					val sigTermsAgg = SigTermsAggregation (key).field (column).minDocCount (500)
+					if (!attr.include.isEmpty && !attr.exclude.isEmpty) {
+						sigTermsAgg.includeExclude (attr.include.asScala.iterator.toSeq, attr.exclude.asScala.iterator.toSeq)
+					}
+					sigTermsAgg
+			}.toList.asJava
+	
+	
+	/** 构建器自动时间间隔日期聚合
+		*
+		* @param attrAggKs attr聚合ks
+		*
+		* @return {    @link Iterable < AutoDateHistogramAggregation >    }
+		*
+		* @param attrAggKs attr聚合ks
+		*
+		* @return {  @link Iterable < AutoDateHistogramAggregation >  }
+		*/
+	def builderAutoIntervalDateAgg (attrAggKs: java.util.List[AttrAggK]) =
+		attrAggKs
+			.asScala
+			.filter (Objects.nonNull)
+			.filter (res => StringUtils.isNoneBlank (res.columnItem))
+			.filter (res => StringUtils.isNoneBlank (res.interval))
+			.filter (res => StringUtils.equalsAnyIgnoreCase (res.esType, "date"))
+			.map {
+				attr =>
+					import com.sksamuel.elastic4s.requests.searches.aggs.AutoDateHistogramAggregation
+					val key = "key" + attr.name
+					val column = attr.columnItem.replaceAll ("\\.keyword", "")
+					AutoDateHistogramAggregation (key, column)
+						.format ("yyyy-mm-dd hh:mm:ss")
+						.buckets (20)
+			}.toList.asJava
+	
+	def addAgg[T <: AbstractAggregation] (aggList: java.util.List[T]) = {
+		val arraysBuffer = new ArrayBuffer[AbstractAggregation]
+		arraysBuffer.appendAll (aggList.asScala)
+		arraysBuffer.asJava
+	}
+	
+	
 }

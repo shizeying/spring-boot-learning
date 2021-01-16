@@ -6,11 +6,13 @@
         <groupId>com.example</groupId>
         <artifactId>learning</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     </parent>
     <artifactId>common</artifactId>
     <name>spring-boot-common</name>
-    <version>${parent.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
+    
+    <!--<version>${parent.version}</version>-->
     <description>spring boot common study</description>
     <packaging>jar</packaging>
     <properties>

@@ -7,10 +7,9 @@
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>spring-boot-aop</artifactId>
-	<version>${parent.version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-aop</name>
 	<description>spring boot study aop</description>
 
