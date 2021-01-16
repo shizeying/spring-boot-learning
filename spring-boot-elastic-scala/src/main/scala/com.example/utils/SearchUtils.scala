@@ -55,7 +55,10 @@ object SearchUtils {
 		highlights.asScala
 			.map (
 				rest => {
-					var hig = highlight (rest.column).fragmentSize (800000).requireFieldMatch (false).numberOfFragments (0)
+					var hig = highlight (rest.column)
+						.fragmentSize (800000)
+						.requireFieldMatch (false)
+						.numberOfFragments (0)
 					if (Objects.nonNull (rest.fragmentSize)) {
 						hig = hig.fragmentOffset (rest.fragmentSize)
 					}
@@ -81,7 +84,7 @@ object SearchUtils {
 	def builderTermQueries (termEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var boolMatchTermQueries = boolQuery.minimumShouldMatch (1)
-		boolMatchTermQueries = boolMatchTermQueries.withShould (termEntities
+		val queryIte = termEntities
 			.asScala
 			.filter (Objects.nonNull)
 			.map {
@@ -90,7 +93,8 @@ object SearchUtils {
 					val term = termQuery (termEntity.column, termEntity.words)
 					termScore (termEntity, term)
 				}
-			})
+			}
+		boolMatchTermQueries = boolMatchTermQueries.withShould (queries = queryIte)
 		boolMatchTermQueries
 	}
 	
@@ -113,7 +117,7 @@ object SearchUtils {
 	def builderFuzzyQuery (fuzzEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var fuzzQuery = boolQuery.minimumShouldMatch (1)
-		fuzzQuery = fuzzQuery.withShould (fuzzEntities
+		val query = fuzzEntities
 			.asScala
 			.filter (Objects.nonNull)
 			.map {
@@ -127,7 +131,8 @@ object SearchUtils {
 						}.iterator
 				}
 			}
-			.flatMap (_.toIterator))
+			.flatMap (_.toIterator)
+		fuzzQuery = fuzzQuery.withShould (queries = query)
 		fuzzQuery
 		
 	}
@@ -147,7 +152,7 @@ object SearchUtils {
 	def builderMatchPhrasePrefixQuery (prefixEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var fuzzyQuery = boolQuery.minimumShouldMatch (1)
-		fuzzyQuery = fuzzyQuery.withShould (prefixEntities
+		val fuzz = prefixEntities
 			.asScala
 			.filter (Objects.nonNull)
 			.map {
@@ -166,7 +171,8 @@ object SearchUtils {
 						}
 						.iterator
 				}
-			}.flatMap (_.toIterable))
+			}.flatMap (_.toIterable)
+		fuzzyQuery = fuzzyQuery.withShould (queries = fuzz)
 		fuzzyQuery
 	}
 	
@@ -182,7 +188,7 @@ object SearchUtils {
 	def builderMatchPhraseQuery (prefixEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var boolMatchPhraseQuery = boolQuery.minimumShouldMatch (1)
-		boolMatchPhraseQuery = boolMatchPhraseQuery.withShould (prefixEntities
+		val bool = prefixEntities
 			.asScala
 			.filter (Objects.nonNull)
 			.map {
@@ -200,7 +206,8 @@ object SearchUtils {
 								score
 						}.iterator
 				}
-			}.flatMap (_.toIterable))
+			}.flatMap (_.toIterable)
+		boolMatchPhraseQuery = boolMatchPhraseQuery.withShould (queries = bool)
 		boolMatchPhraseQuery
 	}
 	
@@ -213,8 +220,7 @@ object SearchUtils {
 	def builderWildcardQuery (wildcardEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var boolQueries = boolQuery ().minimumShouldMatch (1)
-		
-		boolQueries = boolQueries.withShould (wildcardEntities.asScala
+		val bool = wildcardEntities.asScala
 			.filter (Objects.nonNull)
 			.map {
 				wildcardEntity => {
@@ -230,7 +236,8 @@ object SearchUtils {
 				}
 			}
 			.filter (Objects.nonNull)
-			.flatMap (_.iterator))
+			.flatMap (_.iterator)
+		boolQueries = boolQueries.withShould (queries = bool)
 		boolQueries
 	}
 	
@@ -291,7 +298,7 @@ object SearchUtils {
 	def builderFineTermsQuery (termEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var funcQuery = boolQuery.minimumShouldMatch (0)
-		funcQuery = funcQuery.withShould (termEntities.asScala
+		val query = termEntities.asScala
 			.filter (Objects.nonNull)
 			.map {
 				term => {
@@ -300,7 +307,8 @@ object SearchUtils {
 					fineTermQuery (term, score)
 					
 				}
-			}.filter (Objects.nonNull))
+			}.filter (Objects.nonNull)
+		funcQuery = funcQuery.withShould (queries = query)
 		funcQuery
 	}
 	
@@ -323,7 +331,7 @@ object SearchUtils {
 	def builderRegexpQuery (wildcardEntities: java.util.List[TermEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.boolQuery
 		var regexpBool = boolQuery ().minimumShouldMatch (1)
-		regexpBool = regexpBool.withShould (wildcardEntities
+		val bool = wildcardEntities
 			.asScala
 			.filter (Objects.nonNull)
 			.map {
@@ -341,9 +349,9 @@ object SearchUtils {
 							}
 							score
 						}
-				
 			}.filter (Objects.nonNull)
-			.flatMap (_.iterator))
+			.flatMap (_.iterator)
+		regexpBool = regexpBool.withShould (queries = bool)
 		
 		regexpBool
 	}
