@@ -1,12 +1,41 @@
 package com.example
-object MongodbUtils extends App {
+
+
+import org.mongodb.scala._
+
+object MongodbUtils {
 	
-	import com.mongodb.reactivestreams.client.MongoDatabase
-	import org.mongodb.scala.MongoClient
 	
+	//scalastyle:off method.length
 	
-	val client: MongoClient  = MongoClient("mongodb://192.169.4.3:19130")
-	val  database:MongoDatabase =client.getDatabase("kgms_default_user_graph_174c4e9a4a8")
-	database.getCollection(collectionName="basic_info")
+	/**
+		* Run this main method to see the output of this quick example.
+		*
+		* @param args takes an optional single argument for the connection string
+		*
+		* @throws Throwable if an operation fails
+		*/
+	def main (args: Array[String]): Unit = {
+		import scala.util.{Success, Failure}
+		import scala.util.Try
+		import scala.concurrent.ExecutionContext.Implicits.global
+		val mongo = MongoClient ("")
+		
+		val loginfo = mongo.getDatabase ("").getCollection ("log_info").find ()
+		
+	val list=	loginfo.toFuture().onComplete{
+		
+		case Success(Document.fromSeq())=>
+		case Failure(ex)=> None
+	}
 	
+		if (loginfo.toFuture ().isCompleted) {
+			import scala.Console.err
+			loginfo
+				.foreach (res =>
+					err.println ("打印一下：" + res.toJson))
+			
+		}
+		mongo.close ()
+	}
 }

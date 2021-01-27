@@ -16,15 +16,36 @@
 		<maven.compiler.target>8</maven.compiler.target>
 	</properties>
 	<dependencies>
-	
-		
 		
 		<!-- https://mvnrepository.com/artifact/org.mongodb.scala/mongo-scala-driver -->
 		<dependency>
 			<groupId>org.mongodb.scala</groupId>
-			<artifactId>mongo-scala-driver_${scala.version}</artifactId>
-			<version>${mongo.scala.version}</version>
+			<artifactId>mongo-scala-driver_2.12</artifactId>
+			<version>4.0.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-async -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-async</artifactId>
+			<version>3.12.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-core -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-core</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.mongodb.scala/mongo-scala-bson -->
+		<dependency>
+			<groupId>org.mongodb.scala</groupId>
+			<artifactId>mongo-scala-bson_2.12</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		
+		
+		
 		
 		<dependency>
 			<groupId>com.typesafe.akka</groupId>
