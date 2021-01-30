@@ -7,7 +7,7 @@ import com.example.mongodb.entity.UserPortrait;
 import com.example.mongodb.entity.UserPortraitEntity;
 import com.example.mongodb.service.UserPortraitService;
 import com.google.gson.Gson;
-import com.mongodb.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCursor;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,6 @@ class MongodbApplicationTests {
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	@Qualifier("getMongoClient")
 	@Autowired
 	private MongoClient mongoClient;
 	

@@ -1,15 +1,22 @@
 package com.example.config
 
 import com.sksamuel.elastic4s._
+import com.sksamuel.elastic4s.ElasticDsl._
+import com.example.domain.RsRelationData
 
+import com.sksamuel.elastic4s.JacksonSupport
 case class BuildPrefix (sortField: java.lang.String, sorts: java.lang.String,
                         pageSize: java.lang.Integer, pageNo: java.lang.Integer, isExplain: java.lang.Boolean)
 
 object EsUtils {
 	
-	import com.sksamuel.elastic4s.requests.searches.{HighlightField, SearchRequest}
+	import com.example.domain.RsEntityData
+	import com.sksamuel.elastic4s.requests.searches.{HighlightField, SearchRequest, SearchResponse}
 	import com.sksamuel.elastic4s.requests.searches.aggs.AbstractAggregation
 	import com.sksamuel.elastic4s.requests.searches.queries.BoolQuery
+	
+	import java.util.Objects
+	import scala.Console.err
 	
 	
 	def getClient (uris: String, username: String, password: String) = {
@@ -40,7 +47,6 @@ object EsUtils {
 	                        buildPrefix: BuildPrefix) = {
 		
 		
-		import com.sksamuel.elastic4s.ElasticApi.search
 		val resWindow = 1000
 		val offset = (buildPrefix.pageNo - 1) * buildPrefix.pageSize
 		val size = buildPrefix.pageSize
@@ -73,12 +79,26 @@ object EsUtils {
 		request
 	}
 	
-	def performSearch (searchRequest: SearchRequest, client: ElasticClient) = {
-		import com.sksamuel.elastic4s.ElasticApi.RichFuture
-		import com.sksamuel.elastic4s.ElasticDsl.SearchHandler
-		val search = client.execute (searchRequest).await.result
+	def performSearch (request: SearchRequest, client: ElasticClient) = {
+		val search = client.execute (request).await.result
 		search
 	}
+	
+	def convertRsData (searchResponse: SearchResponse) =
+		searchResponse
+			.hits
+			.hits
+			.iterator
+			.map (res => if (res.index.replaceAll ("\\d+", "").contains ("relation")) {
+				RsRelationData.unapply (res)
+			} else
+				RsEntityData.unapply (res)
+			)
+			.map (_.orNull)
+			.filter (Objects.nonNull)
+			.map (printJson)
+			.foreach (err.println)
+	
 	
 	def printJson (any: Any) = JacksonSupport.mapper.writerWithDefaultPrettyPrinter.writeValueAsString (any)
 }

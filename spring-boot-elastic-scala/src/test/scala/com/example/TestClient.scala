@@ -9,14 +9,14 @@ package com.example
 object TestClient extends App {
 	
 	import com.example.config.EsUtils
-	import com.example.utils.{AttrAgg, AttrAggK, HitResult}
+	import com.example.domain.RsEntityData
+	import com.example.utils.{AttrAgg, AttrAggK}
 	import com.google.common.collect.Lists
 	import com.sksamuel.elastic4s.ElasticDsl._
 	import com.sksamuel.elastic4s.JacksonSupport
-
+	
 	import java.util.Objects
 	import scala.Console.err
-	import scala.collection.JavaConverters.{iterableAsScalaIterableConverter, seqAsJavaListConverter}
 	
 	
 	val uris = "http://192.169.4.245:9200,http://192.169.4.245:9201,http://192.169.4.245:9202"
@@ -25,7 +25,7 @@ object TestClient extends App {
 	val client = EsUtils.getClient (uris, username, password)
 	val responder = client.execute {
 		import com.sksamuel.elastic4s.ElasticApi.search
-		search ("common_20200101").query ("手机号").highlighting (highlight ("*"))
+		search ("common_relation_20200101").query ("data").highlighting (highlight ("*"))
 			//search ("my_index2")
 			.aggs {
 				import com.sksamuel.elastic4s.requests.searches.aggs.SigTermsAggregation
@@ -58,39 +58,42 @@ object TestClient extends App {
 		.foreach (println)
 	
 	
-	val list = responder
+	responder
 		.result
 		.hits
 		.hits
 		.iterator
-		.map (HitResult.unapply)
+		.map (res => if (res.index.replaceAll ("\\d+", "").contains ("relation")) {
+			import com.example.domain.RsRelationData
+			println (res.index.replaceAll ("\\d+", ""))
+			RsRelationData.unapply (res)
+		} else
+			RsEntityData.unapply (res)
+		)
 		.map (_.orNull)
 		.filter (Objects.nonNull)
-		.toList
-		.asJava
-	err.println (JacksonSupport.mapper.writeValueAsString (list))
+		.map (JacksonSupport.mapper.writeValueAsString)
+		.foreach (err.println)
+	
+	responder
+		.result
+		.hits
+		.hits
+		.iterator
 	
 	
 	client.close ()
 	
-	import com.github.houbb.segment.api.ISegmentResult
-	import com.github.houbb.segment.bs.SegmentBs
-	import com.github.houbb.segment.support.segment.mode.impl.SegmentModes
-	import com.github.houbb.segment.util.SegmentHelper
 	val string = "这是一个伸手不见五指的黑夜。"
 	
-	val resultList = SegmentBs.newInstance.segmentMode (SegmentModes.search).segment (string)
+	//val resultList = SegmentBs.newInstance.segmentMode (SegmentModes.search).segment (string)
 	
-	err.println(resultList)
-	SegmentBs.newInstance
-		.segmentMode(SegmentModes.dict)
-		.segment(string)
-		.asScala
-		.map(_.word)
-		.foreach(err.println)
-		
-	
-	
+	//SegmentBs.newInstance
+	//	.segmentMode (SegmentModes.dict)
+	//	.segment (string)
+	//	.asScala
+	//	.map (_.word)
+	//.foreach (err.println)
 	
 	
 }
