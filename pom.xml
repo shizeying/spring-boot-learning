@@ -17,6 +17,8 @@
 	<description>spring boot learning</description>
 	<packaging>pom</packaging>
 	<properties>
+		<tus-java-server.version>1.0.0-2.0</tus-java-server.version>
+		<tus-java-client.version>0.4.3</tus-java-client.version>
 		<fastjson.version>1.2.75</fastjson.version>
 		<vavr.version>0.10.3</vavr.version>
 		<java.version>1.8</java.version>
@@ -121,6 +123,8 @@
 		<module>spring-boot-xml</module>
 		<module>spring-boot-elastic-scala</module>
 		<module>spring-boot-scala-mongodb</module>
+		<module>spring-boot-large-file-upload</module>
+		<module>spring-boot-large-file-download</module>
 	</modules>
 
 
