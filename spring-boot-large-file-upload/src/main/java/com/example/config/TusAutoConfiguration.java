@@ -2,8 +2,10 @@ package com.example.config;
 
 import com.example.properties.TusProperties;
 import me.desair.tus.server.TusFileUploadService;
+import me.desair.tus.server.download.DownloadGetRequestHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -29,10 +31,15 @@ public class TusAutoConfiguration {
 	{
 		
 		return new TusFileUploadService().withStoragePath(tusProperties.getTusUploadDirectory())
-		                                 .withUploadURI("/api/upload")
+		                                 
 		                                 .withDownloadFeature();
 	}
 	
 
+	@Bean
+	@ConditionalOnMissingBean(DownloadGetRequestHandler.class)
+	public DownloadGetRequestHandler downloadGetRequestHandler(){
+		return  new DownloadGetRequestHandler();
+	}
 	
 }

@@ -11,6 +11,7 @@ import me.desair.tus.server.util.TusServletResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -32,9 +33,9 @@ class SpringBootLargeFileUploadApplicationTests {
 	void contextLoads() {
 		servletRequest = new MockHttpServletRequest();
 		servletResponse = new MockHttpServletResponse();
-		handler = new DownloadGetRequestHandler();
 	}
 	
+	@Autowired
 	private DownloadGetRequestHandler handler;
 	
 	private MockHttpServletRequest servletRequest;
