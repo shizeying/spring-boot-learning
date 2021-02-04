@@ -2,6 +2,8 @@ package com.example.elasticscala;
 
 import com.example.config.BuildPrefix;
 import com.example.config.EsUtils;
+import com.example.domain.HighlightEntity;
+import com.example.domain.TermEntity;
 import com.example.domain.bo.GeneralBuild;
 import com.example.domain.bo.SearchPatternToBuild;
 import com.example.service.TConfigService;
@@ -18,10 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import scala.runtime.BoxedUnit;
 
 import java.util.*;
-import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
 @SpringBootTest
@@ -91,10 +91,10 @@ class ElasticScalaApplicationTests {
 		abstractAggregations.addAll(aggFive);
 		abstractAggregations.addAll(aggTwo);
 		abstractAggregations.addAll(aggTwo);
-	
+		
 		SearchRequest searchRequest = EsUtils.buildSearchRequest(Arrays.asList(indexName), highlightFields,
 				abstractAggregations, boolQueryTerms, boolQueryTerms,
-				null	);
+				null);
 		SearchResponse searchResponse = EsUtils.performSearch(searchRequest, client);
 		Aggregations aggregations = searchResponse.aggregations();
 		List<AttrAgg> attrAgges = build
@@ -108,7 +108,7 @@ class ElasticScalaApplicationTests {
 		List<HitResult> apply1 = HitResult.apply(searchResponse.hits());
 		
 		//System.err.println(EsUtils.printJson(apply1));
-		System.out.println("apply1.size():"+apply1.size());
+		System.out.println("apply1.size():" + apply1.size());
 		
 	}
 	
@@ -162,14 +162,14 @@ class ElasticScalaApplicationTests {
 	void setCoarse() {
 		SearchPatternToBuild build = tConfigService.findByChineseName("普通关系");
 		String indexName = build.getIndexName() + "*";
-		String kw = "我要查询这个名称记录关联基站第一接收地点2020-11-11";
+		String kw = "第五我要查询这个名称记录关联基站第一接收地点2020-11-11data";
 		List<String> wordList = Lists.newArrayList();
 		if (RegexpRuleUtils.checkRegexpRule(kw)) {
 			wordList.add(kw);
 		}
-		List<String> wordStart =Lists.newArrayList();
+		List<String> wordStart = Lists.newArrayList();
 		List<String> hanlpKw = SearchUtils.segmentKw(kw);
-		wordStart.addAll( SearchUtils.segmentKwOverload(kw));
+		wordStart.addAll(SearchUtils.segmentKwOverload(kw));
 		wordStart.addAll(hanlpKw);
 		List<String> words = wordStart.stream().distinct().collect(Collectors.toList());
 		
@@ -183,7 +183,6 @@ class ElasticScalaApplicationTests {
 		                              .collect(Collectors.toList());
 		
 		words.addAll(wordsDate);
-		
 		
 		
 		List<BoolQuery> boolQueries = new ArrayList<>();
@@ -217,7 +216,7 @@ class ElasticScalaApplicationTests {
 		if (!words.isEmpty()) {
 			List<TermEntity> termEntitiesGen = fieldCoarse
 					                                   .stream()
-					                                   .filter(generalBuild -> StringUtils.equalsAnyIgnoreCase(generalBuild.getEsType(),"text",
+					                                   .filter(generalBuild -> StringUtils.equalsAnyIgnoreCase(generalBuild.getEsType(), "text",
 							                                   "keyword"))
 					                                   .map(generalBuild ->
 							                                        generalBuild
@@ -251,32 +250,33 @@ class ElasticScalaApplicationTests {
 					                                    .flatMap(Collection::stream)
 					                                    .collect(Collectors.toList());
 			List<TermEntity> termEntities2to5Text = fieldCoarse
-					                                    .stream()
-					                                    .filter(generalBuild -> StringUtils.equalsAnyIgnoreCase(generalBuild.getEsType(),"text"))
-					                                    .map(generalBuild ->
-							                                         generalBuild
-									                                         .getColumnItem()
-									                                         .stream()
-									                                         .filter(Objects::nonNull)
-									                                         .map(column -> new TermEntity(column, words, null))
-									                                         .collect(Collectors.toList())
-					                                    )
-					                                    .flatMap(Collection::stream)
-					                                    .collect(Collectors.toList());
+					                                        .stream()
+					                                        .filter(generalBuild -> StringUtils.equalsAnyIgnoreCase(generalBuild.getEsType(),
+							                                        "text"))
+					                                        .map(generalBuild ->
+							                                             generalBuild
+									                                             .getColumnItem()
+									                                             .stream()
+									                                             .filter(Objects::nonNull)
+									                                             .map(column -> new TermEntity(column, words, null))
+									                                             .collect(Collectors.toList())
+					                                        )
+					                                        .flatMap(Collection::stream)
+					                                        .collect(Collectors.toList());
 			List<TermEntity> termEntities2to5date = fieldCoarse
-					                                    .stream()
-					                                    .filter(generalBuild -> StringUtils.equalsAnyIgnoreCase(generalBuild.getEsType(),"text",
-							                                    "keyword"))
-					                                    .map(generalBuild ->
-							                                         generalBuild
-									                                         .getColumnItem()
-									                                         .stream()
-									                                         .filter(Objects::nonNull)
-									                                         .map(column -> new TermEntity(column, words, null))
-									                                         .collect(Collectors.toList())
-					                                    )
-					                                    .flatMap(Collection::stream)
-					                                    .collect(Collectors.toList());
+					                                        .stream()
+					                                        .filter(generalBuild -> StringUtils.equalsAnyIgnoreCase(generalBuild.getEsType(), "text",
+							                                        "keyword"))
+					                                        .map(generalBuild ->
+							                                             generalBuild
+									                                             .getColumnItem()
+									                                             .stream()
+									                                             .filter(Objects::nonNull)
+									                                             .map(column -> new TermEntity(column, words, null))
+									                                             .collect(Collectors.toList())
+					                                        )
+					                                        .flatMap(Collection::stream)
+					                                        .collect(Collectors.toList());
 			BoolQuery boolQueryWildcard = SearchUtils.builderWildcardQuery(termEntities2to5date);
 			boolQueries.add(boolQueryWildcard);
 			
@@ -285,9 +285,10 @@ class ElasticScalaApplicationTests {
 			boolQueries.add(boolQuery);
 			
 		}
+		List<String> ids = Lists.newArrayList();
+		ids.add("bMAqKEjpPDzNE9RLord3l7xJ");
+		BoolQuery coarseGrainedQueryBuilder = SearchUtils.convertBoolQuery(boolQueries, ids);
 		
-		BoolQuery coarseGrainedQueryBuilder = SearchUtils.convertBoolQuery(boolQueries, null);
-	
 		//高亮构建
 		List<HighlightEntity> highlightEntities = build
 				                                          .getFields()
@@ -323,12 +324,13 @@ class ElasticScalaApplicationTests {
 		abstractAggregations.addAll(aggFive);
 		abstractAggregations.addAll(aggTwo);
 		abstractAggregations.addAll(aggTwo);
+		
 		SearchRequest searchRequest = EsUtils.buildSearchRequest(Arrays.asList(indexName), highlightFields,
 				abstractAggregations, coarseGrainedQueryBuilder, null,
 				new BuildPrefix(null, null, 10, 1, true));
-	
 		
 		SearchResponse searchResponse = EsUtils.performSearch(searchRequest, client);
+		
 		Aggregations aggregations = searchResponse.aggregations();
 		List<AttrAgg> attrAgges = build
 				                          .getFields()
@@ -336,12 +338,8 @@ class ElasticScalaApplicationTests {
 				                          .filter(generalBuild -> Objects.nonNull(generalBuild.getAggregations().getColumn()))
 				                          .map(this::formatAttrAgg)
 				                          .collect(Collectors.toList());
-		List<AttrAgg> apply = AttrAgg.apply(aggregations, attrAgges);
+		EsUtils.convertRsData(searchResponse);
 		
-		List<HitResult> apply1 = HitResult.apply(searchResponse.hits());
-		System.out.println(EsUtils.printJson(apply1));
-
-
 		
 	}
 	
@@ -367,7 +365,7 @@ class ElasticScalaApplicationTests {
 								                                       .stream()
 								                                       .filter(Objects::nonNull)
 								                                       .map(column -> new TermEntity(column, words,
-										                                       Integer.parseInt(generalBuild.getIsFineGrained())))
+										                                       Double.parseDouble(generalBuild.getIsFineGrained())))
 								                                       .collect(Collectors.toList())
 				                                  )
 				                                  .flatMap(Collection::stream)

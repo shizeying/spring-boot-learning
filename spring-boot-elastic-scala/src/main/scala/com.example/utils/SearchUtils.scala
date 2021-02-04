@@ -7,36 +7,6 @@ import com.sksamuel.elastic4s.requests.searches.queries.{FuzzyQuery, Query}
 import java.util.Objects
 import scala.collection.JavaConverters.collectionAsScalaIterableConverter
 
-/**
-	* 高亮实体
-	* column：field
-	* fragmentSize：参数用于控制返回的高亮字段的最大字符数（默认值为 100 ），如果高亮结果的字段长度大于该设置的值，则大于的部分不返回
-	*
-	* @author shizeying
-	* @date 2021 /01/14
-	*/
-case class HighlightEntity (column: String, fragmentSize: Integer)
-
-/**
-	* Term
-	* column：field
-	* kw :关键字
-	* boots：权重
-	* include：包含的字段
-	* exclude：不包含的字段
-	*
-	* @author shizeying
-	* @date 2021 /01/14
-	*/
-trait SearchEntity {
-	val column: String
-	val words: java.util.List[String]
-	val boots: Integer
-}
-
-case class TermEntity (override val column: String, override val words: java.util.List[String], override val boots: Integer) extends
-	SearchEntity
-
 
 /**
 	* @program: spring-boot-learning->SearchUtils
@@ -46,7 +16,10 @@ case class TermEntity (override val column: String, override val words: java.uti
 	* */
 object SearchUtils {
 	
+	import com.example.domain.{HighlightEntity, RangeEntity, TermEntity}
 	import com.sksamuel.elastic4s.requests.searches.queries.{BoolQuery, ConstantScore}
+	
+	import scala.collection.JavaConverters.seqAsJavaListConverter
 	
 	def builderHighlight (highlights: java.util.List[HighlightEntity]) = {
 		import com.sksamuel.elastic4s.ElasticApi.highlight
@@ -251,24 +224,46 @@ object SearchUtils {
 		*/
 	def buildFilterIds (ids: java.util.List[String]) = idsQuery (ids)
 	
-	def segmentKwOverload (kw: String) = {
+	def segmentKwOverload (kw: String) = segmentKwOverloadScala (kw = kw)
+		.filter (_.length >= 2)
+		.toList.asJava
+	
+	
+	def segmentKwOverloadScala (kw: String) = {
 		import com.github.houbb.segment.bs.SegmentBs
 		import com.github.houbb.segment.support.segment.mode.impl.SegmentModes
-		
-		import scala.collection.JavaConverters.seqAsJavaListConverter
 		SegmentBs.newInstance
 			.segmentMode (SegmentModes.dict)
 			.segment (kw)
 			.asScala
 			.map (_.word)
 			.filter (_.length >= 2)
-			.toList.asJava
 	}
 	
-	def segmentKw (kw: String) = {
-		import com.hankcs.hanlp.HanLP
+	def builderRangeQuery (range: RangeEntity) = {
+		import com.example.domain.RangeScalaEnum
+		import com.sksamuel.elastic4s.ElasticApi.rangeQuery
+		val format = "yyyy-mm-dd hh:mm:ss"
+		var query = rangeQuery (field = range.column).format (fmt = format)
 		
-		import scala.collection.JavaConverters.seqAsJavaListConverter
+		query = range.from.rangeType match {
+			case RangeScalaEnum.gt => query.gt (f = range.from.v)
+			case RangeScalaEnum.gte => query.gte (gte = range.from.v)
+		}
+		query = range.to.rangeType match {
+			case RangeScalaEnum.lt => query.lt (to = range.from.v)
+			case RangeScalaEnum.lte => query.lte (lte = range.from.v)
+		}
+		constantScoreQuery (query = query)
+		
+	}
+	
+	
+	def segmentKw (kw: String) = segmentKwScala (kw).toList.asJava
+	
+	
+	def segmentKwScala (kw: String) = {
+		import com.hankcs.hanlp.HanLP
 		
 		
 		val segment = HanLP.newSegment ("viterbi")
@@ -282,7 +277,7 @@ object SearchUtils {
 				
 			}
 			.flatMap (_.iterator)
-			.filter (_.length >= 2).toList.asJava
+			.filter (_.length >= 2)
 	}
 	
 	/** 构建器精确条款查询
@@ -361,7 +356,7 @@ object SearchUtils {
 		var bool = boolQuery ().minimumShouldMatch (1)
 		bool = bool.should (boolQueries.asScala)
 		if (Objects.nonNull (ids) && !ids.isEmpty) {
-			bool = bool.filter (idsQuery (ids))
+			bool = bool.filter (idsQuery (ids = ids.asScala))
 		}
 		bool
 	}

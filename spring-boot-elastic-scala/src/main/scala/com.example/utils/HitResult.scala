@@ -1,11 +1,10 @@
 package com.example.utils
 
-trait Result {
-	val id: String
-	val index: String
-}
+import com.example.domain.Result
+
 
 case class SingleData (chineseName: String, fieldName: String, data: Any)
+
 
 /**
 	* @program: spring-boot-learning->HitResult
@@ -29,6 +28,9 @@ object HitResult {
 	def unapply (m: SearchHit): Option[HitResult] = try {
 		
 		import scala.collection.JavaConverters.seqAsJavaListConverter
+		
+	
+		
 		val datas = m
 			.sourceAsMap
 			.filter (Objects.nonNull)
