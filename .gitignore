@@ -42,7 +42,8 @@ spring-boot-utils/mvnw.cmd
 ### Java template
 # Compiled class file
 *.class
-
+.mvn
+**/.mvn
 # Log file
 *.log
 
