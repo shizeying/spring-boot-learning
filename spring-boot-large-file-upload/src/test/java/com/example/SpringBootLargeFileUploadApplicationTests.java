@@ -1,5 +1,9 @@
 package com.example;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.desair.tus.server.HttpHeader;
 import me.desair.tus.server.HttpMethod;
 import me.desair.tus.server.download.DownloadGetRequestHandler;
@@ -12,13 +16,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.util.UUID;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,11 +44,57 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class SpringBootLargeFileUploadApplicationTests {
-	
+	@Value("${user.default.pwd:111111}")
+	private String defaultPwd;
 	@BeforeEach
 	void contextLoads() {
 		servletRequest = new MockHttpServletRequest();
 		servletResponse = new MockHttpServletResponse();
+	}
+	@Value("${map}")
+	private Map<String, String> map = new HashMap<>();
+	@Test
+	void test(){
+		System.err.println("map:"+map.toString());
+		
+	}
+	private RestTemplate restTemplate=new RestTemplate();
+	@Test
+	void  setDefaultPwd(){
+		System.out.println(defaultPwd);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTY2MzQ1OTAsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTYxNjYzMDk5MH0.NiIXwS9UEDyfbLSRXtmSYooQfeETauoI8BgynqhOnPo");
+		headers.add("Cookie","jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MTY2MzQ1OTAsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTYxNjYzMDk5MH0.NiIXwS9UEDyfbLSRXtmSYooQfeETauoI8BgynqhOnPo");
+		MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
+		HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<MultiValueMap<String, Object>>(paramMap,headers);
+		
+		String forObject = restTemplate.exchange("https://shizeying.top/trojan/user", org.springframework.http.HttpMethod.GET,httpEntity,
+				String.class).getBody();
+		System.out.println(forObject);
+	}
+	@Test
+	void  setDefaultPwd2(){
+		   String apk="dfa7df9216474047a21b602c26ec5521";
+		UriComponents build = UriComponentsBuilder.newInstance()
+		                                          .scheme("http")
+		                                          .host("192.168.4.151")
+		                                          .port("80")
+		                                          .pathSegment("sso", "login",apk).build();
+		HttpHeaders headers = new HttpHeaders();
+		//headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.add("single-token","123");
+		MultiValueMap<String, Object> paramMap = new LinkedMultiValueMap<String, Object>();
+		paramMap.add("username","15812345678");
+		paramMap.add("password","111111");
+		ObjectNode personJsonObject = objectMapper.createObjectNode();
+		personJsonObject.put("username","15812345678");
+		personJsonObject.put("password","111111");
+		HttpEntity<String> request = new HttpEntity<String>("", headers);
+		 String uir="http://192.168.4.151/kgms/kg";
+		System.out.println( restTemplate.exchange(uir, org.springframework.http.HttpMethod.GET,null,
+				String.class));
+		System.out.println((UUID.randomUUID().toString().replace("-", "")));
 	}
 	
 	@Autowired
@@ -44,6 +106,43 @@ class SpringBootLargeFileUploadApplicationTests {
 	
 	@Mock
 	private UploadStorageService uploadStorageService;
+	@Autowired
+	private ObjectMapper objectMapper;
+	
+	@Test
+	void setObjectMapper(){
+		String json="{\n" +
+				            "    \"status\":0,\n" +
+				            "    \"data\":{\n" +
+				            "        \"userName\":\"zhangsan\",\n" +
+				            "        \"chineseName\":\"张三\"\n" +
+				            "    }\n" +
+				            "}";
+		try {
+			JsonNode jsonNode= objectMapper.readTree(json);
+			System.out.println(jsonNode.findValue("status").asText());
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		System.out.println(json);
+		String hash="{bcrypt}$2a$10$eeMrQLdbu6HaP.91n40rueeEg5aVjKeeGxm6EG8Xei2fmfDrB7sFy";
+		String oriPwd = "111111";
+		System.out.println(genOauthEncodePwd(oriPwd));
+		System.out.println(bcryptEncode(oriPwd));
+		System.out.println(bcryptEncoder.matches(oriPwd,genOauthEncodePwd(oriPwd)));
+		System.out.println(bcryptEncoder.matches(oriPwd,hash));
+	}
+	private static final PasswordEncoder bcryptEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();;
+	
+	public static String bcryptEncode(String password) {
+		return bcryptEncoder.encode(password);
+	}
+	
+	public static String genOauthEncodePwd(String password) {
+		return bcryptEncode(password);
+	}
+	
+
 	
 	@Test
 	public void supports() throws Exception {

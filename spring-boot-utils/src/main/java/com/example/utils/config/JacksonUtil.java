@@ -15,7 +15,7 @@ public class JacksonUtil {
 	private static ObjectMapper mapper = new ObjectMapper();
 	
 	public static String bean2Json(Object obj) {
-		return Try.of(() -> mapper.writeValueAsString(obj))
+		return Try.of(() -> mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj))
 		          .onFailure(error -> log.error("JacksonUtil:[{}]", error.getMessage())).get();
 	}
 	

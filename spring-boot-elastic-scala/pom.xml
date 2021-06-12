@@ -233,6 +233,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.4</version>
 				<configuration>
 					<timestampFormat>yyyy-MM-dd HH:mm:ss</timestampFormat>
 				</configuration>

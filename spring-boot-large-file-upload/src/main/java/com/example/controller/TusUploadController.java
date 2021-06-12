@@ -62,6 +62,7 @@ public class TusUploadController {
 		UploadInfo uploadInfo = null;
 		try {
 			uploadInfo = this.tusFileUploadService.getUploadInfo(uploadUri);
+			
 		} catch (IOException | TusException e) {
 			e.printStackTrace();
 		}
