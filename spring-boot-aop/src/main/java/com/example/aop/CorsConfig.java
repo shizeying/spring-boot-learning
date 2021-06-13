@@ -1,14 +1,10 @@
-package com.example.config;
+package com.example.aop;
 
-import com.example.utils.config.*;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-
-import java.util.*;
+import org.springframework.web.cors.*;
+import org.springframework.web.filter.*;
 
 /**
  * @author shizeying

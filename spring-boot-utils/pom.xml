@@ -87,9 +87,14 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>spring-boot-aop</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackjson.verison}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackjson.verison}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
