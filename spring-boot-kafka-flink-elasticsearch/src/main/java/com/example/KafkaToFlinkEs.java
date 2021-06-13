@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.*;
 import lombok.extern.slf4j.*;
 import lombok.*;
-import org.apache.commons.lang3.*;
 import org.apache.flink.api.common.serialization.*;
 import org.apache.flink.streaming.api.environment.*;
 import org.apache.flink.streaming.connectors.elasticsearch.*;
@@ -26,6 +25,20 @@ import java.util.*;
 
 /**
  * kafka导入elasticsearch 带密码验证的demo
+ * <p>
+ * <blockquote><pre>
+ *          {
+ *              "elasticsearchIndex":"es索引名称",
+ *              "inputJson":{
+ *                  "id":"id",
+ *                  ..数据...
+ *              }
+ *
+ *          }
+ *
+ *      </pre></blockquote>
+ *
+ * </p>
  *
  * @author shizeying
  * @date 2021/06/13
@@ -46,11 +59,8 @@ public class KafkaToFlinkEs {
 		final String topic = Optional.of(context.getBean(KafkaCustomProperties.class))
 		                             .map(KafkaCustomProperties::getTopic)
 		                             .orElseThrow(() -> new NoSuchElementException("topic未配置"));
-		final String index = Optional.of(context.getBean(KafkaCustomProperties.class))
-		                             .map(KafkaCustomProperties::getElasticsearchIndex)
-		                             .filter(StringUtils::isNoneBlank)
 		
-		                             .orElseThrow(() -> new NoSuchElementException("spring.elasticsearch.index未配置"));
+		
 		final int bulkSize = context.getBean(KafkaCustomProperties.class).getElasticsearchIndexBulk();
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 		final FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(topic, new SimpleStringSchema(), consumerConfig);
@@ -59,26 +69,31 @@ public class KafkaToFlinkEs {
 		//添加kafka为数据源
 		val stream = env.addSource(consumer);
 		stream.printToErr();
-		ElasticsearchSink.Builder<String> esSinkBuilder = new
-				                                                  ElasticsearchSink.Builder<>
-				                                                  (httpHosts,
-						                                                  (ElasticsearchSinkFunction<String>)
-								                                                  (json, runtimeContext,
-								                                                   requestIndexer) -> {
-									                                                  Optional<JsonNode> optional = Optional.of(
-											                                                  JacksonUtil.readJson(json));
-									                                                  final String id = optional.map(node -> node.get("id").asText())
-									                                                                            .orElseThrow(
-											                                                                            () -> new NoSuchElementException(
-													                                                                            "未匹配到id"));
-									                                                  ObjectNode objectNode = optional.get()
-									                                                                                  .deepCopy();
-									                                                  objectNode.remove("id");
-									                                                  String newJson = JacksonUtil.bean2JsonNotNUll(objectNode);
-									                                                  Requests.indexRequest(index).id(id)
-									                                                          .source(newJson, XContentType.JSON);
-									                                                  log.info("data saved.");
-								                                                  });
+		ElasticsearchSink.Builder<String> esSinkBuilder
+				= new
+						
+						  ElasticsearchSink.Builder<>
+						  (httpHosts,
+								  (ElasticsearchSinkFunction<String>)
+										  (json, runtimeContext,
+										   requestIndexer) -> {
+											  Optional<JsonNode> optional = Optional.of(
+													  JacksonUtil.readJson(json));
+											  String index = optional.get().get("elasticsearchIndex").asText();
+											  final Optional<JsonNode> optionalInputJson = Optional.ofNullable(optional.get().get("inputJson"));
+											
+											  final String id = optionalInputJson.map(node -> node.get("id").asText())
+											                                     .orElseThrow(
+													                                     () -> new NoSuchElementException(
+															                                     "未匹配到id"));
+											  ObjectNode objectNode = optionalInputJson.get()
+											                                           .deepCopy();
+											  objectNode.remove("id");
+											  String newJson = JacksonUtil.bean2JsonNotNUll(objectNode);
+											  Requests.indexRequest(index).id(id)
+											          .source(newJson, XContentType.JSON);
+											  log.info("data saved.");
+										  });
 		esSinkBuilder.setRestClientFactory(restClientFactory);
 		//批量请求的配置；这将指示接收器在每个元素之后发出请求，否则将对它们进行缓冲。
 		esSinkBuilder.setBulkFlushMaxActions(bulkSize);

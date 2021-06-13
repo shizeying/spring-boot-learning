@@ -1,16 +1,13 @@
 package com.example.utils.config;
 
-import com.alibaba.fastjson.*;
 import com.example.exception.*;
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.type.*;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.node.*;
 import io.vavr.control.*;
 import lombok.extern.slf4j.*;
 
-import java.sql.*;
 import java.util.*;
 import java.util.function.*;
 
@@ -66,15 +63,27 @@ public class JacksonUtil {
 	}
 	
 	public static void main(String[] args) {
-		String json = "{\n" +
-				              "\"a\":1,\n" +
-				              "\"b\":1\n" +
-				              "\n" +
-				              "}";
-		final JsonNode jsonNode = readJson(json);
-		ObjectNode objectNode = ((ObjectNode) jsonNode).deepCopy();
-		objectNode.remove("a");
-		System.out.println(bean2JsonFun.apply(objectNode));
+		String json = " {\n" +
+				              "     \"elasticsearchIndex\":\"es索引名称\",\n" +
+				              "     \"inputJson\":{\n" +
+				              "         \"id\":\"id\",\n" +
+				              "          \"id2\":\"id\"\n" +
+				              "     }}";
+		System.out.println(json);
+		Optional<JsonNode> optional = Optional.of(
+				JacksonUtil.readJson(json));
+		String index = optional.get().get("elasticsearchIndex").asText();
+		final Optional<JsonNode> optionalInputJson = Optional.ofNullable(optional.get().get("inputJson"));
+		
+		final String id = optionalInputJson.map(node -> node.get("id").asText())
+		                                   .orElseThrow(
+				                                   () -> new NoSuchElementException(
+						                                   "未匹配到id"));
+		ObjectNode objectNode = optionalInputJson.get()
+		                                         .deepCopy();
+		objectNode.remove("id");
+		String newJson = JacksonUtil.bean2JsonNotNUll(objectNode);
+		System.out.println(newJson);
 	}
 	
 	

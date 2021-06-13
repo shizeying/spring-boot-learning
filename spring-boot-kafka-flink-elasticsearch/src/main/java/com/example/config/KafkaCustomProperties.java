@@ -49,10 +49,8 @@ public class KafkaCustomProperties {
 	 * 配置需要写入的topic
 	 */
 	private String topic;
-	/**
-	 * 配置索引名称
-	 */
-	private String elasticsearchIndex;
+
+
 	/**
 	 * 匹配输入es的个数
 	 */
@@ -91,13 +89,7 @@ public class KafkaCustomProperties {
 		this.elasticsearchIndexBulk = elasticsearchIndexBulk;
 	}
 	
-	public String getElasticsearchIndex() {
-		return elasticsearchIndex;
-	}
-	
-	public void setElasticsearchIndex(final String elasticsearchIndex) {
-		this.elasticsearchIndex = elasticsearchIndex;
-	}
+
 	
 	public String getTopic() {
 		return topic;
