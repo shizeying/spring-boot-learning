@@ -1,8 +1,6 @@
 package com.example.config;
 
 import com.google.common.collect.*;
-import lombok.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.*;
 import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;

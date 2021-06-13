@@ -131,7 +131,7 @@
 		<module>spring-boot-mybatis-plus-typehandle</module>
 		<module>spring-boot-xml</module>
 		<module>spring-boot-elastic-scala</module>
-		<module>spring-boot-scala-mongodb</module>
+		<!--<module>spring-boot-scala-mongodb</module>-->
 		<module>spring-boot-large-file-upload</module>
 		<module>spring-boot-large-file-download</module>
 		<module>spring-boot-kafka-flink-elasticsearch</module>
