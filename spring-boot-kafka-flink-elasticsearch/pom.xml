@@ -7,7 +7,6 @@
 		<artifactId>learning</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.example</groupId>
 	<artifactId>spring-boot-kafka-elasticsearch</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-kafka-elasticsearch</name>
@@ -64,7 +63,7 @@
 	
 	<build>
 		<finalName>${project.artifactId}</finalName>
-	
+		
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -80,7 +79,6 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			
 		
 		
 		</plugins>
