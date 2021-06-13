@@ -99,6 +99,7 @@ public class KafkaToFlinkEs {
 		esSinkBuilder.setBulkFlushMaxActions(bulkSize);
 		
 		esSinkBuilder.setFailureHandler(new RetryRejectedExecutionFailureHandler());
+		stream.addSink (esSinkBuilder.build ()).setParallelism (5);
 		try {
 			env.execute("Kafka_Flink_Elasticsearch");
 		} catch (Exception e) {
