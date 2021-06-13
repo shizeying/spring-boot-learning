@@ -59,7 +59,8 @@ public class KafkaToFlinkEs {
 		//添加kafka为数据源
 		val stream = env.addSource(consumer);
 		stream.printToErr();
-		ElasticsearchSink.Builder<String> esSinkBuilder = new ElasticsearchSink.Builder<>
+		ElasticsearchSink.Builder<String> esSinkBuilder = new
+				                                                  ElasticsearchSink.Builder<>
 				                                                  (httpHosts,
 						                                                  (ElasticsearchSinkFunction<String>)
 								                                                  (json, runtimeContext,
@@ -70,8 +71,8 @@ public class KafkaToFlinkEs {
 									                                                                            .orElseThrow(
 											                                                                            () -> new NoSuchElementException(
 													                                                                            "未匹配到id"));
-									                                                  ObjectNode objectNode = ((ObjectNode) optional.get())
-											                                                                          .deepCopy();
+									                                                  ObjectNode objectNode = optional.get()
+									                                                                                  .deepCopy();
 									                                                  objectNode.remove("id");
 									                                                  String newJson = JacksonUtil.bean2JsonNotNUll(objectNode);
 									                                                  Requests.indexRequest(index).id(id)
