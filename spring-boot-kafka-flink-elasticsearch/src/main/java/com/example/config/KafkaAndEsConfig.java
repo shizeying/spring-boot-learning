@@ -22,7 +22,7 @@ import java.util.stream.*;
  * @date 2021/06/13
  */
 @Slf4j
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties(ElasticsearchRestClientProperties.class)
 public class KafkaAndEsConfig {
 	@Autowired
