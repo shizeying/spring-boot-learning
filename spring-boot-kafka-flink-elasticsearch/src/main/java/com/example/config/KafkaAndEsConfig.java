@@ -40,8 +40,8 @@ public class KafkaAndEsConfig {
 		props.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, String.join(",", properties
 				                                                                            .getBootstrapServers()));
 		//zk
-		props.setProperty("zookeeper.connect", String.join(",", properties
-				                                                        .getZookeeperConnects()));
+		props.setProperty(CustConsumerConfig.ZOOKEEPER_CONNECT, String.join(",", properties
+				                                                                         .getZookeeperConnects()));
 		//spring.kafka.consumer.group-id
 		Try.of(() -> properties.getConsumer().getGroupId())
 		   .filter(Objects::nonNull)

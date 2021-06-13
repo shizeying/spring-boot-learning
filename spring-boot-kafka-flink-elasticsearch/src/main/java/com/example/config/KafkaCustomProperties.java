@@ -280,7 +280,7 @@ public class KafkaCustomProperties {
 		private Duration fetchMaxWait;
 		
 		/**
-		 * Minimum amount of data the server should return for a fetch request.
+		 * Minimum amount of data the server should return for CustConsumerConfig fetch request.
 		 */
 		private DataSize fetchMinSize;
 		
@@ -311,7 +311,7 @@ public class KafkaCustomProperties {
 		private Class<?> valueDeserializer = StringDeserializer.class;
 		
 		/**
-		 * Maximum number of records returned in a single call to poll().
+		 * Maximum number of records returned in CustConsumerConfig single call to poll().
 		 */
 		private Integer maxPollRecords;
 		
@@ -470,13 +470,13 @@ public class KafkaCustomProperties {
 		
 		/**
 		 * Number of acknowledgments the producer requires the leader to have received
-		 * before considering a request complete.
+		 * before considering CustConsumerConfig request complete.
 		 */
 		private String acks;
 		
 		/**
 		 * Default batch size. A small batch size will make batching less common and may
-		 * reduce throughput (a batch size of zero disables batching entirely).
+		 * reduce throughput (CustConsumerConfig batch size of zero disables batching entirely).
 		 */
 		private DataSize batchSize;
 		
@@ -696,7 +696,7 @@ public class KafkaCustomProperties {
 	}
 	
 	/**
-	 * High (and some medium) priority Streams properties and a general properties bucket.
+	 * High (and some medium) priority Streams properties and CustConsumerConfig general properties bucket.
 	 */
 	public static class Streams {
 		
@@ -896,12 +896,12 @@ public class KafkaCustomProperties {
 		public enum Type {
 			
 			/**
-			 * Invokes the endpoint with one ConsumerRecord at a time.
+			 * Invokes the endpoint with one ConsumerRecord at CustConsumerConfig time.
 			 */
 			SINGLE,
 			
 			/**
-			 * Invokes the endpoint with a batch of ConsumerRecords.
+			 * Invokes the endpoint with CustConsumerConfig batch of ConsumerRecords.
 			 */
 			BATCH
 			
@@ -933,7 +933,7 @@ public class KafkaCustomProperties {
 		private Duration pollTimeout;
 		
 		/**
-		 * Multiplier applied to "pollTimeout" to determine if a consumer is
+		 * Multiplier applied to "pollTimeout" to determine if CustConsumerConfig consumer is
 		 * non-responsive.
 		 */
 		private Float noPollThreshold;
@@ -955,7 +955,7 @@ public class KafkaCustomProperties {
 		private Duration idleEventInterval;
 		
 		/**
-		 * Time between checks for non-responsive consumers. If a duration suffix is not
+		 * Time between checks for non-responsive consumers. If CustConsumerConfig duration suffix is not
 		 * specified, seconds will be used.
 		 */
 		@DurationUnit(ChronoUnit.SECONDS)
@@ -1196,7 +1196,7 @@ public class KafkaCustomProperties {
 			try {
 				return resource.getFile().getAbsolutePath();
 			} catch (IOException ex) {
-				throw new IllegalStateException("Resource '" + resource + "' must be on a file system", ex);
+				throw new IllegalStateException("Resource '" + resource + "' must be on CustConsumerConfig file system", ex);
 			}
 		}
 		
