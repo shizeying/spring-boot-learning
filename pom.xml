@@ -87,12 +87,19 @@
 		<mongo.scala.version>4.1.1</mongo.scala.version>
 		<mybatis.plus.version>3.4.1</mybatis.plus.version>
 		<jsonld-java.version>0.13.3</jsonld-java.version>
-		<jsonld-java-rdf2go.version>0.12.0</jsonld-java-rdf2go.version>
+		<rdf4j.version>3.7.0</rdf4j.version>
 	</properties>
 	
 	<dependencyManagement>
 		
 		<dependencies>
+			<!--<dependency>-->
+			<!--	<groupId>org.eclipse.RDF4J</groupId>-->
+			<!--	<artifactId>rdf4j-bom</artifactId>-->
+			<!--	<version>${rdf4j.version}</version>-->
+			<!--	<type>pom</type>-->
+			<!--	<scope>import</scope>-->
+			<!--</dependency>-->
 			<dependency>
 				<groupId>io.projectreactor</groupId>
 				<artifactId>reactor-bom</artifactId>
@@ -195,4 +202,26 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>aliyunmaven</id>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>oss.sonatype.org-snapshot</id>
+			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 </project>
