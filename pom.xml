@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -86,6 +86,8 @@
 		<hanlp.version>portable-1.7.8</hanlp.version>
 		<mongo.scala.version>4.1.1</mongo.scala.version>
 		<mybatis.plus.version>3.4.1</mybatis.plus.version>
+		<jsonld-java.version>0.13.3</jsonld-java.version>
+		<jsonld-java-rdf2go.version>0.12.0</jsonld-java-rdf2go.version>
 	</properties>
 	
 	<dependencyManagement>
@@ -135,6 +137,7 @@
 		<module>spring-boot-large-file-upload</module>
 		<module>spring-boot-large-file-download</module>
 		<module>spring-boot-kafka-flink-elasticsearch</module>
+		<module>spring-boot-jsonld</module>
 	</modules>
 	
 	<build>
