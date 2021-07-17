@@ -6,6 +6,7 @@ import lombok.extern.slf4j.*;
 import org.apache.commons.io.*;
 import org.springframework.core.io.*;
 
+import java.io.*;
 import java.nio.charset.*;
 import java.util.function.*;
 
@@ -40,11 +41,20 @@ public class ReadResourcesUtils {
 	                                                                            .get();
 	
 	
-
-	
-			
-	
-
-	
+	public static Function<String, InputStream> readFileToStringFile = queryFile -> Try.of(() -> new ClassPathResource(queryFile))
+	                                                                                   .mapTry(ClassPathResource::getInputStream)
+	                                                                                   //.mapTry(inputStream -> IOUtils
+	                                                                                   //                          .toString(inputStream,
+	                                                                                   //                                  StandardCharsets.UTF_8))
+	                                                                                   .getOrElseThrow(
+			                                                                                   () -> new NullPointerException("没有匹配到指定文件中的数据"));
+	public static Function<String, String> readFileToStringFilePath = queryFile -> Try.of(() -> new ClassPathResource(queryFile))
+	                                                                                  .map(ClassPathResource::getPath)
+	                                                                                   //.mapTry(ClassPathResource::getInputStream)
+	                                                                                   //.mapTry(inputStream -> IOUtils
+	                                                                                   //                          .toString(inputStream,
+	                                                                                   //                                  StandardCharsets.UTF_8))
+	                                                                                   .getOrElseThrow(
+			                                                                                   () -> new NullPointerException("没有匹配到指定文件中的数据"));
 	
 }

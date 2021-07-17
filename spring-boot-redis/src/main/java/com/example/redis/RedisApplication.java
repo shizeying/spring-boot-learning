@@ -1,11 +1,9 @@
 package com.example.redis;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
 
-@EnableRedisRepositories
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.example")
 public class RedisApplication {
 
 	public static void main(String[] args) {

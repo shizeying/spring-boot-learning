@@ -1,0 +1,4 @@
+easy:
+  rules:
+    enabled: true
+    rules-engine-type: plain # \u6307\u5B9A\u89C4\u5219\u5F15\u64CE\u7684\u5B9E\u73B0\uFF0Cplain\u662F\u672Cstarter\u65B0\u589E\u7684\u4E00\u4E2A\u7B80\u5355\u6267\u884C\u5F15\u64CE
