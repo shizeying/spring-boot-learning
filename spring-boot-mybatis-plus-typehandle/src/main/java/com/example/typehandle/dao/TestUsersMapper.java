@@ -14,5 +14,5 @@ import java.util.List;
 @Repository
 @Mapper
 public interface TestUsersMapper extends BaseMapper<TestUsersEntity> {
-	List<TestUsersEntity> find();
+	List<TestUsersEntity> find(TestUsersEntity entity);
 }

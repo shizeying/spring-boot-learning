@@ -13,5 +13,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public abstract class BaseEntity {
 	@ToMap(key = "listid")
-	private Long id;
+	private Object id;
 }

@@ -1,7 +1,6 @@
 package com.example.typehandle.entity;
 
 import com.example.typehandle.annotation.ToMap;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +16,7 @@ public abstract class BasicEntity extends BaseEntity{
 	@ToMap(key = "list123")
 	private String name;
 	
-	public BasicEntity(Long id, String name) {
+	public BasicEntity(Object id, String name) {
 		super(id);
 		this.name = name;
 	}

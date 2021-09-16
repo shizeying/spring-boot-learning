@@ -21,7 +21,7 @@ public class TestUsersEntity extends BasicEntity {
 	private Map<String, Object> map = Maps.newHashMap();
 	
 	@Builder
-	public TestUsersEntity(Long id, String name, Map<String, Object> map) {
+	public TestUsersEntity(Object id, String name, Map<String, Object> map) {
 		super(id, name);
 		this.map = map;
 	}

@@ -7,34 +7,40 @@
 		<artifactId>learning</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>spring-boot-jsonld</artifactId>
+	<artifactId>spring-boot-starter-drools</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-jsonld</name>
+	<name>spring-boot-starter-drools</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.eclipse.rdf4j/rdf4j-util -->
-		<!--<dependency>-->
-		<!--	<groupId>org.eclipse.rdf4j</groupId>-->
-		<!--	<artifactId>rdf4j-util</artifactId>-->
-		<!--	<version>${rdf4j.version}</version>-->
-		<!--</dependency>-->
-		
-		
+		<dependency>
+			<groupId>com.github.hongwen1993</groupId>
+			<artifactId>fast-drools-spring-boot-starter</artifactId>
+			<version>8.0.8</version>
+		</dependency>
 		
 		<dependency>
-			<groupId>com.github.jsonld-java</groupId>
-			<artifactId>jsonld-java</artifactId>
-			<version>${jsonld-java.version}</version>
+			<groupId>com.example</groupId>
+			<artifactId>spring-boot-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-decisiontables</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>

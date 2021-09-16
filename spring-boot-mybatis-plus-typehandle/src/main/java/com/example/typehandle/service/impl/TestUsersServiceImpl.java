@@ -15,6 +15,6 @@ import java.util.List;
 public class TestUsersServiceImpl extends ServiceImpl<TestUsersMapper, TestUsersEntity> implements TestUsersService {
 	@Override
 	public List<TestUsersEntity> find() {
-		return this.baseMapper.find();
+		return this.baseMapper.find(TestUsersEntity.builder().id(1).build());
 	}
 }
