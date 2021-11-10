@@ -18,6 +18,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j -->
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>4.5.5</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-swagger</artifactId>

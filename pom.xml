@@ -17,6 +17,8 @@
 	<description>spring boot learning</description>
 	<packaging>pom</packaging>
 	<properties>
+		<jsqlparser.version>4.2</jsqlparser.version>
+		<json-path.version>2.6.0</json-path.version>
 		<breeze.version>1.1</breeze.version>
 		<cats.verison>2.3.1</cats.verison>
 		<arpack-ng.verison>3.7.0-1.5.4</arpack-ng.verison>
