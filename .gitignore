@@ -395,7 +395,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-spring-boot-jython/.mvn/wrapper/MavenWrapperDownloader.java
-spring-boot-jython/.mvn/wrapper/maven-wrapper.properties
-spring-boot-kafka/.mvn/wrapper/MavenWrapperDownloader.java
-spring-boot-kafka/.mvn/wrapper/maven-wrapper.properties
+**/.mvn/
+**/*.iml
+
+.semanticgraphs
