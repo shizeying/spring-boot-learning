@@ -397,5 +397,6 @@ Temporary Items
 
 **/.mvn/
 **/*.iml
-
+**/HELP.md
 .semanticgraphs
+HELP.md
