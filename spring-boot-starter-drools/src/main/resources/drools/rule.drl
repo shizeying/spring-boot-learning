@@ -8,6 +8,7 @@ global Logger log;
 
 rule "rule 01"
 when
+
     $d:Double($d == 0)
 then
     log.info("执行规则01");
