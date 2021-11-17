@@ -96,11 +96,26 @@
 		<jena.version>3.7.0</jena.version>
 		<easy-rule.version>4.2.0</easy-rule.version>
 		<drools.version>7.42.0.Final</drools.version>
+		<hibernate-jpamodelgen.version>5.6.1.Final</hibernate-jpamodelgen.version>
+	
 	</properties>
 	
 	<dependencyManagement>
 		
 		<dependencies>
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator.version}</version>
+			</dependency>
+			<!--自动生成jpa配置元信息-->
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-jpamodelgen</artifactId>
+				<version>${hibernate-jpamodelgen.version}</version>
+			
+			</dependency>
+			
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena</artifactId>
