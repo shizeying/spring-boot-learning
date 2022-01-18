@@ -1,10 +1,8 @@
 package com.example.mongodb.service.impl;
 
 import com.example.mongodb.entity.UserPortrait;
-import com.example.mongodb.entity.UserPortraitEntity;
 import com.example.mongodb.service.UserPortraitOriginalService;
 import com.example.mongodb.utils.PageResult;
-import com.google.common.base.Functions;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
@@ -15,21 +13,9 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.InsertOneModel;
 import com.mongodb.client.model.WriteModel;
 import com.mongodb.client.result.UpdateResult;
-import io.vavr.Function1;
 import io.vavr.Function2;
-import io.vavr.Function3;
 import io.vavr.Function4;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -38,7 +24,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.stereotype.Service;
 
-/** @author shizeying */
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+/**
+ * @author shizeying
+ */
 @SuppressWarnings("ALL")
 @Service
 @Slf4j
@@ -118,11 +112,10 @@ public class UserPortraitOriginalServiceImpl implements UserPortraitOriginalServ
 						.getDatabase(DATA_BASENAME)
 						.withCodecRegistry(codecRegistry())
 						.getCollection(COLLECTION_NAME, UserPortrait.class);
-	
 		
 		
-		Function4<Long, String, String,String, UserPortrait> function3 =
-				(ei, un, db,annotate) -> new UserPortrait()
+		Function4<Long, String, String, String, UserPortrait> function3 =
+				(ei, un, db, annotate) -> new UserPortrait()
 						.setEntityId(ei)
 						.setUsername(un)
 						.setDatabaseName(db)

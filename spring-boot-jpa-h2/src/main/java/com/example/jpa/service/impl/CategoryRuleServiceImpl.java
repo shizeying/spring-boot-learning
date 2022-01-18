@@ -13,14 +13,6 @@ import com.example.jpa.repository.CategoryRuleRepository;
 import com.example.jpa.service.CategoryRuleService;
 import com.example.utils.config.JacksonUtil;
 import com.google.common.collect.Lists;
-import java.util.List;
-import java.util.Objects;
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +23,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.*;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -82,7 +79,7 @@ public class CategoryRuleServiceImpl implements CategoryRuleService {
 				//分类代码
 				predicatesList.add(criteriaBuilder.like(root.get(CategoryRuleEntity_.categoryCode), kw));
 				//类别名称
-				predicatesList.add(criteriaBuilder.like(root.get(CategoryRuleEntity_.typeName), kw));
+				predicatesList.add(criteriaBuilder.like(root.get(CategoryRuleEntity_.typeName3), kw));
 				
 			} else {
 				like = false;
@@ -95,7 +92,7 @@ public class CategoryRuleServiceImpl implements CategoryRuleService {
 							data.getProductionFactory()));
 				}
 				if (StringUtils.isNotBlank(data.getTypeName())) {
-					predicatesList.add(criteriaBuilder.equal(root.get(CategoryRuleEntity_.typeName),
+					predicatesList.add(criteriaBuilder.equal(root.get(CategoryRuleEntity_.typeName3),
 							data.getTypeName()));
 				}
 				
@@ -122,7 +119,7 @@ public class CategoryRuleServiceImpl implements CategoryRuleService {
 					criteriaBuilder.asc(root.get(CategoryRuleEntity_.productName)),
 					criteriaBuilder.asc(root.get(CategoryRuleEntity_.categoryCode)),
 					criteriaBuilder.asc(root.get(CategoryRuleEntity_.productionFactory)),
-					criteriaBuilder.asc(root.get(CategoryRuleEntity_.typeName))
+					criteriaBuilder.asc(root.get(CategoryRuleEntity_.typeName3))
 			
 			);
 			
@@ -166,7 +163,7 @@ public class CategoryRuleServiceImpl implements CategoryRuleService {
 				
 				
 				cq.select(
-						cb.construct(String.class, root.get(CategoryRuleEntity_.typeName)));
+						cb.construct(String.class, root.get(CategoryRuleEntity_.typeName3)));
 				break;
 			default:
 				

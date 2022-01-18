@@ -1,28 +1,24 @@
 package com.example.jpa.entity;
 
 import com.example.jpa.base.BaseEntity;
-import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@EqualsAndHashCode(callSuper = false)
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+@EqualsAndHashCode(callSuper = true, exclude = {"testEntityList"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "testEntityList")
 //@RequiredArgsConstructor
 @Entity
 @DynamicInsert
@@ -54,7 +50,15 @@ public class CategoryRuleEntity extends BaseEntity implements Serializable {
 	/**
 	 * 类别名称
 	 */
-	private String typeName;
+	private String typeName3;
+	
+	
+	@OneToMany(targetEntity = TestEntity.class, fetch = FetchType.EAGER)
+	@JoinColumns(value = {
+			@JoinColumn(name = "categoryRuleId", referencedColumnName = "id", insertable = false, nullable = false)
+			//
+	}, foreignKey = @ForeignKey(name = "none", value = ConstraintMode.NO_CONSTRAINT))
+	private List<TestEntity> testEntityList = new ArrayList<>();
 	
 	
 }
