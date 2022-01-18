@@ -5,11 +5,10 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<groupId>com.example</groupId>
 	<artifactId>jython</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-jython</name>
 	<description>jython project for Spring Boot</description>
 
@@ -28,7 +27,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-swagger</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 
 		<dependency>

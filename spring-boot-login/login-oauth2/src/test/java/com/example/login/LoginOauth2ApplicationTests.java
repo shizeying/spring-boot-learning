@@ -1,13 +1,13 @@
-package com.example;
+package com.example.login;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootScalaSmileApplicationTests {
-	
-	@Test
-	void contextLoads() {
-	}
-	
+class LoginOauth2ApplicationTests {
+
+  @Test
+  void contextLoads() {
+  }
+
 }

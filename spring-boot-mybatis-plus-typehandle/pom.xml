@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>mybatis-plus-typehandle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>mybatis-plus-typeHandle</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
@@ -20,27 +20,22 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-core</artifactId>
-			<version>${mybatis.plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-annotation</artifactId>
-			<version>${mybatis.plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-generator</artifactId>
-			<version>${mybatis.plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus-boot-starter</artifactId>
-			<version>${mybatis.plus.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.version}</version>
 		</dependency>
 	
 		<dependency>
@@ -62,7 +57,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-utils</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 	</dependencies>
 	

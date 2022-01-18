@@ -5,12 +5,12 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<packaging>jar</packaging>
 	<artifactId>redis</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-redis</name>
 	<description>spring boot redis study</description>
 
@@ -25,7 +25,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-customer-config</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 		
 		<dependency>
@@ -46,7 +46,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-swagger</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

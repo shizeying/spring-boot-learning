@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>spring-boot-customer-config</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-customer-config</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-utils</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

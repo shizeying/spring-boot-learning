@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>spring-boot-easy-rule</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-easy-rule</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -19,7 +19,6 @@
 		<dependency>
 			<groupId>com.ilxqx</groupId>
 			<artifactId>easy-rules-spring-boot-starter</artifactId>
-			<version>${easy-rule.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

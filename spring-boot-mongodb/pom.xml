@@ -6,12 +6,12 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<packaging>jar</packaging>
 	<artifactId>mongodb</artifactId>
 	<name>spring-boot-mongodb</name>
-	<version>1.0</version>
 	<description>Spring Boot learning mongodb</description>
 
 	<properties>
@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-swagger</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 
 		<dependency>

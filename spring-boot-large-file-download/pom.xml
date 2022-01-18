@@ -5,10 +5,10 @@
 	<parent>
 		<groupId>com.example</groupId>
 		<artifactId>learning</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}${sha1}${changelist}</version>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>spring-boot-large-file-download</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-large-file-download</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -18,12 +18,11 @@
 		<dependency>
 			<groupId>com.example</groupId>
 			<artifactId>spring-boot-utils</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>${revision}${sha1}${changelist}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!--<artifactId>spring-boot-starter-webflux</artifactId>-->
 		</dependency>
 		
 		<dependency>
