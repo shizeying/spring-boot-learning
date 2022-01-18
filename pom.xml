@@ -60,7 +60,6 @@
 		<lombok.version>1.18.12</lombok.version>
 		<hive.version>2.3.0</hive.version>
 		<log.version>1.7.30</log.version>
-		<jackjson.version>2.8.8</jackjson.version>
 		<jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
 		<commons-dbutils.version>1.7</commons-dbutils.version>
 		<c3o0.version>0.9.1.2</c3o0.version>
@@ -108,16 +107,28 @@
 	  <jsonschema2pojo-core.version>1.1.1</jsonschema2pojo-core.version>
 		<xercesImpl.version>2.12.0</xercesImpl.version>
 		<hive-jdbc.version>2.2.0</hive-jdbc.version>
+		<jjwt.version>0.9.1</jjwt.version>
 	</properties>
 	
 	<dependencyManagement>
 		
 		<dependencies>
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${jjwt.version}</version>
+			</dependency>
 			<!-- https://mvnrepository.com/artifact/org.apache.hive/hive-jdbc -->
 			<dependency>
 				<groupId>org.apache.hive</groupId>
 				<artifactId>hive-jdbc</artifactId>
 				<version>${hive-jdbc.version}</version>
+			</dependency>
+			<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackjson.verison}</version>
 			</dependency>
 
 			<dependency>
@@ -447,6 +458,7 @@
 		<module>spring-boot-customer-config</module>
 		<module>spring-boot-starter-drools</module>
 		<module>spring-boot-login</module>
+		<module>spring-boot-jpa-h2</module>
 		
 	</modules>
 

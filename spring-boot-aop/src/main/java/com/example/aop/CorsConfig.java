@@ -16,7 +16,7 @@ import org.springframework.web.filter.*;
  */
 @Slf4j
 @SuppressWarnings("ALL")
-@Configuration
+@Configuration(proxyBeanMethods = false)
 public class CorsConfig {
 	@Autowired
 	private DepartmentProperties departmentProperties;

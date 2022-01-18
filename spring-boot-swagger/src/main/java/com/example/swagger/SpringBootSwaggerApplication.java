@@ -59,6 +59,6 @@ public class SpringBootSwaggerApplication
         ip,
         port,
         contextPath);
-    log.info("External:http://{}:{}{}", ip, port, "/doc.html", contextPath);
+    log.info("External:http://{}:{}{}", "", port, "/doc.html", contextPath);
   }
 }
