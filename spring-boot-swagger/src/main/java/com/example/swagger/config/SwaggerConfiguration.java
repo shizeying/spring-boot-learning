@@ -1,6 +1,6 @@
 package com.example.swagger.config;
 
-import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
+import com.example.utils.constant.ToolsConstants;
 import java.io.FileReader;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,6 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -44,7 +43,7 @@ public class SwaggerConfiguration {
     return new Docket(DocumentationType.SWAGGER_2)
         .apiInfo(apiInfo())
         .select()
-        .apis(RequestHandlerSelectors.basePackage("com.example"))
+        .apis(RequestHandlerSelectors.basePackage(ToolsConstants.package_name))
         .paths(PathSelectors.any())
         .build();
   }
@@ -53,6 +52,7 @@ public class SwaggerConfiguration {
     return new ApiInfoBuilder()
         .termsOfServiceUrl("http://localhost:8080")
         .title(model.getName())
+
         .description(model.getDescription())
         .version(model.getVersion())
         .build();
