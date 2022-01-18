@@ -8,8 +8,7 @@
 		<version>${revision}${sha1}${changelist}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
-	<artifactId>${name}</artifactId>
-	<version>${revision}${sha1}${changelist}</version>
+	<artifactId>spring-boot-xml</artifactId>
 	<name>spring-boot-xml</name>
 	<description>Demo project for Spring Boot</description>
 	
@@ -52,14 +51,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>

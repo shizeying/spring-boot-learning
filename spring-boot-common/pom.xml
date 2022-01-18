@@ -9,31 +9,6 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
         <groupId>org.springframework.boot</groupId>
       </plugin>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <annotationProcessorPaths>
-            <path>
-              <artifactId>lombok</artifactId>
-              <groupId>org.projectlombok</groupId>
-              <version>${lombok.version}</version>
-            </path>
-            <path>
-              <artifactId>mapstruct-processor</artifactId>
-              <groupId>org.mapstruct</groupId>
-              <version>${org.mapstruct.version}</version>
-            </path>
-          </annotationProcessorPaths> <!-- or higher, depending on your project -->
-          <compilerArgs>
-            <arg>-Amapstruct.suppressGeneratorTimestamp=true</arg>
-            <arg>-Amapstruct.defaultComponentModel=spring</arg>
-          </compilerArgs> <!-- or higher, depending on your project -->
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-        <groupId>org.apache.maven.plugins</groupId>
-        <version>${maven-compiler-plugin.version}</version>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -88,7 +63,6 @@
   <description>spring boot common study</description>
   <modelVersion>4.0.0</modelVersion>
 
-  <!--<version>${parent.version}</version>-->
   <name>spring-boot-common</name>
   <packaging>jar</packaging>
   <parent>

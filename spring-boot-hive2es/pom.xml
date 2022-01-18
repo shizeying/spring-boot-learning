@@ -13,7 +13,6 @@
 	<name>spring-boot-hive2es</name>
 	<description>native hive to es</description>
 
-
 	<properties>
 		<java.version>1.8</java.version>
 
@@ -22,51 +21,48 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct-jdk8</artifactId>
-			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>${org.mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>c3p0</groupId>
 			<artifactId>c3p0</artifactId>
-			<version>${c3o0.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-dbutils</groupId>
 			<artifactId>commons-dbutils</artifactId>
-			<version>${commons-dbutils.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.47</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-jdbc</artifactId>
-			<version>${hive.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.glassfish</groupId>
+					<artifactId>javax.el</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${log.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>${log.version}</version>
 		</dependency>
 
 
@@ -76,7 +72,6 @@
 
 			<artifactId>jackson-annotations</artifactId>
 
-			<version>${jackjson.version}</version>
 
 		</dependency>
 		<dependency>
@@ -85,7 +80,6 @@
 
 			<artifactId>jackson-databind</artifactId>
 
-			<version>${jackjson.version}</version>
 
 		</dependency>
 
@@ -96,7 +90,6 @@
 
 			<artifactId>jackson-mapper-asl</artifactId>
 
-			<version>${jackson-mapper-asl.version}</version>
 
 		</dependency>
 		<!-- elasticsearch -->
@@ -142,27 +135,26 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-					<annotationProcessorPaths>
-						<path>
-							<groupId>org.mapstruct</groupId>
-							<artifactId>mapstruct-processor</artifactId>
-							<version>${org.mapstruct.version}</version>
-						</path>
-						<path>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-							<version>${lombok.version}</version>
-						</path>
-					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+			<!--	<groupId>org.apache.maven.plugins</groupId>-->
+			<!--	<artifactId>maven-compiler-plugin</artifactId>-->
+			<!--	<configuration>-->
+			<!--		<source>${maven.compiler.source}</source>-->
+			<!--		<target>${maven.compiler.target}</target>-->
+			<!--		<annotationProcessorPaths>-->
+			<!--			<path>-->
+			<!--				<groupId>org.mapstruct</groupId>-->
+			<!--				<artifactId>mapstruct-processor</artifactId>-->
+			<!--				<version>${org.mapstruct.version}</version>-->
+			<!--			</path>-->
+			<!--			<path>-->
+			<!--				<groupId>org.projectlombok</groupId>-->
+			<!--				<artifactId>lombok</artifactId>-->
+			<!--				<version>${lombok.version}</version>-->
+			<!--			</path>-->
+			<!--		</annotationProcessorPaths>-->
+			<!--	</configuration>-->
+			<!--</plugin>-->
 
 		</plugins>
 	</build>

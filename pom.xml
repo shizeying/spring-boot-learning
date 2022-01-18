@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>${revision}${sha1}${changelist}</version>
+		<version>2.5.1</version>
 		<relativePath/>
 	</parent>
 	
@@ -20,7 +20,7 @@
 		<revision>2.5.1</revision>
 		<changelist/>
 		<sha1/>
-
+		<maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
 		<scala-maven-plugin.version>3.4.6</scala-maven-plugin.version>
 		<buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
 		<maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
@@ -107,11 +107,39 @@
 		<hibernate-jpamodelgen.version>5.6.1.Final</hibernate-jpamodelgen.version>
 	  <jsonschema2pojo-core.version>1.1.1</jsonschema2pojo-core.version>
 		<xercesImpl.version>2.12.0</xercesImpl.version>
+		<hive-jdbc.version>2.2.0</hive-jdbc.version>
 	</properties>
 	
 	<dependencyManagement>
 		
 		<dependencies>
+			<!-- https://mvnrepository.com/artifact/org.apache.hive/hive-jdbc -->
+			<dependency>
+				<groupId>org.apache.hive</groupId>
+				<artifactId>hive-jdbc</artifactId>
+				<version>${hive-jdbc.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct-jdk8</artifactId>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>c3p0</groupId>
+				<artifactId>c3p0</artifactId>
+				<version>${c3o0.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-dbutils</groupId>
+				<artifactId>commons-dbutils</artifactId>
+				<version>${commons-dbutils.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.documents4j</groupId>
 				<artifactId>documents4j-transformer-api</artifactId>
@@ -162,6 +190,15 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-core</artifactId>
 				<version>${jackjson.verison}</version>
+			</dependency>
+			<dependency>
+
+				<groupId>org.codehaus.jackson</groupId>
+
+				<artifactId>jackson-mapper-asl</artifactId>
+
+				<version>${jackson-mapper-asl.version}</version>
+
 			</dependency>
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
@@ -338,9 +375,9 @@
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-jpamodelgen</artifactId>
 				<version>${hibernate-jpamodelgen.version}</version>
-			
+				<scope>provided</scope>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.apache.jena</groupId>
 				<artifactId>jena</artifactId>
@@ -469,6 +506,10 @@
 								<artifactId>spring-boot-configuration-processor</artifactId>
 								<version>${revision}${sha1}${changelist}</version>
 							</exclude>
+							<exclude>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+							</exclude>
 						</excludes>
 					</configuration>
 					<executions>
@@ -482,6 +523,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
 					<configuration>
 						<source>${maven.compiler.source}</source>
 						<target>${maven.compiler.target}</target>
@@ -548,31 +590,29 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 		</plugins>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>aliyunmaven</id>
-			<url>https://maven.aliyun.com/repository/public</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>oss.sonatype.org-snapshot</id>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
+	<!--<repositories>-->
+	<!--	<repository>-->
+	<!--		<id>aliyunmaven</id>-->
+	<!--		<url>https://maven.aliyun.com/repository/public</url>-->
+	<!--		<releases>-->
+	<!--			<enabled>false</enabled>-->
+	<!--		</releases>-->
+	<!--		<snapshots>-->
+	<!--			<enabled>true</enabled>-->
+	<!--		</snapshots>-->
+	<!--	</repository>-->
+	<!--	<repository>-->
+	<!--		<id>oss.sonatype.org-snapshot</id>-->
+	<!--		<url>http://oss.sonatype.org/content/repositories/snapshots</url>-->
+	<!--		<releases>-->
+	<!--			<enabled>false</enabled>-->
+	<!--		</releases>-->
+	<!--		<snapshots>-->
+	<!--			<enabled>true</enabled>-->
+	<!--		</snapshots>-->
+	<!--	</repository>-->
+	<!--</repositories>-->
 </project>

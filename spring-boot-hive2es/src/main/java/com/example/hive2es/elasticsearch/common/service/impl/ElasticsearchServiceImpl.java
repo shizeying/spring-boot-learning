@@ -193,7 +193,6 @@ public abstract class ElasticsearchServiceImpl<T extends BasicEntity> implements
         try {
             SearchHits hits = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT).getHits();
             for (SearchHit hit : hits) {
-                System.err.println(hits.getTotalHits());
                 System.out.println(hit.getSourceAsString());
             }
         } catch (IOException e) {
