@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <description>spring boot common study</description>
+  <modelVersion>4.0.0</modelVersion>
+
+  <name>spring-boot-common</name>
+  <packaging>jar</packaging>
+  <parent>
+    <artifactId>learning</artifactId>
+    <groupId>com.example</groupId>
+    <version>${revision}${sha1}${changelist}</version>
+    <relativePath>../pom.xml</relativePath>
+    <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
   <artifactId>common</artifactId>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <groupId>org.springframework.boot</groupId>
-      </plugin>
-    </plugins>
-  </build>
+
   <dependencies>
     <dependency>
       <artifactId>validation-api</artifactId>
       <groupId>javax.validation</groupId>
-      <version>${javax.validation.version}</version>
     </dependency>
 
     <dependency>
       <artifactId>mapstruct-jdk8</artifactId>
       <groupId>org.mapstruct</groupId>
-      <version>${org.mapstruct.version}</version>
     </dependency>
     <dependency>
       <artifactId>mapstruct-processor</artifactId>
       <groupId>org.mapstruct</groupId>
       <scope>compile</scope>
-      <version>${org.mapstruct.version}</version>
 
     </dependency>
     <dependency>
       <artifactId>mapstruct</artifactId>
       <groupId>org.mapstruct</groupId>
       <scope>compile</scope>
-      <version>${org.mapstruct.version}</version>
     </dependency>
 
 
@@ -60,25 +68,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <description>spring boot common study</description>
-  <modelVersion>4.0.0</modelVersion>
-
-  <name>spring-boot-common</name>
-  <packaging>jar</packaging>
-  <parent>
-    <artifactId>learning</artifactId>
-    <groupId>com.example</groupId>
-    <version>${revision}${sha1}${changelist}</version>
-    <relativePath>../pom.xml</relativePath>
-    <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
-  </parent>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <groupId>org.springframework.boot</groupId>
+      </plugin>
+    </plugins>
+  </build>
 
 
 </project>
