@@ -1,11 +1,13 @@
 package com.example.aop;
 
-import com.example.config.*;
-import lombok.extern.slf4j.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
-import org.springframework.web.cors.*;
-import org.springframework.web.filter.*;
+import com.example.config.DepartmentProperties;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * @author shizeying
@@ -15,7 +17,6 @@ import org.springframework.web.filter.*;
  * @date 2020/11/04
  */
 @Slf4j
-@SuppressWarnings("ALL")
 @Configuration(proxyBeanMethods = false)
 public class CorsConfig {
 	@Autowired

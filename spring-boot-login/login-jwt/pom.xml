@@ -2,24 +2,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+
   <parent>
-    <artifactId>spring-boot-login</artifactId>
     <groupId>com.example</groupId>
+    <artifactId>spring-boot-login</artifactId>
     <version>${revision}${sha1}${changelist}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
+  <modelVersion>4.0.0</modelVersion>
   <artifactId>login-jwt</artifactId>
   <name>login-jwt</name>
   <description>login-jwt</description>
+
   <properties>
     <java.version>1.8</java.version>
   </properties>
+
   <dependencies>
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
+      <groupId>com.example</groupId>
+      <artifactId>spring-boot-swagger</artifactId>
+      <version>${revision}${sha1}${changelist}</version>
     </dependency>
     <dependency>
       <groupId>com.example</groupId>
@@ -27,13 +30,13 @@
       <version>${revision}${sha1}${changelist}</version>
     </dependency>
     <dependency>
-      <groupId>com.example</groupId>
-      <artifactId>spring-boot-swagger</artifactId>
-      <version>${revision}${sha1}${changelist}</version>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt</artifactId>
     </dependency>
     <!--自动生成jpa_类-->
     <dependency>
@@ -42,27 +45,26 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
     </dependency>
   </dependencies>
 
@@ -74,5 +76,4 @@
       </plugin>
     </plugins>
   </build>
-
 </project>
