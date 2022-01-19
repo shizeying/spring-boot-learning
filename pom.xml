@@ -137,6 +137,12 @@
 				<version>${org.mapstruct.version}</version>
 			</dependency>
 			<dependency>
+				<artifactId>mapstruct-processor</artifactId>
+				<groupId>org.mapstruct</groupId>
+				<scope>compile</scope>
+				<version>${org.mapstruct.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.mapstruct</groupId>
 				<artifactId>mapstruct</artifactId>
 				<version>${org.mapstruct.version}</version>

@@ -37,7 +37,6 @@
       <artifactId>mapstruct-processor</artifactId>
       <groupId>org.mapstruct</groupId>
       <scope>compile</scope>
-
     </dependency>
     <dependency>
       <artifactId>mapstruct</artifactId>
