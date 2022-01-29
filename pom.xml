@@ -85,6 +85,7 @@
 		
 		<dom4j.version>2.1.3</dom4j.version>
 		<elastic4s.vresion>7.9.1</elastic4s.vresion>
+		<elastic.vresion>7.9.1</elastic.vresion>
 		<scala.version>2.12</scala.version>
 		<flink.version>1.11.0</flink.version>
 		<elasticsearch.version>7.7.0</elasticsearch.version>
@@ -108,11 +109,19 @@
 		<xercesImpl.version>2.12.0</xercesImpl.version>
 		<hive-jdbc.version>2.2.0</hive-jdbc.version>
 		<jjwt.version>0.9.1</jjwt.version>
+		<orika.version>1.5.4</orika.version>
 	</properties>
 	
 	<dependencyManagement>
 		
 		<dependencies>
+			<!-- https://mvnrepository.com/artifact/ma.glasnost.orika/orika-core -->
+			<dependency>
+				<groupId>ma.glasnost.orika</groupId>
+				<artifactId>orika-core</artifactId>
+				<version>${orika.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>io.jsonwebtoken</groupId>
 				<artifactId>jjwt</artifactId>

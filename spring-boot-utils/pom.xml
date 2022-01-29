@@ -29,13 +29,17 @@
 			<groupId>com.github.jsqlparser</groupId>
 			<artifactId>jsqlparser</artifactId>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>org.jsonschema2pojo</groupId>
 			<artifactId>jsonschema2pojo-core</artifactId>
 		</dependency>
-		
+		<!--bean拷贝工具类-->
+		<dependency>
+			<groupId>ma.glasnost.orika</groupId>
+			<artifactId>orika-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
