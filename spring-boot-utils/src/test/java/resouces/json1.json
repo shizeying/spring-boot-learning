@@ -1,0 +1,22 @@
+{
+  "index": {
+    "routing": {
+      "allocation": {
+        "include": {
+          "_name": "der.ys"
+        }
+      }
+    },
+    "mapping": {
+      "single_type": "true",
+      "single_type1": "true"
+    },
+    "refresh_interval": "1s",
+    "translog": {
+      "durability": "async",
+      "sync_interval": "1s"
+    },
+    "number_of_shards": "1"
+  },
+  "codec": "default"
+}

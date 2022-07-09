@@ -1,0 +1,22 @@
+{
+  "codec": "default",
+  "index": {
+    "routing": {
+      "allocation": {
+        "include": {
+          "_name": "ys",
+          "_name1": "cker.ys"
+        }
+      }
+    },
+    "mapping": {
+      "single_type": "true"
+    },
+    "refresh_interval": "1s",
+    "translog": {
+      "durability": "async",
+      "sync_interval": "15s"
+    },
+    "number_of_shards": "1"
+  }
+}
