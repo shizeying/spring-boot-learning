@@ -5,14 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.vavr.control.Try;
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.function.Function;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * jackson 工具类
@@ -65,30 +61,7 @@ public class JacksonUtil {
 				.onFailure(err -> new MyErrorException(err, JacksonUtil.class))
 				.get();
 	}
-	
-	public static void main(String[] args) {
-		String json = " {\n" +
-				              "     \"elasticsearchIndex\":\"es索引名称\",\n" +
-				              "     \"inputJson\":{\n" +
-				              "         \"id\":\"id\",\n" +
-				              "          \"id2\":\"id\"\n" +
-				              "     }}";
-		System.out.println(json);
-		Optional<JsonNode> optional = Optional.of(
-				JacksonUtil.readJson(json));
-		String index = optional.get().get("elasticsearchIndex").asText();
-		final Optional<JsonNode> optionalInputJson = Optional.ofNullable(optional.get().get("inputJson"));
-		
-		final String id = optionalInputJson.map(node -> node.get("id").asText())
-				.orElseThrow(
-						() -> new NoSuchElementException(
-								"未匹配到id"));
-		ObjectNode objectNode = optionalInputJson.get()
-				.deepCopy();
-		objectNode.remove("id");
-		String newJson = JacksonUtil.bean2JsonNotNUll(objectNode);
-		System.out.println(newJson);
+		public static JsonNode createJson() {
+			return mapper.createObjectNode();
 	}
-	
-	
 }

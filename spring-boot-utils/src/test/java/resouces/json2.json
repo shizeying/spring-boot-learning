@@ -5,7 +5,13 @@
       "allocation": {
         "include": {
           "_name": "ys",
-          "_name1": "cker.ys"
+          "_name1": "cker.ys",
+          "_name2": 2,
+          "_name3": [
+            1,
+            3,
+            4
+          ]
         }
       }
     },

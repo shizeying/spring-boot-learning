@@ -3,7 +3,13 @@
     "routing": {
       "allocation": {
         "include": {
-          "_name": "der.ys"
+          "_name": "der.ys",
+          "_name2": 1,
+          "_name3": [
+            1,
+            2,
+            3
+          ]
         }
       }
     },

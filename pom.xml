@@ -111,11 +111,17 @@
     <jjwt.version>0.9.1</jjwt.version>
     <orika.version>1.5.4</orika.version>
     <java-diff-utils.version>4.11</java-diff-utils.version>
+    <json-patch.version>1.13</json-patch.version>
   </properties>
 
   <dependencyManagement>
 
     <dependencies>
+      <dependency>
+        <groupId>com.github.java-json-tools</groupId>
+        <artifactId>json-patch</artifactId>
+        <version>${json-patch.version}</version>
+      </dependency>
       <dependency>
         <groupId>io.github.java-diff-utils</groupId>
         <artifactId>java-diff-utils</artifactId>
@@ -498,148 +504,148 @@
       <testResource>
         <directory>src/test/java/resources/${profile.env}</directory>
       </testResource>
-  </testResources>
+    </testResources>
 
-  <pluginManagement>
+    <pluginManagement>
 
+      <plugins>
+        <plugin>
+          <groupId>net.alchim31.maven</groupId>
+          <artifactId>scala-maven-plugin</artifactId>
+          <version>${scala-maven-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>compile-scala</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>add-source</goal>
+                <goal>compile</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>test-compile-scala</id>
+              <phase>test-compile</phase>
+              <goals>
+                <goal>add-source</goal>
+                <goal>testCompile</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <!--<recompileMode>incremental</recompileMode>-->
+            <!--<compileOrder>Mixed</compileOrder>-->
+            <scalaVersion>${scala.compat.version}</scalaVersion>
+            <args>
+              <arg>-unchecked</arg>
+              <arg>-deprecation</arg>
+              <arg>-feature</arg>
+            </args>
+            <jvmArgs>
+              <jvmArg>-Xms64m</jvmArg>
+              <jvmArg>-Xmx1024m</jvmArg>
+            </jvmArgs>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <finalName>${project.build.finalName}</finalName>
+            <fork>true</fork>
+            <!--增加jvm参数-->
+            <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
+            <excludes>
+              <exclude>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-configuration-processor</artifactId>
+                <version>${revision}${sha1}${changelist}</version>
+              </exclude>
+              <exclude>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+              </exclude>
+            </excludes>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+            <encoding>UTF-8</encoding>
+            <annotationProcessorPaths>
+              <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+              </path>
+              <path>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>${hibernate-jpamodelgen.version}</version>
+
+              </path>
+            </annotationProcessorPaths>
+            <compilerArguments>
+              <processor>
+                lombok.launch.AnnotationProcessorHider$AnnotationProcessor,org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
+              </processor>
+            </compilerArguments>
+          </configuration>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
     <plugins>
+
+
       <plugin>
-        <groupId>net.alchim31.maven</groupId>
-        <artifactId>scala-maven-plugin</artifactId>
-        <version>${scala-maven-plugin.version}</version>
-        <executions>
-          <execution>
-            <id>compile-scala</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>add-source</goal>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>test-compile-scala</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>add-source</goal>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
         <configuration>
-          <!--<recompileMode>incremental</recompileMode>-->
-          <!--<compileOrder>Mixed</compileOrder>-->
-          <scalaVersion>${scala.compat.version}</scalaVersion>
-          <args>
-            <arg>-unchecked</arg>
-            <arg>-deprecation</arg>
-            <arg>-feature</arg>
-          </args>
-          <jvmArgs>
-            <jvmArg>-Xms64m</jvmArg>
-            <jvmArg>-Xmx1024m</jvmArg>
-          </jvmArgs>
+          <skipTests>true</skipTests>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <configuration>
-          <finalName>${project.build.finalName}</finalName>
-          <fork>true</fork>
-          <!--增加jvm参数-->
-          <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
-          <excludes>
-            <exclude>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-configuration-processor</artifactId>
-              <version>${revision}${sha1}${changelist}</version>
-            </exclude>
-            <exclude>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-            </exclude>
-          </excludes>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-compiler-plugin.version}</version>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>${maven-jar-plugin.version}</version>
         <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-          <encoding>UTF-8</encoding>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-            <path>
-              <groupId>org.hibernate</groupId>
-              <artifactId>hibernate-jpamodelgen</artifactId>
-              <version>${hibernate-jpamodelgen.version}</version>
-
-            </path>
-          </annotationProcessorPaths>
-          <compilerArguments>
-            <processor>
-              lombok.launch.AnnotationProcessorHider$AnnotationProcessor,org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor
-            </processor>
-          </compilerArguments>
+          <archive>
+            <manifestEntries>
+              <!--suppress UnresolvedMavenProperty -->
+              <Build-Timestamp>${timestamp}</Build-Timestamp>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
-
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>${buildnumber-maven-plugin.version}</version>
+        <configuration>
+          <timestampFormat>yyyy-MM-dd HH:mm:ss</timestampFormat>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>create-timestamp</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
-  </pluginManagement>
-  <plugins>
-
-
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-surefire-plugin</artifactId>
-      <version>${maven-surefire-plugin.version}</version>
-      <configuration>
-        <skipTests>true</skipTests>
-      </configuration>
-    </plugin>
-    <plugin>
-      <groupId>org.apache.maven.plugins</groupId>
-      <artifactId>maven-jar-plugin</artifactId>
-      <version>${maven-jar-plugin.version}</version>
-      <configuration>
-        <archive>
-          <manifestEntries>
-            <!--suppress UnresolvedMavenProperty -->
-            <Build-Timestamp>${timestamp}</Build-Timestamp>
-          </manifestEntries>
-        </archive>
-      </configuration>
-    </plugin>
-    <plugin>
-      <groupId>org.codehaus.mojo</groupId>
-      <artifactId>buildnumber-maven-plugin</artifactId>
-      <version>${buildnumber-maven-plugin.version}</version>
-      <configuration>
-        <timestampFormat>yyyy-MM-dd HH:mm:ss</timestampFormat>
-      </configuration>
-      <executions>
-        <execution>
-          <goals>
-            <goal>create-timestamp</goal>
-          </goals>
-        </execution>
-      </executions>
-    </plugin>
-  </plugins>
-</build>
+  </build>
 
   <!--<repositories>-->
   <!--	<repository>-->
@@ -663,4 +669,4 @@
   <!--		</snapshots>-->
   <!--	</repository>-->
   <!--</repositories>-->
-  </project>
+</project>
