@@ -18,6 +18,11 @@
 	</properties>
 	
 	<dependencies>
+		<dependency>
+			<groupId>io.github.java-diff-utils</groupId>
+			<artifactId>java-diff-utils</artifactId>
+			<version>4.11</version>
+		</dependency>
 		<!--		json path 解析工具-->
 		<!-- https://mvnrepository.com/artifact/com.jayway.jsonpath/json-path -->
 		<dependency>
@@ -128,6 +133,20 @@
 	</dependencies>
 	
 	<build>
+		  <!--和上面的配置一样，放到 build 节点里面 -->
+    <!--单元测试时引用src/main/resources下的资源文件-->
+    <testResources>
+      <testResource>
+        <directory>src/test/java/resources/</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>*</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <directory>src/test/java/resources/${profile.env}</directory>
+      </testResource>
+  </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
