@@ -39,7 +39,6 @@ public class UserServiceImpl implements UserService {
         if(Objects.nonNull(userDTO.getId())){
             log.info("updateUser-->id:{}",userDTO.getId());
             return updateUser(userDTO);
-
         }
 
         addUser(userDTO);

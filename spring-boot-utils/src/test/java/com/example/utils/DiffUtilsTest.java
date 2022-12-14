@@ -9,6 +9,7 @@ import com.github.difflib.patch.AbstractDelta;
 import com.github.difflib.patch.Patch;
 import com.github.difflib.text.DiffRow;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -34,7 +35,7 @@ class DiffUtilsTest {
 
   @Test
   void test() {
-    //行比较器，原文件删除的内容用"~"包裹，对比文件新增的内容用"**"包裹
+    // 行比较器，原文件删除的内容用 "~" 包裹，对比文件新增的内容用 "**" 包裹
     String original = String.join("\n", file1);
     String revised = String.join("\n", file2);
     List<DiffRow> diffRows = DiffUtil.diffRowsByString(original, revised, "\n");
@@ -57,7 +58,26 @@ class DiffUtilsTest {
   @Test
   void test3() throws JsonPatchException {
     List<DiffJson> diffJsons = DiffUtil.diffJsonByString(source, target);
-    System.out.println(JSON.toJSONString(diffJsons,true));
+    System.out.println(JSON.toJSONString(diffJsons, true));
   }
+
+  @Test
+  void test4() throws JsonPatchException {
+    List<Object> diffJsons = Lists.newArrayList(1, 2, 3, "a");
+    diffJsons.add(0, "b");
+    diffJsons.add(1, "c");
+    System.out.println(JSON.toJSONString(diffJsons, true));
+  }
+
+  @Test
+  void test5() throws JsonPatchException {
+    List<String> test = FileUtil.readUtf8Lines(ResourceUtil.getResource("test").getFile());
+    System.out.println(test.stream().mapToDouble(Double::valueOf).sum());
+  }
+
+
+  @Test
+  void test6() {
+    }
 
 }

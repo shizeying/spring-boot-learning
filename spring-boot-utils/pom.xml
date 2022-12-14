@@ -18,7 +18,10 @@
   </properties>
 
   <dependencies>
-
+    <dependency>
+      <groupId>com.github.oshi</groupId>
+      <artifactId>oshi-core</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.github.java-json-tools</groupId>
       <artifactId>json-patch</artifactId>
