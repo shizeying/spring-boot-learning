@@ -70,7 +70,6 @@ public class OrikaBeanConvertUtils {
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
 	public static <T, R> Consumer<Tuple2<T, R>> convertNull() {
-		final DefaultMapperFactory.Builder builder = new DefaultMapperFactory.Builder();
 		return tuple2 -> initNull().map(tuple2._1, tuple2._2);
 	}
 	
