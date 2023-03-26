@@ -2,15 +2,19 @@ package com.example.utils;
 
 import io.vavr.Tuple;
 import io.vavr.Tuple2;
-import lombok.*;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
-
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 public class OrikaBeanConvertUtils {
+	
 	private static final DefaultMapperFactory.Builder DEFAULTMAPPERFACTORYBUILDER = new DefaultMapperFactory.Builder();
 	
 	
@@ -18,9 +22,9 @@ public class OrikaBeanConvertUtils {
 		return DEFAULTMAPPERFACTORYBUILDER
 				
 				.mapNulls(false).useAutoMapping(true)
-				//属性生成策略
+				// 属性生成策略
 				// .propertyResolverStrategy()
-				//class属性生成策略
+				// class 属性生成策略
 				// .classMapBuilderFactory()
 				.build()
 				
@@ -30,9 +34,9 @@ public class OrikaBeanConvertUtils {
 	private static MapperFacade initNull() {
 		return DEFAULTMAPPERFACTORYBUILDER
 				
-				//属性生成策略
+				// 属性生成策略
 				// .propertyResolverStrategy()
-				//class属性生成策略
+				// class 属性生成策略
 				// .classMapBuilderFactory()
 				.build()
 				
@@ -41,9 +45,7 @@ public class OrikaBeanConvertUtils {
 	
 	
 	/**
-	 * 转换:空值自动删除
-	 * tuple2._1:source
-	 * tuple2._2:target
+	 * 转换: 空值自动删除 tuple2._1:source tuple2._2:target
 	 *
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
@@ -53,9 +55,7 @@ public class OrikaBeanConvertUtils {
 	}
 	
 	/**
-	 * 转换:空值自动删除
-	 * tuple2._1:source
-	 * tuple2._2:target
+	 * 转换: 空值自动删除 tuple2._1:source tuple2._2:target
 	 *
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
@@ -65,9 +65,7 @@ public class OrikaBeanConvertUtils {
 	}
 	
 	/**
-	 * 转换:空值不会忽略
-	 * tuple2._1:source
-	 * tuple2._2:target
+	 * 转换: 空值不会忽略 tuple2._1:source tuple2._2:target
 	 *
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
@@ -77,9 +75,7 @@ public class OrikaBeanConvertUtils {
 	}
 	
 	/**
-	 * 转换:空值自动删除
-	 * tuple2._1:source
-	 * tuple2._2:target
+	 * 转换: 空值自动删除 tuple2._1:source tuple2._2:target
 	 *
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
@@ -89,9 +85,7 @@ public class OrikaBeanConvertUtils {
 	}
 	
 	/**
-	 * 转换:空值不会忽略
-	 * tuple2._1:source
-	 * tuple2._2:target
+	 * 转换: 空值不会忽略 tuple2._1:source tuple2._2:target
 	 *
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
@@ -126,7 +120,6 @@ public class OrikaBeanConvertUtils {
 	public static void main(String[] args) {
 		final A a = A.builder().a("1").b("2").build();
 		final B b = B.builder().a("3").build();
-		
 		
 		OrikaBeanConvertUtils.convertNotNull().accept(Tuple.of(b, a));
 		System.out.println(a);

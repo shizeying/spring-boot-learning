@@ -415,6 +415,8 @@
         <artifactId>hibernate-validator</artifactId>
         <version>${hibernate-validator.version}</version>
       </dependency>
+
+
       <!--自动生成jpa配置元信息-->
       <dependency>
         <groupId>org.hibernate</groupId>
