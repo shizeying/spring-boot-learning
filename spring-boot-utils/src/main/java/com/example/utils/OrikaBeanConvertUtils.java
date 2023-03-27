@@ -10,15 +10,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
+import ma.glasnost.orika.BoundMapperFacade;import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.impl.DefaultMapperFactory;import org.apache.poi.ss.formula.functions.T;
 
 public class OrikaBeanConvertUtils {
 	
 	private static final DefaultMapperFactory.Builder DEFAULTMAPPERFACTORYBUILDER = new DefaultMapperFactory.Builder();
 	
 	
-	private static MapperFacade initNotNull() {
+	private static <R,T> BoundMapperFacade<R,T> initNotNull(Class<R> rClass,Class<T> tClass) {
 		return DEFAULTMAPPERFACTORYBUILDER
 				
 				.mapNulls(false).useAutoMapping(true)
@@ -28,10 +28,10 @@ public class OrikaBeanConvertUtils {
 				// .classMapBuilderFactory()
 				.build()
 				
-				.getMapperFacade();
+				.getMapperFacade(rClass,tClass);
 	}
 	
-	private static MapperFacade initNull() {
+	private static <R,T> BoundMapperFacade<R,T> initNull(Class<R> rClass,Class<T> tClass) {
 		return DEFAULTMAPPERFACTORYBUILDER
 				
 				// 属性生成策略
@@ -40,7 +40,7 @@ public class OrikaBeanConvertUtils {
 				// .classMapBuilderFactory()
 				.build()
 				
-				.getMapperFacade();
+				.getMapperFacade(rClass,tClass);
 	}
 	
 	
@@ -61,7 +61,7 @@ public class OrikaBeanConvertUtils {
 	 */
 	public static <T, R> BiConsumer<T, R> convertNotNullBiConsumer() {
 		
-		return (source, target) -> initNotNull().map(source, target);
+		return (source, target) -> initNotNull((Class<T>) source.getClass(),target.getClass()).map(((T)source));
 	}
 	
 	/**
@@ -70,7 +70,7 @@ public class OrikaBeanConvertUtils {
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
 	public static <T, R> Consumer<Tuple2<T, R>> convertNull() {
-		return tuple2 -> initNull().map(tuple2._1, tuple2._2);
+		return tuple2 -> initNull((Class<T>) tuple2._1().getClass(),tuple2._2.getClass()).map(tuple2._1);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class OrikaBeanConvertUtils {
 	 */
 	public static <T, R> Function<T, R> convertNotNull(Class<R> clazz) {
 		
-		return source -> initNotNull().map(source, clazz);
+		return source -> initNotNull((Class<T>) source.getClass(),clazz).map(source);
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class OrikaBeanConvertUtils {
 	 * @return {@code Consumer<Tuple2<T, R>>}
 	 */
 	public static <T, R> Function<T, R> convertNull(Class<R> clazz) {
-		return source -> initNull().map(source, clazz);
+		return source -> initNull((Class<T>) source.getClass(),clazz).map(source);
 	}
 	
 	

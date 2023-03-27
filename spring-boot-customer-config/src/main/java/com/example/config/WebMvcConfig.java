@@ -19,7 +19,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	 *
 	 * @return 执行器
 	 */
-	@Bean("executorBeanName")
+	@Bean()
 	public ThreadPoolTaskExecutor asyncExecutor() {
 		ThreadPoolTaskExecutor executor = new VisiableThreadPoolTaskExecutor();
 		//1: 核心线程数目

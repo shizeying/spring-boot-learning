@@ -4,22 +4,21 @@ import com.example.common.user.convert.UserConvert;
 import com.example.common.user.dto.UserDTO;
 import com.example.common.user.model.User;
 import com.example.common.user.service.UserService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.LongAdder;
+import javax.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 @Service
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     private UserConvert userConvert;
 
     private static Map<Long, User> mockUserTable = new ConcurrentHashMap<>();
