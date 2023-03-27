@@ -51,7 +51,7 @@ public class OrikaBeanConvertUtils {
 	 */
 	public static <T, R> Consumer<Tuple2<T, R>> convertNotNull() {
 		
-		return tuple2 -> initNotNull().map(tuple2._1, tuple2._2);
+		return tuple2 -> initNotNull((Class<T>)tuple2._1(),tuple2._2.getClass() ).map(tuple2._1);
 	}
 	
 	/**
