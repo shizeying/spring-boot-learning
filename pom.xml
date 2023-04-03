@@ -113,11 +113,19 @@
     <java-diff-utils.version>4.11</java-diff-utils.version>
     <json-patch.version>1.13</json-patch.version>
     <oshi-core.version>3.5.0</oshi-core.version>
+    <modelmapper.version>3.1.1</modelmapper.version>
   </properties>
 
   <dependencyManagement>
 
     <dependencies>
+      <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+      <dependency>
+        <groupId>org.modelmapper</groupId>
+        <artifactId>modelmapper</artifactId>
+        <version>${modelmapper.version}</version>
+      </dependency>
+
       <!-- oshi 方法获取 cpu -->
       <dependency>
         <groupId>com.github.oshi</groupId>
